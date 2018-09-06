@@ -2,7 +2,7 @@ package Scenes;
 
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
-import javafx.geometry.HPos;
+import Areas.HotelRoom;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -15,12 +15,14 @@ public class SimulationScene {
 	public BorderPane bPane;
 	public Scene simulationScene;
 	public Stage simulationStage;
+	public static HotelRoom room;
 	
 	public SimulationScene()
 	{
 		setStage();
 		setGrid();
 		setBorderPane();
+		
 		setSimulationScene();
 		showSimulationStage();
 	}
@@ -34,21 +36,21 @@ public class SimulationScene {
 	{
 		simulationStage = new Stage();
 		simulationStage.setTitle("Hotel Simulatie");
-		simulationStage.setResizable(false);
+		simulationStage.setResizable(true);
 	}
 	
 	public void setBorderPane(){
 		bPane = new BorderPane();
 		//bPane.setStyle("-fx-background-color: #333333;");
 		bPane.setCenter(grid);
-		bPane.setMaxSize(800, 800);
+		bPane.setMaxSize(600, 600);
 	}
 	
 	
 	public void setGrid(){
 		grid = new GridPane();
-		grid.setGridLinesVisible(true);
-		grid.setMaxSize(800, 800);
+		grid.setGridLinesVisible(false);
+		grid.setMaxSize(500, 500);
 		
 		int cols = 10;
 		int rows = 10;
@@ -62,7 +64,8 @@ public class SimulationScene {
 		    RowConstraints rowConst = new RowConstraints();
 		    rowConst.setPercentHeight(100.0 / rows);
 		    grid.getRowConstraints().add(rowConst);         
-		} 		
+		} 	
+
 		
 		
 		for (int i = 0; i<10; i++)
@@ -73,8 +76,18 @@ public class SimulationScene {
 			}
 		}		
 		
-		//grid.setStyle("-fx-background-image: url('/img/ground.png')");
+		HotelRoom room = new HotelRoom(1,1);
+		HotelRoom room2 = new HotelRoom(2,2);
+		HotelRoom room3 = new HotelRoom(1,1);
+		
+		grid.add(room.mensImageView,8,8);
+		grid.add(room2.mensImageView,1,1,2,2);
+		grid.add(room3.mensImageView,5,5);
+		
+//		grid.setStyle("-fx-background-image: url('/Images/bg.png')");
 	}
+	
+		
 	
 	/**
 	 * method die het gridveld leeg maakt.
@@ -91,7 +104,7 @@ public class SimulationScene {
 	 * method die een scene opbouwd voor het spel
 	 */	
 	public void setSimulationScene(){
-		simulationScene = new Scene(bPane, 1000, 1000);
+		simulationScene = new Scene(bPane, 600, 600);
 		simulationStage.setScene(simulationScene);
 	}
 
