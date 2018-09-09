@@ -3,7 +3,9 @@ package Areas;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import javafx.scene.Node;
+import Scenes.SimulationScene;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -17,43 +19,46 @@ public class HotelRoom {
 	public int cleaningTime = 1;
 	public boolean cleaningEmergency = false;
 	
-	public ImageView mensImageView;
-	public Image mensImage;
+	public ImageView roomImageView;
+	public Image roomImage;
 	private int dimensionW;
 	private int dimensionH;
+	private int x;
+	private int y;
 
 	
 	//Constructor
-	public HotelRoom(int dimensionW, int dimensionH){
+	public HotelRoom(int dimensionW, int dimensionH, int x, int y){
 		
 		this.dimensionW = dimensionW;
 		this.dimensionH = dimensionH;
+		this.x = x;
+		this.y = y;
 		
+		
+		// Get the right image depending on dimensions
 		try {
-			if(dimensionW == 1 && dimensionH ==1) {
-				setSprite(new FileInputStream("src/Images/room_1.png"));
-			} else if(dimensionW == 2 && dimensionH == 2)  {
-				setSprite(new FileInputStream("src/Images/room_2_2.png"));
-			}
+			setSprite(new FileInputStream("src/Images/door.png"));
+			
         } catch (FileNotFoundException e) {
             //
             e.printStackTrace();
         }
-        
+		
+		// Paint the room on the grid
+		SimulationScene.grid.add(this.roomImageView,x,y, dimensionW, dimensionH);
+		SimulationScene.grid.setHalignment(this.roomImageView, HPos.LEFT);
+		SimulationScene.grid.setValignment(this.roomImageView, VPos.BOTTOM);
+
 
 	}
 	
 	public void setSprite(FileInputStream sprite){
-        Image mensImage = new Image(sprite);
-        mensImageView = new ImageView();
-        if(dimensionW == 1 && dimensionH ==1) {
-        	mensImageView.setFitHeight(50);
-        	mensImageView.setFitWidth(50);
-        } else if(dimensionW == 2 && dimensionH == 2)  {
-        	mensImageView.setFitHeight(100);
-        	mensImageView.setFitWidth(100);
-        }
-        mensImageView.setImage(mensImage);
+        Image roomImage = new Image(sprite);
+        roomImageView = new ImageView();
+        roomImageView.setFitWidth(16);
+        roomImageView.setFitHeight(32);
+        roomImageView.setImage(roomImage);
     }
 	
 	

@@ -11,7 +11,7 @@ public class PersonFactory {
 	    	  return new Guest(status, visibility, prefStars, x, y);
 	      } 
 	      else if(personType.equalsIgnoreCase("CLEANER")){
-	         return new Cleaner();
+	         return new Cleaner(status, visibility, x, y);
 	      }
 	      
 	      return null;

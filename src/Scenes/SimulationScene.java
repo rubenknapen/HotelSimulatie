@@ -2,18 +2,21 @@ package Scenes;
 
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
+
 import Areas.HotelRoom;
 import Persons.PersonFactory;
 import Persons.iPerson;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 
 public class SimulationScene {
 
-	public GridPane grid;
+	public static GridPane grid;
 	public BorderPane bPane;
 	public Scene simulationScene;
 	public Stage simulationStage;
@@ -51,24 +54,24 @@ public class SimulationScene {
 	
 	public void setGrid(){
 		grid = new GridPane();
-		grid.setGridLinesVisible(false);
+		grid.setGridLinesVisible(true);
 		grid.setMaxSize(500, 500);
 		
 		int cols = 10;
 		int rows = 10;
-						
+		
+
+		
 		for (int i = 0; i < cols; i++) {
 		      ColumnConstraints colConst = new ColumnConstraints();
-		      colConst.setPercentWidth(100.0 / cols);
+		      colConst.setMinWidth(48);
 		      grid.getColumnConstraints().add(colConst);
 		}
 		for (int i = 0; i < rows; i++) {
 		    RowConstraints rowConst = new RowConstraints();
-		    rowConst.setPercentHeight(100.0 / rows);
+		    rowConst.setMinHeight(48);
 		    grid.getRowConstraints().add(rowConst);         
-		} 	
-
-		
+		} 			
 		
 		for (int i = 0; i<10; i++)
 		{
@@ -77,22 +80,35 @@ public class SimulationScene {
 				grid.add(new Label(i+","+j), i, j);
 			}
 		}		
+
+		Image img = new Image("file:src/Images/floor_bg.png");
+		ImageView imgView = new ImageView(img);
+		imgView.setFitWidth(336);
+		imgView.setFitHeight(48);
+
+		grid.add(imgView,1,2,7,1);
+	
 		
-		iPerson gast = PersonFactory.createPerson("Guest","In de rij staan",true,4,7,2);
-		gast.test();
 		
-		HotelRoom room = new HotelRoom(1,1);
-		HotelRoom room2 = new HotelRoom(2,2);
-		HotelRoom room3 = new HotelRoom(1,1);
 		
-		grid.add(room.mensImageView,8,8);
-		grid.add(room2.mensImageView,1,1,2,2);
-		grid.add(room3.mensImageView,5,5);
+		// create some rooms
+		HotelRoom room = new HotelRoom(1,1,3,2);
+		HotelRoom room2 = new HotelRoom(1,1,4,2);
+		HotelRoom room3 = new HotelRoom(1,1,5,2);
+		HotelRoom room4 = new HotelRoom(1,1,6,2);
+		
+		
+		//create a guest
+		iPerson guest1 = PersonFactory.createPerson("Guest","In de rij staan",true,4,1,2);
+
+		//create a cleaner
+		iPerson cleaner1 = PersonFactory.createPerson("Cleaner","Schoonmaken",true,4,2,2);
+
 		
 //		grid.setStyle("-fx-background-image: url('/Images/bg.png')");
 	}
 	
-		
+	
 	
 	/**
 	 * method die het gridveld leeg maakt.

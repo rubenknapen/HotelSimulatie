@@ -1,5 +1,14 @@
 package Persons;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import Scenes.SimulationScene;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 public class Guest implements iPerson {
 
 	//Variables
@@ -8,15 +17,40 @@ public class Guest implements iPerson {
 	private int prefStars; // Preference for stars of hotelroom
 	private int x; // x coordinate
 	private int y; // y coordinate
+	private ImageView guestImageView;
 	
 	//Constructor
 	public Guest(String status, boolean visibility, int prefStars, int x, int y){
-			this.setStatus(status);
-			this.setVisibility(visibility);
-			this.setPrefStars(prefStars);		
-			this.setX(x);
-			this.setY(y);
+		
+		this.setStatus(status);
+		this.setVisibility(visibility);
+		this.setPrefStars(prefStars);		
+		this.setX(x);
+		this.setY(y);
+
+		// Get the right image depending on dimensions
+		try {
+			setSprite(new FileInputStream("src/Images/guest.png"));	
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+		
+		// Paint the guest on the grid
+		SimulationScene.grid.add(this.guestImageView,x,y);
+		SimulationScene.grid.setHalignment(this.guestImageView, HPos.CENTER);
+		SimulationScene.grid.setValignment(this.guestImageView, VPos.BOTTOM);
+		
 	}
+	
+	public void setSprite(FileInputStream sprite){
+		
+        Image guestImage = new Image(sprite);
+        guestImageView = new ImageView();
+    	guestImageView.setFitHeight(16);
+    	guestImageView.setFitWidth(16); 
+    	guestImageView.setImage(guestImage);
+    	
+    }
 	
 	//Functions
 	public void checkInRoom(){
@@ -39,10 +73,6 @@ public class Guest implements iPerson {
 		
 	}
 	
-	public void test(){
-		System.out.println("Ik ben nu aanwezig en mijn status is: " + status);
-	}
-
 	@Override
 	public void evacuate() {
 		// TODO Auto-generated method stub
