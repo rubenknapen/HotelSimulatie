@@ -1,9 +1,10 @@
 package Persons;
 
-public class Cleaner {
+public class Cleaner implements iPerson {
 
 	//Variables
-	String field = "";
+	boolean visibility = true; // Hide or shows the person visually 
+	String status = ""; // Status of the person "evacuate, check in, etc."
 	
 	
 	//Constructor
@@ -11,13 +12,28 @@ public class Cleaner {
 	{
 		
 	}
-	
-	
-	
-	
+
 	//Functions
 	public void cleanRoom()
 	{
+		
+	}
+
+	@Override
+	public void evacuate() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getFastestRoute() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void test() {
+		// TODO Auto-generated method stub
 		
 	}
 }

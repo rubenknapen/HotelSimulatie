@@ -3,6 +3,8 @@ package Scenes;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import Areas.HotelRoom;
+import Persons.PersonFactory;
+import Persons.iPerson;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -75,6 +77,9 @@ public class SimulationScene {
 				grid.add(new Label(i+","+j), i, j);
 			}
 		}		
+		
+		iPerson gast = PersonFactory.createPerson("Guest","In de rij staan",true,4,7,2);
+		gast.test();
 		
 		HotelRoom room = new HotelRoom(1,1);
 		HotelRoom room2 = new HotelRoom(2,2);
