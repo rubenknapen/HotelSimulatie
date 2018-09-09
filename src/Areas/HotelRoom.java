@@ -57,7 +57,7 @@ public class HotelRoom {
         Image roomImage = new Image(sprite);
         roomImageView = new ImageView();
         roomImageView.setFitWidth(16);
-        roomImageView.setFitHeight(32);
+        roomImageView.setFitHeight(37);
         roomImageView.setImage(roomImage);
     }
 	

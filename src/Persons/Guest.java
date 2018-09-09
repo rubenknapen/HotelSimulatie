@@ -46,7 +46,7 @@ public class Guest implements iPerson {
 		
         Image guestImage = new Image(sprite);
         guestImageView = new ImageView();
-    	guestImageView.setFitHeight(16);
+    	guestImageView.setFitHeight(21);
     	guestImageView.setFitWidth(16); 
     	guestImageView.setImage(guestImage);
     	

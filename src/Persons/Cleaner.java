@@ -44,7 +44,7 @@ public class Cleaner implements iPerson {
 		
         Image cleanerImage = new Image(sprite);
         cleanerImageView = new ImageView();
-        cleanerImageView.setFitHeight(16);
+        cleanerImageView.setFitHeight(21);
         cleanerImageView.setFitWidth(16); 
         cleanerImageView.setImage(cleanerImage);
     	
