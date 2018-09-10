@@ -12,7 +12,10 @@ import javafx.scene.layout.CornerRadii;
 import Areas.HotelRoom;
 import Persons.PersonFactory;
 import Persons.iPerson;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -22,6 +25,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class SimulationScene {
 
@@ -66,8 +70,8 @@ public class SimulationScene {
 		grid.setGridLinesVisible(false);
 		grid.setMaxSize(500, 500);
 		
-		int cols = 12;
-		int rows = 12;
+		int cols = 14;
+		int rows = 10;
 		int colSize = 48;
 		int rowSize= 48;
 		
@@ -91,16 +95,30 @@ public class SimulationScene {
 //				grid.add(new Label(i+","+j), i, j);
 //			}
 //		}		
-
 		
+		// Create elevatorcabin image
+		Image elevatorRopeImage = new Image("file:src/Images/elevator_rope.png");
+		ImageView elevatorRopeImageView = new ImageView(elevatorRopeImage);
+		elevatorRopeImageView.setFitWidth(24);
+		elevatorRopeImageView.setFitHeight(48);
+		elevatorRopeImageView.setTranslateX(13);
+		grid.add(elevatorRopeImageView, 2, 1, 1, 1);	
+		
+		// Create elevatorcabin image
+		Image elevatorCabinImage = new Image("file:src/Images/elevator_cabin.png");
+		ImageView elevatorCabinImageView = new ImageView(elevatorCabinImage);
+		elevatorCabinImageView.setFitWidth(24);
+		elevatorCabinImageView.setFitHeight(48);
+		elevatorCabinImageView.setTranslateX(13);
+		grid.add(elevatorCabinImageView, 2, 2, 1, 1);
 
 		// Create top-floor background image
 		Image topFloorImage = new Image("file:src/Images/top_floor.png");
 		ImageView topFloorImageView = new ImageView(topFloorImage);
 		topFloorImageView.setFitWidth(384);
 		topFloorImageView.setFitHeight(48);
-
 		
+			
 		// Create Hbox to contain background images of floors
 		HBox floorBackground = new HBox();
 		floorBackground.setMaxSize(colSize * 8,rowSize * 8);
@@ -112,17 +130,37 @@ public class SimulationScene {
 		floorBackground.getChildren().add(topFloorImageView);
 		
 		// Add the floor background to the grid
-		grid.add(floorBackground, 2, 1, 8, 8);
-		grid.setBackground(new Background(new BackgroundFill(Color.web("#102860"), CornerRadii.EMPTY, Insets.EMPTY)));
+		grid.add(floorBackground, 4, 1, 8, 8);
+
+		// Create elevator background image
+		Image elevatorImage = new Image("file:src/Images/elevator_top.png");
+		ImageView elevatorImageImageView = new ImageView(elevatorImage);
+		elevatorImageImageView.setFitWidth(96);
+		elevatorImageImageView.setFitHeight(48);
+		
+		
+		// Create Hbox to contain background images of elevator
+		HBox elevatorBackground = new HBox();
+		elevatorBackground.setMaxSize(colSize * 2,rowSize * 8);
+		elevatorBackground.setMinSize(colSize * 2,rowSize * 8);
+		BackgroundImage elevatorBG= new BackgroundImage(new Image("file:src/Images/elevator_bg.png",96,48,false,false),
+		        BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,
+		          BackgroundSize.DEFAULT);
+		elevatorBackground.setBackground(new Background(elevatorBG));
+		elevatorBackground.getChildren().add(elevatorImageImageView);
+			
+		// Add the elevator background to the grid
+		grid.add(elevatorBackground, 2,1,1,8);
+		grid.setBackground(new Background(new BackgroundFill(Color.web("#102860"), CornerRadii.EMPTY, Insets.EMPTY)));	
 		
 		// create some rooms
-//		HotelRoom room = new HotelRoom(1,1,2,2);
-		HotelRoom room2 = new HotelRoom(1,1,3,2);
-		HotelRoom room3 = new HotelRoom(1,1,4,2);
-		HotelRoom room4 = new HotelRoom(1,1,5,2);
-		HotelRoom room5 = new HotelRoom(1,1,6,2);
-		HotelRoom room6 = new HotelRoom(1,1,7,2);
-		HotelRoom room7 = new HotelRoom(1,1,8,2);
+		HotelRoom room1 = new HotelRoom(1,1,4,2);
+		HotelRoom room2 = new HotelRoom(1,1,5,2);
+		HotelRoom room3 = new HotelRoom(1,1,6,2);
+		HotelRoom room4 = new HotelRoom(1,1,7,2);
+		HotelRoom room5 = new HotelRoom(1,1,8,2);
+		HotelRoom room6 = new HotelRoom(1,1,9,2);
+		HotelRoom room7 = new HotelRoom(1,1,10,2);
 		
 //		HotelRoom room5 = new HotelRoom(1,1,4,3);
 //		HotelRoom room6 = new HotelRoom(1,1,5,3);
@@ -130,13 +168,12 @@ public class SimulationScene {
 //		HotelRoom room8 = new HotelRoom(1,1,7,3);
 		
 		//create a guest
-		iPerson guest1 = PersonFactory.createPerson("Guest","In de rij staan",true,4,2,2);
+		iPerson guest1 = PersonFactory.createPerson("Guest","In de rij staan",true,4,4,2);
 
 		//create a cleaner
-		iPerson cleaner1 = PersonFactory.createPerson("Cleaner","Schoonmaken",true,4,4,2);
+		iPerson cleaner1 = PersonFactory.createPerson("Cleaner","Schoonmaken",true,4,5,2);
 
 	}
-	
 	
 	
 	/**
@@ -154,7 +191,7 @@ public class SimulationScene {
 	 * method die een scene opbouwd voor het spel
 	 */	
 	public void setSimulationScene(){
-		simulationScene = new Scene(bPane, 600, 600);
+		simulationScene = new Scene(bPane, 800, 600);
 		simulationStage.setScene(simulationScene);
 	}
 
