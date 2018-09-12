@@ -19,13 +19,6 @@ public class HotelRoom extends Area {
 	public int cleaningTime = 1;
 	public boolean cleaningEmergency = false;
 	
-	public ImageView roomImageView;
-	public Image roomImage;
-	private int dimensionW;
-	private int dimensionH;
-	private int x;
-	private int y;
-
 	
 	//Constructor
 	public HotelRoom(int dimensionW, int dimensionH, int x, int y)
@@ -38,7 +31,7 @@ public class HotelRoom extends Area {
 		
 		// Get the right image depending on dimensions
 		try {
-			setSprite(new FileInputStream("src/Images/door.png"));
+			createSprite(new FileInputStream("src/Images/door.png"));
 			
         } catch (FileNotFoundException e) {
             //
@@ -46,16 +39,8 @@ public class HotelRoom extends Area {
         }
 		
 		// Paint the room on the grid
-		SimulationScene.grid.add(this.roomImageView,x,y, dimensionW, dimensionH);
-		SimulationScene.grid.setHalignment(this.roomImageView, HPos.LEFT);
-		SimulationScene.grid.setValignment(this.roomImageView, VPos.BOTTOM);
+		SimulationScene.grid.add(roomImageView,x,y, dimensionW, dimensionH);
+		SimulationScene.grid.setHalignment(roomImageView, HPos.LEFT);
+		SimulationScene.grid.setValignment(roomImageView, VPos.BOTTOM);
 	}
-
-	public void setSprite(FileInputStream sprite){
-        Image roomImage = new Image(sprite);
-        roomImageView = new ImageView();
-        roomImageView.setFitWidth(16);
-        roomImageView.setFitHeight(37);
-        roomImageView.setImage(roomImage);
-    }
 }
