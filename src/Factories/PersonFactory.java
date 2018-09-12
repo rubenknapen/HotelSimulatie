@@ -2,11 +2,11 @@ package Factories;
 
 import Persons.Cleaner;
 import Persons.Guest;
-import Persons.iPerson;
+import Persons.Person;
 
 public class PersonFactory {
 
-	public static iPerson createPerson(String personType, String status, boolean visibility, int prefStars, int x, int y){
+	public static Person createPerson(String personType, String status, boolean visibility, int prefStars, int x, int y){
 
 	      if(personType == null){
 	         return null;

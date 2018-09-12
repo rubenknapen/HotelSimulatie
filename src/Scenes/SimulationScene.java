@@ -11,7 +11,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.CornerRadii;
 import Areas.HotelRoom;
 import Factories.PersonFactory;
-import Persons.iPerson;
+import Persons.Person;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
@@ -168,10 +168,10 @@ public class SimulationScene {
 //		HotelRoom room8 = new HotelRoom(1,1,7,3);
 		
 		//create a guest
-		iPerson guest1 = PersonFactory.createPerson("Guest","In de rij staan",true,4,4,2);
+		Person guest1 = PersonFactory.createPerson("Guest","In de rij staan",true,4,4,2);
 
 		//create a cleaner
-		iPerson cleaner1 = PersonFactory.createPerson("Cleaner","Schoonmaken",true,4,5,2);
+		Person cleaner1 = PersonFactory.createPerson("Cleaner","Schoonmaken",true,4,5,2);
 
 	}
 	

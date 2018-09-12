@@ -9,7 +9,7 @@ import javafx.geometry.VPos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Cleaner implements iPerson {
+public class Cleaner extends Person {
 
 	//Variables
 	private String status; // Status of the person "evacuate, check in, etc."

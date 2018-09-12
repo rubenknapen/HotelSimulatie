@@ -9,7 +9,7 @@ import javafx.geometry.VPos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Guest implements iPerson {
+public class Guest extends Person {
 
 	//Variables
 	private String status; // Status of the person "evacuate, check in, etc."
