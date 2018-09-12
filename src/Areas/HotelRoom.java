@@ -6,32 +6,28 @@ import java.io.FileNotFoundException;
 import Scenes.SimulationScene;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 public class HotelRoom extends Area {
 
 
 	//Variables
-	public boolean available = true;
-	public int roomNumber = 0;
-	public int stars = 1;
-	public int cleaningTime = 1;
-	public boolean cleaningEmergency = false;
 	
 	
 	//Constructor
-	public HotelRoom(int dimensionW, int dimensionH, int x, int y)
+	public HotelRoom(int dimensionW, int dimensionH, int x, int y, int stars)
 	{
 		this.dimensionW = dimensionW;
 		this.dimensionH = dimensionH;
 		this.x = x;
 		this.y = y;
+		this.stars = stars;
 		
 		
+			
 		// Get the right image depending on dimensions
 		try {
-			createSprite(new FileInputStream("src/Images/door.png"));
+			getImageForStars();
+			createSprite(new FileInputStream("src/Images/"+imageLocation));
 			
         } catch (FileNotFoundException e) {
             //

@@ -9,15 +9,22 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.CornerRadii;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
+
+import Areas.Area;
 import Areas.HotelRoom;
+import Factories.AreaFactory;
 import Factories.PersonFactory;
 import Persons.Person;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.geometry.Insets;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -25,7 +32,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Duration;
+import simple.JSONArray;
+import simple.JSONObject;
+import simple.parser.JSONParser;
+import simple.parser.ParseException;
 
 public class SimulationScene {
 
@@ -86,15 +96,7 @@ public class SimulationScene {
 		    RowConstraints rowConst = new RowConstraints();
 		    rowConst.setMinHeight(rowSize);
 		    grid.getRowConstraints().add(rowConst);         
-		} 			
-		
-//		for (int i = 0; i<10; i++)
-//		{
-//			for (int j = 0; j < 10; j++)
-//			{
-//				grid.add(new Label(i+","+j), i, j);
-//			}
-//		}		
+		}	
 		
 		// Create elevatorcabin image
 		Image elevatorRopeImage = new Image("file:src/Images/elevator_rope.png");
@@ -153,28 +155,104 @@ public class SimulationScene {
 		grid.add(elevatorBackground, 2,1,1,8);
 		grid.setBackground(new Background(new BackgroundFill(Color.web("#102860"), CornerRadii.EMPTY, Insets.EMPTY)));	
 		
-		// create some rooms
-		HotelRoom room1 = new HotelRoom(1,1,4,2);
-		HotelRoom room2 = new HotelRoom(1,1,5,2);
-		HotelRoom room3 = new HotelRoom(1,1,6,2);
-		HotelRoom room4 = new HotelRoom(1,1,7,2);
-		HotelRoom room5 = new HotelRoom(1,1,8,2);
-		HotelRoom room6 = new HotelRoom(1,1,9,2);
-		HotelRoom room7 = new HotelRoom(1,1,10,2);
 		
-//		HotelRoom room5 = new HotelRoom(1,1,4,3);
-//		HotelRoom room6 = new HotelRoom(1,1,5,3);
-//		HotelRoom room7 = new HotelRoom(1,1,6,3);
-//		HotelRoom room8 = new HotelRoom(1,1,7,3);
+		//
+		//
+		//
+		//		EXPERIMENTAL JSON PARSER IMPLEMENTATION
+		//
+		//
+		//
+		
+		
+		ArrayList<String> listData = new ArrayList<String>();
+		JSONParser parser = new JSONParser();
+		
+		try {
+		
+			FileReader reader = new FileReader("src/layout/hotel.layout");
+
+			JSONParser jsonParser = new JSONParser();
+			
+			
+			
+			
+			
+			JSONArray jsonArr = (JSONArray) jsonParser.parse(reader);
+			List<Object> dataList = new ArrayList<Object>();
+			
+			for (Object o: jsonArr)
+			{
+				int stars = 0;
+				long capacity = 0;
+				int x = 0;
+				int y = 0;
+				
+				int dimensionW = 0;
+				int dimensionH = 0;
+				
+				JSONObject obj = (JSONObject)o;
+				String areaType = (String) obj.get("AreaType");
+				String dimension = (String) obj.get("Dimension");
+				
+				//Spliting dimension and putting it in ints
+				String[] parts = dimension.split(",");
+				dimensionW = Integer.parseInt(parts[0]);
+				String[] partsAfterSpace = parts[1].split("\\s+");
+				dimensionH = Integer.parseInt(partsAfterSpace[1]);
+				
+				//Splitting position in x & y
+				String position = (String) obj.get("Position");
+				parts = position.split(",");
+				x = Integer.parseInt(parts[0]);
+				partsAfterSpace = parts[1].split("\\s+");
+				y = Integer.parseInt(partsAfterSpace[1]);
+				
+				//Check if classification is available
+				if(obj.containsKey("Classification"))
+				{
+					String classification = (String) obj.get("Classification");
+					stars = Integer.parseInt(classification.charAt(0) + "");
+				}
+				
+				//Check if capacity if available
+				if(obj.containsKey("Capacity"))
+				{
+					capacity = (long) obj.get("Capacity");
+				}
+				
+				Area tempRoom = AreaFactory.createArea(areaType, x,y,dimensionW,dimensionH,stars,capacity);
+			}
+			
+		}	
+		
+		catch (FileNotFoundException ex) 
+		{
+			ex.printStackTrace();
+		} 	
+		
+		catch (IOException ex) 
+		{
+			ex.printStackTrace();
+		}	 
+		
+		catch (ParseException ex)
+		{
+			ex.printStackTrace();
+		} 
+		
+		catch (NullPointerException ex) 
+		{
+			ex.printStackTrace();
+		}
+		
 		
 		//create a guest
 		Person guest1 = PersonFactory.createPerson("Guest","In de rij staan",true,4,4,2);
 
 		//create a cleaner
 		Person cleaner1 = PersonFactory.createPerson("Cleaner","Schoonmaken",true,4,5,2);
-
 	}
-	
 	
 	/**
 	 * method die het gridveld leeg maakt.
