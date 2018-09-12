@@ -10,13 +10,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.CornerRadii;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
 
 import Areas.Area;
 import Areas.HotelRoom;
@@ -164,22 +160,13 @@ public class SimulationScene {
 		//
 		//
 		
-		
-		ArrayList<String> listData = new ArrayList<String>();
-		JSONParser parser = new JSONParser();
-		
 		try {
 		
 			FileReader reader = new FileReader("src/layout/hotel.layout");
 
 			JSONParser jsonParser = new JSONParser();
 			
-			
-			
-			
-			
 			JSONArray jsonArr = (JSONArray) jsonParser.parse(reader);
-			List<Object> dataList = new ArrayList<Object>();
 			
 			for (Object o: jsonArr)
 			{
@@ -221,7 +208,15 @@ public class SimulationScene {
 					capacity = (long) obj.get("Capacity");
 				}
 				
+				System.out.println("type: "+areaType);
+				System.out.println("x: "+x);
+				System.out.println("y: "+y);
+				System.out.println("stars: "+stars);
+				System.out.println("capacity: "+capacity);
+				System.out.println("");
+				
 				Area tempRoom = AreaFactory.createArea(areaType, x,y,dimensionW,dimensionH,stars,capacity);
+			
 			}
 			
 		}	
