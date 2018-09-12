@@ -1,6 +1,6 @@
 package Areas;
 
-public class Stairway {
+public class Stairway extends Area {
 
 	//Variables
 	

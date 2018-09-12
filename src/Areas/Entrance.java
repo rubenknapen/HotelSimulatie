@@ -1,6 +1,6 @@
 package Areas;
 
-public class Entrance {
+public class Entrance extends Area {
 
 	//Variables
 	

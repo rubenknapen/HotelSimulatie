@@ -1,6 +1,6 @@
 package Areas;
 
-public class Restaurant {
+public class Restaurant extends Area {
 
 	//Variables
 	public int capacity = 0;

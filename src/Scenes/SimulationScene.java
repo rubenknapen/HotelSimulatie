@@ -10,7 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.CornerRadii;
 import Areas.HotelRoom;
-import Persons.PersonFactory;
+import Factories.PersonFactory;
 import Persons.iPerson;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

@@ -1,6 +1,6 @@
 package Areas;
 
-public interface iArea {
+public abstract class Area {
 
 	//Variables
 	int x = 0;

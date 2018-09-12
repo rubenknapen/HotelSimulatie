@@ -1,6 +1,6 @@
 package Areas;
 
-public class Hotel {
+public class Hotel extends Area {
 
 	//Variables
 	public boolean evacuate = false;

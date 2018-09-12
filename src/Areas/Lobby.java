@@ -1,6 +1,6 @@
 package Areas;
 
-public class Lobby {
+public class Lobby extends Area {
 
 	//Variables
 	String field = "";

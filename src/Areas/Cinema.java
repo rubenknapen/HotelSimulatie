@@ -1,6 +1,6 @@
 package Areas;
 
-public class Cinema {
+public class Cinema extends Area {
 
 	//Variables
 	public boolean moviePlaying = false;

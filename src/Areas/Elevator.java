@@ -1,6 +1,6 @@
 package Areas;
 
-public class Elevator {
+public class Elevator extends Area {
 
 	//Variables
 	public boolean broken = true;

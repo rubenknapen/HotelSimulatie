@@ -1,6 +1,6 @@
 package Areas;
 
-public class Floor {
+public class Floor extends Area {
 
 	//Variables
 	

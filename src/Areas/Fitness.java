@@ -1,6 +1,6 @@
 package Areas;
 
-public class Fitness {
+public class Fitness extends Area {
 
 	//Variables
 	

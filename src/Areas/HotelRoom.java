@@ -9,7 +9,7 @@ import javafx.geometry.VPos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class HotelRoom {
+public class HotelRoom extends Area {
 
 
 	//Variables
@@ -28,8 +28,8 @@ public class HotelRoom {
 
 	
 	//Constructor
-	public HotelRoom(int dimensionW, int dimensionH, int x, int y){
-		
+	public HotelRoom(int dimensionW, int dimensionH, int x, int y)
+	{
 		this.dimensionW = dimensionW;
 		this.dimensionH = dimensionH;
 		this.x = x;
@@ -49,10 +49,8 @@ public class HotelRoom {
 		SimulationScene.grid.add(this.roomImageView,x,y, dimensionW, dimensionH);
 		SimulationScene.grid.setHalignment(this.roomImageView, HPos.LEFT);
 		SimulationScene.grid.setValignment(this.roomImageView, VPos.BOTTOM);
-
-
 	}
-	
+
 	public void setSprite(FileInputStream sprite){
         Image roomImage = new Image(sprite);
         roomImageView = new ImageView();
@@ -60,6 +58,4 @@ public class HotelRoom {
         roomImageView.setFitHeight(37);
         roomImageView.setImage(roomImage);
     }
-	
-	
 }
