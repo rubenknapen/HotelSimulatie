@@ -120,9 +120,17 @@ public class GridBuilder {
 				System.out.println("");
 			}
 			else if(isOcupied[x][y] != 1)
-			{			
+			{
 				Area tempRoom = AreaFactory.createArea(areaType,dimensionW,dimensionH,stars,capacity, x, y);
-				isOcupied[x][y] = 1;
+								
+				for (int xOcupied = x ; xOcupied < x+dimensionW ; xOcupied++) 
+				{
+		            for (int yOcupied = y ; yOcupied < y+dimensionH ; yOcupied++) 
+		            {
+		            	isOcupied[xOcupied][yOcupied] = 1;
+		            	System.out.println("x: "+xOcupied+" & y: "+yOcupied+" Toegevoegd aan array");
+		            }
+				}
 			}
 		}
 	}
