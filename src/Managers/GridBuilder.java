@@ -125,7 +125,7 @@ public class GridBuilder {
 								
 				for (int xOcupied = x ; xOcupied < x+dimensionW ; xOcupied++) 
 				{
-		            for (int yOcupied = y ; yOcupied < y+dimensionH ; yOcupied++) 
+		            for (int yOcupied = y ; yOcupied > y-dimensionH ; yOcupied--) 
 		            {
 		            	isOcupied[xOcupied][yOcupied] = 1;
 		            	System.out.println("x: "+xOcupied+" & y: "+yOcupied+" Toegevoegd aan array");
