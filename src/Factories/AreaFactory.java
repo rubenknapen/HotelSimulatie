@@ -51,7 +51,7 @@ public class AreaFactory {
 	         return new Hotel();
 	      }
 	      
-	      else if(areaType.equalsIgnoreCase("HotelRoom"))
+	      else if(areaType.equalsIgnoreCase("Room"))
 	      {
 	         return new HotelRoom(x, y, dimensionW, dimensionH, stars);
 	      }
