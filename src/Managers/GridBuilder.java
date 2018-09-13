@@ -44,13 +44,14 @@ public class GridBuilder {
 	//
 	//
 	
-	ArrayList<HotelRoom> HotelRooms = new ArrayList<HotelRoom>();
+	ArrayList<Area> HotelRooms = new ArrayList<Area>();
     ArrayList<Elevator> Elevators = new ArrayList<Elevator>();
     ArrayList<Entrance> Entrances = new ArrayList<Entrance>();
     ArrayList<Fitness> Fitnesses = new ArrayList<Fitness>();
-    ArrayList<Lobby> lobbies = new ArrayList<Lobby>();
+    ArrayList<Lobby> Lobbies = new ArrayList<Lobby>();
     ArrayList<Restaurant> Restaurants = new ArrayList<Restaurant>();
     ArrayList<Stairway> Stairways = new ArrayList<Stairway>();
+    int[][] isOcupied = new int[25][25];
 	
 	
 	try {
@@ -112,13 +113,16 @@ public class GridBuilder {
 			*/
 			
 			//Create room based on parameters in object
-			Area tempRoom = AreaFactory.createArea(areaType,dimensionW,dimensionH,stars,capacity, x, y);
-			
-			
-			//Add this to ArrayList so we can recall positions
-			if(areaType == "Room")
+			if(isOcupied[x][y] == 1)
 			{
-				HotelRooms.add((HotelRoom) tempRoom);
+				System.out.println("x: "+x+" y: "+y);
+				System.out.println("Hier staat al iets, deze sla ik over");
+				System.out.println("");
+			}
+			else if(isOcupied[x][y] != 1)
+			{			
+				Area tempRoom = AreaFactory.createArea(areaType,dimensionW,dimensionH,stars,capacity, x, y);
+				isOcupied[x][y] = 1;
 			}
 		}
 	}
@@ -145,11 +149,10 @@ public class GridBuilder {
 		ex.printStackTrace();
 	}
 	
-	
 	//create a guest
 	Person guest1 = PersonFactory.createPerson("Guest","In de rij staan",true,4,4,2);
 
 	//create a cleaner
 	Person cleaner1 = PersonFactory.createPerson("Cleaner","Schoonmaken",true,4,5,2);
-}
+	}
 }
