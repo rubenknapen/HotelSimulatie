@@ -14,12 +14,12 @@ public class HotelRoom extends Area {
 	
 	
 	//Constructor
-	public HotelRoom(int dimensionW, int dimensionH, int x, int y, int stars)
+	public HotelRoom(int dimensionW, int dimensionH, int stars, int x, int y)
 	{
+		this.x = x;
+		this.y = y;		
 		this.dimensionW = dimensionW;
 		this.dimensionH = dimensionH;
-		this.x = x;
-		this.y = y;
 		this.stars = stars;
 		
 		

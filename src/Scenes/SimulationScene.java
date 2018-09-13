@@ -152,13 +152,13 @@ public class SimulationScene {
 		grid.setBackground(new Background(new BackgroundFill(Color.web("#102860"), CornerRadii.EMPTY, Insets.EMPTY)));	
 		
 		
-		//
-		//
-		//
-		//		EXPERIMENTAL JSON PARSER IMPLEMENTATION
-		//
-		//
-		//
+//		//
+//		//
+//		//
+//		//		EXPERIMENTAL JSON PARSER IMPLEMENTATION
+//		//
+//		//
+//		//
 		
 		try {
 		
@@ -215,7 +215,7 @@ public class SimulationScene {
 				System.out.println("capacity: "+capacity);
 				System.out.println("");
 				
-				Area tempRoom = AreaFactory.createArea(areaType, x,y,dimensionW,dimensionH,stars,capacity);
+				Area tempRoom = AreaFactory.createArea(areaType,dimensionW,dimensionH,stars,capacity, x, y);
 			
 			}
 			
@@ -241,6 +241,7 @@ public class SimulationScene {
 			ex.printStackTrace();
 		}
 		
+//		Area tempRoom = AreaFactory.createArea("HotelRoom", 1,1,1,1,1,1);
 		
 		//create a guest
 		Person guest1 = PersonFactory.createPerson("Guest","In de rij staan",true,4,4,2);
