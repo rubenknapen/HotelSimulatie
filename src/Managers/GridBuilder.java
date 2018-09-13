@@ -55,7 +55,7 @@ public class GridBuilder {
 	
 	try {
 	
-		FileReader reader = new FileReader("src/layout/hotel.layout");
+		FileReader reader = new FileReader("src/layout/hotel2.layout");
 
 		JSONParser jsonParser = new JSONParser();
 		

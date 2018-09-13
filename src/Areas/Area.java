@@ -13,8 +13,7 @@ public abstract class Area {
 	int x = 0;
 	int y = 0;
 	int dimensionW;
-	int dimensionH;
-	
+	int dimensionH;	
 	public boolean available = true;
 	public int roomNumber = 0;
 	public int stars = 1;

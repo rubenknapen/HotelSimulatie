@@ -21,9 +21,7 @@ public class HotelRoom extends Area {
 		this.dimensionW = dimensionW;
 		this.dimensionH = dimensionH;
 		this.stars = stars;
-		
-		
-			
+				
 		// Get the right image depending on dimensions
 		try {
 			getImageForStars();

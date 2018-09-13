@@ -81,15 +81,13 @@ public class SimulationScene {
 	
 	public void setGrid(){
 		grid = new GridPane();
-		grid.setGridLinesVisible(false);
+		grid.setGridLinesVisible(true);
 		grid.setMaxSize(500, 500);
 		
 		int cols = 14;
 		int rows = 10;
 		int colSize = 48;
 		int rowSize= 48;
-		
-
 		
 		for (int i = 0; i < cols; i++) {
 		      ColumnConstraints colConst = new ColumnConstraints();
