@@ -13,6 +13,8 @@ import Areas.Stairway;
 import Areas.Area;
 
 public class AreaFactory {
+	
+	static int xOffset = 2;
 
 	public static Area createArea(String areaType, int dimensionW, int dimensionH, int stars, long capacity, int x, int y){
 
@@ -23,7 +25,7 @@ public class AreaFactory {
 	      
 	      if(areaType.equalsIgnoreCase("Cinema")) 
 	      {
-	    	  return new Cinema(dimensionW, dimensionH, x, y);
+	    	  return new Cinema(dimensionW, dimensionH, x+xOffset, y);
 	      } 
 	      
 	      else if(areaType.equalsIgnoreCase("Elevator"))
@@ -38,7 +40,7 @@ public class AreaFactory {
 	      
 	      else if(areaType.equalsIgnoreCase("Fitness"))
 	      {
-	         return new Fitness(dimensionW, dimensionH, x, y);
+	         return new Fitness(dimensionW, dimensionH, x+xOffset, y);
 	      }
 	      
 	      else if(areaType.equalsIgnoreCase("Floor"))
@@ -53,17 +55,17 @@ public class AreaFactory {
 	      
 	      else if(areaType.equalsIgnoreCase("Room"))
 	      {
-	         return new HotelRoom(dimensionW, dimensionH, stars, x, y);
+	         return new HotelRoom(dimensionW, dimensionH, stars, x+xOffset, y);
 	      }
 	      
 	      else if(areaType.equalsIgnoreCase("Lobby"))
 	      {
-	         return new Lobby(dimensionW, dimensionH, x, y);
+	         return new Lobby(dimensionW, dimensionH, x+xOffset, y);
 	      }
 	      
 	      else if(areaType.equalsIgnoreCase("Restaurant"))
 	      {
-	         return new Restaurant(dimensionW, dimensionH, x, y);
+	         return new Restaurant(dimensionW, dimensionH, x+xOffset, y);
 	      }
 	      
 	      else if(areaType.equalsIgnoreCase("Stairway"))
