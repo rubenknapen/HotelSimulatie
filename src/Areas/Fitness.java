@@ -23,7 +23,7 @@ public class Fitness extends Area {
 		
 		// Get the right image depending on dimensions
 		try {
-			createSprite(new FileInputStream("src/Images/door.png"));
+			createSprite(new FileInputStream("src/Images/door_transparant.png"));
 			
         } catch (FileNotFoundException e) {
             //

@@ -13,11 +13,19 @@ import javafx.scene.layout.CornerRadii;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import Areas.Area;
+import Areas.Elevator;
+import Areas.Entrance;
+import Areas.Fitness;
 import Areas.HotelRoom;
+import Areas.Lobby;
+import Areas.Restaurant;
+import Areas.Stairway;
 import Factories.AreaFactory;
 import Factories.PersonFactory;
+import Managers.GridBuilder;
 import Persons.Person;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -151,103 +159,8 @@ public class SimulationScene {
 		grid.add(elevatorBackground, 2,1,1,8);
 		grid.setBackground(new Background(new BackgroundFill(Color.web("#102860"), CornerRadii.EMPTY, Insets.EMPTY)));	
 		
-		
-//		//
-//		//
-//		//
-//		//		EXPERIMENTAL JSON PARSER IMPLEMENTATION
-//		//
-//		//
-//		//
-		
-		try {
-		
-			FileReader reader = new FileReader("src/layout/hotel.layout");
-
-			JSONParser jsonParser = new JSONParser();
-			
-			JSONArray jsonArr = (JSONArray) jsonParser.parse(reader);
-			
-			for (Object o: jsonArr)
-			{
-				int stars = 0;
-				long capacity = 0;
-				int x = 0;
-				int y = 0;
-				
-				int dimensionW = 0;
-				int dimensionH = 0;
-				
-				JSONObject obj = (JSONObject)o;
-				String areaType = (String) obj.get("AreaType");
-				String dimension = (String) obj.get("Dimension");
-				
-				//Spliting dimension and putting it in ints
-				String[] parts = dimension.split(",");
-				dimensionW = Integer.parseInt(parts[0]);
-				String[] partsAfterSpace = parts[1].split("\\s+");
-				dimensionH = Integer.parseInt(partsAfterSpace[1]);
-				
-				//Splitting position in x & y
-				String position = (String) obj.get("Position");
-				parts = position.split(",");
-				x = Integer.parseInt(parts[0]);
-				partsAfterSpace = parts[1].split("\\s+");
-				y = Integer.parseInt(partsAfterSpace[1]);
-				
-				//Check if classification is available
-				if(obj.containsKey("Classification"))
-				{
-					String classification = (String) obj.get("Classification");
-					stars = Integer.parseInt(classification.charAt(0) + "");
-				}
-				
-				//Check if capacity if available
-				if(obj.containsKey("Capacity"))
-				{
-					capacity = (long) obj.get("Capacity");
-				}
-				
-				System.out.println("type: "+areaType);
-				System.out.println("x: "+x);
-				System.out.println("y: "+y);
-				System.out.println("stars: "+stars);
-				System.out.println("capacity: "+capacity);
-				System.out.println("");
-				
-				Area tempRoom = AreaFactory.createArea(areaType,dimensionW,dimensionH,stars,capacity, x, y);
-			
-			}
-			
-		}	
-		
-		catch (FileNotFoundException ex) 
-		{
-			ex.printStackTrace();
-		} 	
-		
-		catch (IOException ex) 
-		{
-			ex.printStackTrace();
-		}	 
-		
-		catch (ParseException ex)
-		{
-			ex.printStackTrace();
-		} 
-		
-		catch (NullPointerException ex) 
-		{
-			ex.printStackTrace();
-		}
-		
-//		Area tempRoom = AreaFactory.createArea("HotelRoom", 1,1,1,1,1,1);
-		
-		//create a guest
-		Person guest1 = PersonFactory.createPerson("Guest","In de rij staan",true,4,4,2);
-
-		//create a cleaner
-		Person cleaner1 = PersonFactory.createPerson("Cleaner","Schoonmaken",true,4,5,2);
+		//Create GridBuilder
+		GridBuilder gridBuilder = new GridBuilder();
 	}
 	
 	/**
