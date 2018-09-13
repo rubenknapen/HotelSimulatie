@@ -162,7 +162,7 @@ public class SimulationScene {
 		
 		try {
 		
-			FileReader reader = new FileReader("src/layout/hotel_test.layout");
+			FileReader reader = new FileReader("src/layout/hotel.layout");
 
 			JSONParser jsonParser = new JSONParser();
 			
@@ -215,11 +215,7 @@ public class SimulationScene {
 				System.out.println("capacity: "+capacity);
 				System.out.println("");
 				
-<<<<<<< HEAD
-				Area tempRoom = AreaFactory.createArea(areaType, x, y, dimensionW, dimensionH, stars, capacity);
-=======
 				Area tempRoom = AreaFactory.createArea(areaType,dimensionW,dimensionH,stars,capacity, x, y);
->>>>>>> a414bf0d055c89325b6a09958fd4daf0c669f2ad
 			
 			}
 			
