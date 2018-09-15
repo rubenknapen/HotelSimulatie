@@ -60,6 +60,7 @@ public class GridBuilder {
 	
 		FileReader reader = new FileReader(MainMenuScene.selectedLayout);
 
+
 		JSONParser jsonParser = new JSONParser();
 		
 		JSONArray jsonArr = (JSONArray) jsonParser.parse(reader);
@@ -167,5 +168,10 @@ public class GridBuilder {
 
 	//create a cleaner
 	Person cleaner1 = PersonFactory.createPerson("Cleaner","Schoonmaken",true,4,5,2);
+	
+	Area lift = AreaFactory.createArea("Elevator",1,1,0,0,2,2);
+	
+//	grid.add(elevatorCabinImageView, 2, 2, 1, 1);
+	
 	}
 }

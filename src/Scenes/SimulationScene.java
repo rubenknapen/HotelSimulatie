@@ -108,14 +108,6 @@ public class SimulationScene {
 		elevatorRopeImageView.setTranslateX(13);
 		grid.add(elevatorRopeImageView, 2, 1, 1, 1);	
 		
-		// Create elevatorcabin image
-		Image elevatorCabinImage = new Image("file:src/Images/elevator_cabin.png");
-		ImageView elevatorCabinImageView = new ImageView(elevatorCabinImage);
-		elevatorCabinImageView.setFitWidth(24);
-		elevatorCabinImageView.setFitHeight(48);
-		elevatorCabinImageView.setTranslateX(13);
-		grid.add(elevatorCabinImageView, 2, 2, 1, 1);
-
 		// Create top-floor background image
 		Image topFloorImage = new Image("file:src/Images/top_floor.png");
 		ImageView topFloorImageView = new ImageView(topFloorImage);
