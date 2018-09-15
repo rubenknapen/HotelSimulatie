@@ -16,6 +16,7 @@ import Areas.Stairway;
 import Factories.AreaFactory;
 import Factories.PersonFactory;
 import Persons.Person;
+import Scenes.MainMenuScene;
 import simple.JSONArray;
 import simple.JSONObject;
 import simple.parser.JSONParser;
@@ -52,11 +53,13 @@ public class GridBuilder {
     ArrayList<Restaurant> Restaurants = new ArrayList<Restaurant>();
     ArrayList<Stairway> Stairways = new ArrayList<Stairway>();
     int[][] isOcupied = new int[25][25];
+    int objectNumber = 1;
 	
 	
 	try {
 	
-		FileReader reader = new FileReader("src/layout/hotel3.layout");
+		FileReader reader = new FileReader(MainMenuScene.selectedLayout);
+
 
 		JSONParser jsonParser = new JSONParser();
 		
@@ -117,7 +120,9 @@ public class GridBuilder {
 			{
 				System.out.println("x: "+x+" y: "+y);
 				System.out.println("Hier staat al iets, deze sla ik over");
+				System.out.println("object: "+objectNumber);
 				System.out.println("");
+				objectNumber += 1;
 			}
 			else if(isOcupied[x][y] != 1)
 			{
@@ -131,6 +136,7 @@ public class GridBuilder {
 		            	System.out.println("x: "+xOcupied+" & y: "+yOcupied+" Toegevoegd aan array");
 		            }
 				}
+				objectNumber += 1;
 			}
 		}
 	}
