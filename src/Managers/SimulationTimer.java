@@ -3,7 +3,7 @@ package Managers;
 public class SimulationTimer {
 
 	//Variables
-	int tick = 0;
+	int tickRate = 0;
 	
 	//Constructor
 	public SimulationTimer()
@@ -12,11 +12,6 @@ public class SimulationTimer {
 	}
 	
 	//Functions
-	public void pickLayout()
-	{
-		
-	}
-	
 	public void getTimerSettings()
 	{
 		

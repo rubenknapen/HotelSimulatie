@@ -4,6 +4,7 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 
+import Managers.SettingBuilder;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -27,7 +28,9 @@ public class MainMenuScene {
 	public Button closeButton;
 	public Button startButton;
 	public Button layoutSelectButton;
+
 	public static String selectedLayout = "D:\\Program Files (x86)\\Eclipse-workspace\\HotelSimulatie\\src\\layout\\hotel3.layout";
+
 	
 	/**
 	 * constructor die zorgt dat de stage gebouwt en weergegeven wordt.
@@ -90,6 +93,7 @@ public class MainMenuScene {
 				}
 				else
 				{
+					SettingBuilder settingBuilder = new SettingBuilder();
 					startSimulation();
 				}
 			}
