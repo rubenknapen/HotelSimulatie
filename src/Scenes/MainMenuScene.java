@@ -27,7 +27,7 @@ public class MainMenuScene {
 	public Button closeButton;
 	public Button startButton;
 	public Button layoutSelectButton;
-	public static String selectedLayout = "";
+	public static String selectedLayout = "0";
 	
 	/**
 	 * constructor die zorgt dat de stage gebouwt en weergegeven wordt.
@@ -84,7 +84,14 @@ public class MainMenuScene {
 
 			public void handle(ActionEvent e) {
 
-				startSimulation();
+				if (selectedLayout == "0")
+				{
+					System.out.println("Selecteer eerst een layout!");
+				}
+				else
+				{
+					startSimulation();
+				}
 			}
 		});
 		
