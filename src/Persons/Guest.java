@@ -3,6 +3,7 @@ package Persons;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import Managers.GridBuilder;
 import Scenes.SimulationScene;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -36,9 +37,9 @@ public class Guest extends Person {
         }
 		
 		// Paint the guest on the grid
-		SimulationScene.grid.add(this.guestImageView,x,y);
-		SimulationScene.grid.setHalignment(this.guestImageView, HPos.CENTER);
-		SimulationScene.grid.setValignment(this.guestImageView, VPos.BOTTOM);
+		GridBuilder.grid.add(this.guestImageView,x,y);
+		GridBuilder.grid.setHalignment(this.guestImageView, HPos.CENTER);
+		GridBuilder.grid.setValignment(this.guestImageView, VPos.BOTTOM);
 		
 	}
 	

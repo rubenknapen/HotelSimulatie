@@ -3,6 +3,7 @@ package Areas;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import Managers.GridBuilder;
 import Scenes.SimulationScene;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -31,9 +32,9 @@ public class Fitness extends Area {
         }
 		
 		// Paint the room on the grid
-		SimulationScene.grid.add(roomImageView,x,y, dimensionW, dimensionH);
-		SimulationScene.grid.setHalignment(roomImageView, HPos.LEFT);
-		SimulationScene.grid.setValignment(roomImageView, VPos.BOTTOM);
+		GridBuilder.grid.add(roomImageView,x,y, dimensionW, dimensionH);
+		GridBuilder.grid.setHalignment(roomImageView, HPos.LEFT);
+		GridBuilder.grid.setValignment(roomImageView, VPos.BOTTOM);
 	}
 	
 	//Functions

@@ -27,7 +27,7 @@ public class MainMenuScene {
 	public Button closeButton;
 	public Button startButton;
 	public Button layoutSelectButton;
-	public static String selectedLayout = "0";
+	public static String selectedLayout = "D:\\Program Files (x86)\\Eclipse-workspace\\HotelSimulatie\\src\\layout\\hotel3.layout";
 	
 	/**
 	 * constructor die zorgt dat de stage gebouwt en weergegeven wordt.
