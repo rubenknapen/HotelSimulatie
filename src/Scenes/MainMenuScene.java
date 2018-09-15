@@ -29,8 +29,10 @@ public class MainMenuScene {
 	public Button startButton;
 	public Button layoutSelectButton;
 
-	public static String selectedLayout = "D:\\Program Files (x86)\\Eclipse-workspace\\HotelSimulatie\\src\\layout\\hotel3.layout";
-
+	
+	public static String baseFolder = System.getProperty("user.dir");
+	public static String fileLocation = "\\src\\layout\\hotel3.layout";
+	public static String selectedLayout = baseFolder+fileLocation;
 	
 	/**
 	 * constructor die zorgt dat de stage gebouwt en weergegeven wordt.
@@ -38,6 +40,7 @@ public class MainMenuScene {
 	 */
 	public MainMenuScene(Stage stage) 
 	{
+		System.out.println(selectedLayout);
 		setStage(stage);
 		setPane();
 		createButtons();
