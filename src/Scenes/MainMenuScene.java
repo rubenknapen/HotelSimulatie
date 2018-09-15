@@ -1,5 +1,9 @@
 package Scenes;
 
+import java.io.File;
+
+import javax.swing.JFileChooser;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,6 +26,8 @@ public class MainMenuScene {
 	public ImageView imageView;
 	public Button closeButton;
 	public Button startButton;
+	public Button layoutSelectButton;
+	public static String selectedLayout = "";
 	
 	/**
 	 * constructor die zorgt dat de stage gebouwt en weergegeven wordt.
@@ -94,11 +100,34 @@ public class MainMenuScene {
 				Platform.exit();
 			}
 		});
+		
+		//Layout Select Button
+		layoutSelectButton = new Button("Kies Layout");
+		layoutSelectButton.setPrefSize(150, 36);
+		layoutSelectButton.setLayoutX(75);
+		layoutSelectButton.setLayoutY(100);
+		layoutSelectButton.setOnAction(new EventHandler<ActionEvent>() {
+			
+			public void handle(ActionEvent e) {
+				System.out.println("Working Directory = " +
+			              System.getProperty("user.dir"));
+
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+				int result = fileChooser.showOpenDialog(fileChooser);
+				if (result == JFileChooser.APPROVE_OPTION) 
+				{
+				    File selectedFile = fileChooser.getSelectedFile();
+				    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+				    selectedLayout = selectedFile.getAbsolutePath();
+				}
+			}
+		});
 	}
 	
 	public void addButtons()
 	{
-		layout.getChildren().addAll(startButton,closeButton);
+		layout.getChildren().addAll(startButton,closeButton,layoutSelectButton);
 	}
 	
 	public void startSimulation()

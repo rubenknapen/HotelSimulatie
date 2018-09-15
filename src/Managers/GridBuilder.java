@@ -16,6 +16,7 @@ import Areas.Stairway;
 import Factories.AreaFactory;
 import Factories.PersonFactory;
 import Persons.Person;
+import Scenes.MainMenuScene;
 import simple.JSONArray;
 import simple.JSONObject;
 import simple.parser.JSONParser;
@@ -57,7 +58,7 @@ public class GridBuilder {
 	
 	try {
 	
-		FileReader reader = new FileReader("src/layout/hotel2.layout");
+		FileReader reader = new FileReader(MainMenuScene.selectedLayout);
 
 		JSONParser jsonParser = new JSONParser();
 		
