@@ -29,7 +29,7 @@ public class AreaFactory {
 	      
 	      else if(areaType.equalsIgnoreCase("Elevator"))
 	      {
-	         return new Elevator();
+	         return new Elevator(dimensionW, dimensionH, x, y);
 	      }
 	      
 	      else if(areaType.equalsIgnoreCase("Entrance"))
