@@ -250,6 +250,9 @@ public class GridBuilder {
 	
 	private void addPersons() {
 		
+		SimulationTimer simulationTimer = new SimulationTimer();
+		SettingBuilder settingBuilder = new SettingBuilder();
+		
 		//create a guest
 		Person guest1 = PersonFactory.createPerson("Guest","In de rij staan",true,4,4,2);
 
@@ -257,6 +260,10 @@ public class GridBuilder {
 		Person cleaner1 = PersonFactory.createPerson("Cleaner","Schoonmaken",true,4,5,2);
 		
 		Area lift = AreaFactory.createArea("Elevator",1,1,0,0,2,2);
+		
+		simulationTimer.addObserver(guest1);
+		simulationTimer.addObserver(cleaner1);
+		simulationTimer.activateTimer();
 	}
 	
 	public void clearGrid() {

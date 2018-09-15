@@ -5,6 +5,7 @@ import java.io.File;
 import javax.swing.JFileChooser;
 
 import Managers.SettingBuilder;
+import Managers.SimulationTimer;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -96,7 +97,6 @@ public class MainMenuScene {
 				}
 				else
 				{
-					SettingBuilder settingBuilder = new SettingBuilder();
 					startSimulation();
 				}
 			}

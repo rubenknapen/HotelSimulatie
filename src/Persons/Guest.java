@@ -2,6 +2,7 @@ package Persons;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Observable;
 
 import Managers.GridBuilder;
 import Scenes.SimulationScene;
@@ -116,6 +117,12 @@ public class Guest extends Person {
 
 	public void setX(int x) {
 		this.x = x;
+	}
+	
+	@Override
+	public void update(Observable observable, Object arg)
+	{
+		System.out.println("Im a guest and I'm going to walk");
 	}
 
 	public int getY() {

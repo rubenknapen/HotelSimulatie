@@ -2,6 +2,7 @@ package Persons;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Observable;
 
 import Managers.GridBuilder;
 import Scenes.SimulationScene;
@@ -101,4 +102,9 @@ public class Cleaner extends Person {
 		this.y = y;
 	}
 
+	@Override
+	public void update(Observable observable, Object arg)
+	{
+		System.out.println("Im a cleaner and I'm going to walk");
+	}
 }
