@@ -52,6 +52,7 @@ public class GridBuilder {
     ArrayList<Restaurant> Restaurants = new ArrayList<Restaurant>();
     ArrayList<Stairway> Stairways = new ArrayList<Stairway>();
     int[][] isOcupied = new int[25][25];
+    int objectNumber = 1;
 	
 	
 	try {
@@ -117,7 +118,9 @@ public class GridBuilder {
 			{
 				System.out.println("x: "+x+" y: "+y);
 				System.out.println("Hier staat al iets, deze sla ik over");
+				System.out.println("object: "+objectNumber);
 				System.out.println("");
+				objectNumber += 1;
 			}
 			else if(isOcupied[x][y] != 1)
 			{
@@ -131,6 +134,7 @@ public class GridBuilder {
 		            	System.out.println("x: "+xOcupied+" & y: "+yOcupied+" Toegevoegd aan array");
 		            }
 				}
+				objectNumber += 1;
 			}
 		}
 	}
