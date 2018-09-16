@@ -24,7 +24,7 @@ public class Restaurant extends Area {
 		
 		// Get the right image depending on dimensions
 		try {
-			createSprite(new FileInputStream("src/Images/door_transparant.png"));
+			createSprite(new FileInputStream("src/Images/door_restaurant.png"));
 			
         } catch (FileNotFoundException e) {
             //

@@ -6,7 +6,12 @@ import java.io.FileNotFoundException;
 import Managers.GridBuilder;
 import Scenes.SimulationScene;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.VPos;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 
 public class Cinema extends Area {
 
@@ -24,7 +29,7 @@ public class Cinema extends Area {
 		
 		// Get the right image depending on dimensions
 		try {
-			createSprite(new FileInputStream("src/Images/door_transparant.png"));
+			createSprite(new FileInputStream("src/Images/door_cinema.png"));
 			
         } catch (FileNotFoundException e) {
             //
@@ -35,6 +40,7 @@ public class Cinema extends Area {
 		GridBuilder.grid.add(roomImageView,x,y, dimensionW, dimensionH);
 		GridBuilder.grid.setHalignment(roomImageView, HPos.LEFT);
 		GridBuilder.grid.setValignment(roomImageView, VPos.BOTTOM);
+			
 	}
 	
 	//Functions

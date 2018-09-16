@@ -41,27 +41,27 @@ public abstract class Area {
 	{
 		if (stars == 1)
 		{
-			imageLocation = "door_1_transparant.png";
+			imageLocation = "door_1.png";
 		}
 		
 		else if (stars == 2)
 		{
-			imageLocation = "door_2_transparant.png";
+			imageLocation = "door_2.png";
 		}
 		
 		else if (stars == 3)
 		{
-			imageLocation = "door_3_transparant.png";
+			imageLocation = "door_3.png";
 		}
 		
 		else if (stars == 4)
 		{
-			imageLocation = "door_4_transparant.png";
+			imageLocation = "door_4.png";
 		}
 		
 		else if (stars == 5)
 		{
-			imageLocation = "door_5_transparant.png";
+			imageLocation = "door_5.png";
 		}
 	}
 }
