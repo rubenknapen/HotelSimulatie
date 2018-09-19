@@ -265,6 +265,11 @@ public class GridBuilder {
 		grid.add(floorBackground, xOffset+1, 1, 8, 8);
 	}
 	
+	public int[][] get2DArray()
+	{
+		return isOcupied;
+	}
+	
 	public void addPersons() {
 		
 		SimulationTimer simulationTimer = new SimulationTimer();
