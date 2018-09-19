@@ -3,6 +3,7 @@ package Scenes;
 import javafx.scene.layout.BorderPane;
 import Areas.HotelRoom;
 import Managers.GridBuilder;
+import SimpleEvents.HotelEventManager;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
