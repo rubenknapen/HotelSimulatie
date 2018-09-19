@@ -195,7 +195,10 @@ public class GridBuilder {
 			            for (int yOcupied = y ; yOcupied > y-dimensionH ; yOcupied--) 
 			            {
 			            	isOcupied[xOcupied][yOcupied] = 1;
-			            	System.out.println("x: "+xOcupied+" & y: "+yOcupied+" Toegevoegd aan array");
+			            	System.out.println("areaType: "+areaType);
+			            	System.out.println("x: "+xOcupied+" & y: "+yOcupied+" Added");
+			            	System.out.println("W: "+dimensionW+"H: "+dimensionH);
+			            	System.out.println("");
 			            }
 					}
 					objectNumber += 1;
