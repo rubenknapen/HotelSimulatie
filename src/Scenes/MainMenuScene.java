@@ -4,6 +4,7 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 
+import Managers.HotelManager;
 import Managers.SettingBuilder;
 import Managers.SimulationTimer;
 import javafx.application.Platform;
@@ -146,6 +147,7 @@ public class MainMenuScene {
 	
 	public void startSimulation()
 	{
+	    new HotelManager();
 	    new SimulationScene();
 	}
 }

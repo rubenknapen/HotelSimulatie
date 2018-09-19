@@ -5,15 +5,17 @@ import java.util.Observer;
 
 public abstract class Person implements Observer
 {	
+	String path = "";
+	
 	//All functions
 	public void evacuate()
 	{
 		// Evacuates the person from the building
 	}
 	
-	public void getFastestRoute()
+	public void move()
 	{
-		// Calculate the fastest route to their destination
+		//
 	}
 	
 	public void update(Observable observable, Object arg)

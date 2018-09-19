@@ -64,12 +64,6 @@ public class Cleaner extends Person {
 		
 	}
 
-	@Override
-	public void getFastestRoute() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public String getStatus() {
 		return status;
 	}

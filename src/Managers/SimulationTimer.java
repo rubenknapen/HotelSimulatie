@@ -4,6 +4,8 @@ import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import ShortestPath.ShortestPath;
+
 public class SimulationTimer extends Observable{
 
 	//Variables
@@ -15,7 +17,7 @@ public class SimulationTimer extends Observable{
 	//Constructor
 	public SimulationTimer()
 	{
-		//
+		//ShortestPath test = new ShortestPath();
 	}
 	
 	//Functions
