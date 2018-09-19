@@ -55,13 +55,9 @@ public class GridBuilder {
     
 	//Constructor
 	public GridBuilder(){
-		createGrid();
-		createGridBackground();
-		createRooms();
-		addPersons();
 	}
 	
-	private void createGrid(){
+	public void createGrid(){
 		
 		grid = new GridPane();
 		grid.setGridLinesVisible(true);
@@ -115,7 +111,7 @@ public class GridBuilder {
 		
 	}
 	
-	private void createRooms(){
+	public void createRooms(){
 
 		//		EXPERIMENTAL JSON PARSER IMPLEMENTATION
 			
@@ -194,7 +190,14 @@ public class GridBuilder {
 					{
 			            for (int yOcupied = y ; yOcupied > y-dimensionH ; yOcupied--) 
 			            {
-			            	isOcupied[xOcupied][yOcupied] = 1;
+			            	if(areaType == "Cinema")
+			            	{
+			            		isOcupied[xOcupied][yOcupied] = 6;
+			            	}
+			            	else
+			            	{
+			            		isOcupied[xOcupied][yOcupied] = 1;
+			            	}
 			            }
 					}
 					System.out.println("areaType: "+areaType);
@@ -204,6 +207,17 @@ public class GridBuilder {
 					objectNumber += 1;
 				}
 			}
+			System.out.println("Added stairs to Array");
+			isOcupied[7][0] = 9;
+			isOcupied[7][1] = 9;
+			isOcupied[7][2] = 9;
+			isOcupied[7][3] = 9;
+			isOcupied[7][4] = 9;
+			isOcupied[7][5] = 9;
+			isOcupied[7][6] = 9;
+			isOcupied[7][7] = 9;
+			isOcupied[7][8] = 9;
+			isOcupied[7][9] = 9;
 		}
 			
 		catch (FileNotFoundException ex) 
@@ -228,7 +242,7 @@ public class GridBuilder {
 	
 	}
 	
-	private void createGridBackground() {
+	public void createGridBackground() {
 		
 		// Create Hbox to contain background images of floors
 		HBox floorBackground = new HBox();
@@ -251,7 +265,7 @@ public class GridBuilder {
 		grid.add(floorBackground, xOffset+1, 1, 8, 8);
 	}
 	
-	private void addPersons() {
+	public void addPersons() {
 		
 		SimulationTimer simulationTimer = new SimulationTimer();
 		SettingBuilder settingBuilder = new SettingBuilder();

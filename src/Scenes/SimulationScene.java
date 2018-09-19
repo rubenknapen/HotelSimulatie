@@ -19,7 +19,6 @@ public class SimulationScene {
 	public SimulationScene()
 	{
 		setStage();
-		GridBuilder gridBuilder = new GridBuilder();
 		setBorderPane();
 		setSimulationScene();
 		showSimulationStage();

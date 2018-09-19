@@ -17,7 +17,7 @@ public class SimulationTimer extends Observable{
 	//Constructor
 	public SimulationTimer()
 	{
-		ShortestPath test = new ShortestPath();
+		//ShortestPath test = new ShortestPath();
 	}
 	
 	//Functions
