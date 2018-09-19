@@ -31,10 +31,10 @@ public class SimulationTimer extends Observable{
 		  timer.scheduleAtFixedRate(new TimerTask() {
 		          public void run() 
 		          {
-		        	  setChanged();
-		        	  notifyObservers();
-		              System.out.println("tick: "+currentTick);
-		              currentTick++;
+//		        	  setChanged();
+//		        	  notifyObservers();
+//		              System.out.println("tick: "+currentTick);
+//		              currentTick++;
 		          }
 		      }, delay, interval);
 	}

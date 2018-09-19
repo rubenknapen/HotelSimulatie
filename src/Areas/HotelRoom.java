@@ -7,6 +7,7 @@ import Managers.GridBuilder;
 import Scenes.SimulationScene;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -39,14 +40,26 @@ public class HotelRoom extends Area {
             e.printStackTrace();
         }
 		
-		HBox testtt = new HBox();
-		testtt.setMaxSize(48 * dimensionW,48 * dimensionH);
-		testtt.setMinSize(48 * dimensionW,48 * dimensionH);
-//		testtt.setBackground(new Background(new BackgroundFill(Color.web("#fff"), CornerRadii.EMPTY, Insets.EMPTY)));	
-//		
+		HBox roomBg = new HBox();
+		roomBg.setBackground(new Background(new BackgroundFill(Color.web("green"), CornerRadii.EMPTY, Insets.EMPTY)));
+		
+		roomBg.setStyle("-fx-padding: 0;" + 
+                "-fx-border-style: solid inside;" + 
+                "-fx-border-width: 2;" +
+                "-fx-border-insets: 5;" + 
+                "-fx-border-radius: 5;" + 
+                "-fx-border-color: blue;");
+		roomBg.setAlignment(Pos.BOTTOM_LEFT);
+		
+		roomBg.getChildren().addAll(roomImageView);
+		
 		// Paint the room on the grid
-		GridBuilder.grid.add(roomImageView,x,y, dimensionW, dimensionH);
-		GridBuilder.grid.setHalignment(roomImageView, HPos.LEFT);
-		GridBuilder.grid.setValignment(roomImageView, VPos.BOTTOM);
+		GridBuilder.grid.add(roomBg,x,y, dimensionW, dimensionH);
+		
+//		
+//		// Paint the room on the grid
+//		GridBuilder.grid.add(roomImageView,x,y, dimensionW, dimensionH);
+//		GridBuilder.grid.setHalignment(roomImageView, HPos.LEFT);
+//		GridBuilder.grid.setValignment(roomImageView, VPos.BOTTOM);
 	}
 }

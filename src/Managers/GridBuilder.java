@@ -42,6 +42,7 @@ public class GridBuilder {
 	//Variables
 	public static GridPane grid;
 	static int xOffset = 3;
+	private int maxY = 0;
 
 	ArrayList<Area> HotelRooms = new ArrayList<Area>();
     ArrayList<Elevator> Elevators = new ArrayList<Elevator>();
@@ -67,8 +68,9 @@ public class GridBuilder {
 		grid.setGridLinesVisible(true);
 		grid.setMaxSize(500, 500);
 		
+		
 		int cols = 14;
-		int rows = 10;
+		int rows = 11;
 		int colSize = 48;
 		int rowSize= 48;
 		
@@ -115,6 +117,10 @@ public class GridBuilder {
 		
 	}
 	
+	public int getMaxY() {
+		return maxY;
+	}
+	
 	private void createRooms(){
 
 		//		EXPERIMENTAL JSON PARSER IMPLEMENTATION
@@ -128,11 +134,15 @@ public class GridBuilder {
 			
 			JSONArray jsonArr = (JSONArray) jsonParser.parse(reader);
 			
+			
+			// Get max Y coordinate first !! CODE NEEDS CLEANING UP THOUGH !!
+						
 			for (Object o: jsonArr){
 				int stars = 0;
 				long capacity = 0;
 				int x = 0;
 				int y = 0;
+	
 				
 				int dimensionW = 0;
 				int dimensionH = 0;
@@ -154,6 +164,42 @@ public class GridBuilder {
 				partsAfterSpace = parts[1].split("\\s+");
 				y = Integer.parseInt(partsAfterSpace[1]);
 				
+				if(y + dimensionH > maxY) {
+					maxY = y + (dimensionH - 1);
+				}
+
+			}
+			
+			// For-each loop to create rooms via the AreaFactory
+			
+			for (Object o: jsonArr){
+				int stars = 0;
+				long capacity = 0;
+				int x = 0;
+				int y = 0;
+	
+				
+				int dimensionW = 0;
+				int dimensionH = 0;
+				
+				JSONObject obj = (JSONObject)o;
+				String areaType = (String) obj.get("AreaType");
+				String dimension = (String) obj.get("Dimension");
+				
+				//Spliting dimension and putting it in ints
+				String[] parts = dimension.split(",");
+				dimensionW = Integer.parseInt(parts[0]);
+				String[] partsAfterSpace = parts[1].split("\\s+");
+				dimensionH = Integer.parseInt(partsAfterSpace[1]);
+				
+				//Splitting position in x & y
+				String position = (String) obj.get("Position");
+				parts = position.split(",");
+				x = Integer.parseInt(parts[0]);
+				partsAfterSpace = parts[1].split("\\s+");
+				y = Integer.parseInt(partsAfterSpace[1]);
+				
+					
 				//Check if classification is available
 				if(obj.containsKey("Classification"))
 				{
@@ -188,16 +234,13 @@ public class GridBuilder {
 				}
 				else if(isOcupied[x][y] != 1)
 				{
-					Area tempRoom = AreaFactory.createArea(areaType,dimensionW,dimensionH,stars,capacity, x + xOffset, y);
-									
-					for (int xOcupied = x ; xOcupied < x+dimensionW ; xOcupied++) 
-					{
-			            for (int yOcupied = y ; yOcupied > y-dimensionH ; yOcupied--) 
-			            {
-			            	isOcupied[xOcupied][yOcupied] = 1;
-			            	System.out.println("x: "+xOcupied+" & y: "+yOcupied+" Toegevoegd aan array");
-			            }
+					
+					if (dimensionH > 1) {
+						y += 1;
 					}
+					
+					Area tempRoom = AreaFactory.createArea(areaType,dimensionW,dimensionH,stars,capacity, x + xOffset, (getMaxY() - y + 1));
+				
 					objectNumber += 1;
 				}
 			}
@@ -260,6 +303,7 @@ public class GridBuilder {
 		Person cleaner1 = PersonFactory.createPerson("Cleaner","Schoonmaken",true,4,5,2);
 		
 		Area lift = AreaFactory.createArea("Elevator",1,1,0,0,2,2);
+		Area lobby = AreaFactory.createArea("Lobby",1,1,0,0,1,1);
 		
 		simulationTimer.addObserver(guest1);
 		simulationTimer.addObserver(cleaner1);
