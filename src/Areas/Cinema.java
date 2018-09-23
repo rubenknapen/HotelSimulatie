@@ -2,6 +2,7 @@ package Areas;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 
 import Managers.GridBuilder;
 import Scenes.SimulationScene;
@@ -21,13 +22,17 @@ public class Cinema extends Area {
 	public boolean moviePlaying = false;
 	
 	//Constructor
-	public Cinema(int dimensionW, int dimensionH, int x, int y)
-	{
+	public Cinema(String _name, int dimensionW, int dimensionH, int x, int y) {
 		this.dimensionW = dimensionW;
 		this.dimensionH = dimensionH;
 		this.x = x;
 		this.y = y;
 		
+        neighbours = new HashMap<>();
+        distance = Integer.MAX_VALUE;
+        latest = null;
+        name = _name;
+
 		
 		// Get the right image depending on dimensions
 		try {

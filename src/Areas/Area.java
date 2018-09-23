@@ -1,13 +1,22 @@
 package Areas;
 
 import java.io.FileInputStream;
+import java.util.HashMap;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public abstract class Area {
 
-	//Variables
+	// Variables for Dijkstra
+
+    public HashMap<Area, Integer> neighbours;
+    public int distance;
+    public Area latest;
+    public String name;
+	
+	
+	// Variables
 	int x = 0;
 	int y = 0;
 	int dimensionW;
@@ -26,6 +35,8 @@ public abstract class Area {
 	public Image roomImage;
 	
 	String imageLocation;
+
+		
 	//Functions
 	
 	public void createSprite(FileInputStream sprite)

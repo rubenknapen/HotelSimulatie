@@ -43,6 +43,7 @@ public class GridBuilder {
 	public static GridPane grid;
 	static int xOffset = 3;
 	private int maxY = 0;
+	private int maxX = 0;
 
 	ArrayList<Area> HotelRooms = new ArrayList<Area>();
     ArrayList<Elevator> Elevators = new ArrayList<Elevator>();
@@ -118,6 +119,11 @@ public class GridBuilder {
 		return maxY;
 	}
 	
+	public int getMaxX() {
+		return maxX + xOffset;
+	}
+	
+	
 	public void createRooms(){
 
 
@@ -165,6 +171,10 @@ public class GridBuilder {
 				if(y + dimensionH > maxY) {
 					maxY = y + (dimensionH - 1);
 				}
+				
+				if(x + dimensionW > maxX) {
+					maxX = x + dimensionW;
+				}
 
 			}
 			
@@ -174,14 +184,13 @@ public class GridBuilder {
 				int stars = 0;
 				long capacity = 0;
 				int x = 0;
-				int y = 0;
-	
-				
+				int y = 0;		
 				int dimensionW = 0;
 				int dimensionH = 0;
 				
 				JSONObject obj = (JSONObject)o;
 				String areaType = (String) obj.get("AreaType");
+				String _name = areaType;
 				String dimension = (String) obj.get("Dimension");
 				
 				//Spliting dimension and putting it in ints
@@ -238,7 +247,8 @@ public class GridBuilder {
 						y += 1;
 					}
 					
-					Area tempRoom = AreaFactory.createArea(areaType,dimensionW,dimensionH,stars,capacity, x + xOffset, (getMaxY() - y + 1));
+					Area tempRoom = AreaFactory.createArea(_name, areaType,dimensionW,dimensionH,stars,capacity, x + xOffset, (getMaxY() - y + 1));
+					
 												
 					for (int xOcupied = x ; xOcupied < x+dimensionW ; xOcupied++) 
 					{
@@ -254,10 +264,10 @@ public class GridBuilder {
 			            	}
 			            }
 					}
+					System.out.println("Naam: "+ _name);
 					System.out.println("areaType: "+areaType);
 	            	System.out.println("x: "+x+" & y: "+y+" Added");
-	            	System.out.println("W: "+dimensionW+"H: "+dimensionH);
-	            	System.out.println("");
+	            	System.out.println("W: "+dimensionW+" H: "+dimensionH + "\n");
 
 					objectNumber += 1;
 				}
@@ -297,7 +307,7 @@ public class GridBuilder {
 	
 	}
 	
-	public void createGridBackground() {
+	public void createHotelBackground() {
 		
 		// Create Hbox to contain background images of floors
 		HBox floorBackground = new HBox();
@@ -336,12 +346,18 @@ public class GridBuilder {
 		//create a cleaner
 		Person cleaner1 = PersonFactory.createPerson("Cleaner","Schoonmaken",true,4,5,2);
 		
-		Area lift = AreaFactory.createArea("Elevator",1,1,0,0,2,2);
-		Area lobby = AreaFactory.createArea("Lobby",1,1,0,0,1,1);
+		Area lift = AreaFactory.createArea("Elevator ", "Elevator",1,1,0,0,2,2);
+		Area lobby = AreaFactory.createArea("lobby", "Lobby",10,2,0,0,(xOffset - 1),(getMaxY() + 1));
 		
 		simulationTimer.addObserver(guest1);
 		simulationTimer.addObserver(cleaner1);
 		simulationTimer.activateTimer();
+	}
+	
+	public void createStairway() {
+		for(int i = 0; i < (getMaxY() + 1); i++) {
+			Area stairway = AreaFactory.createArea("Stairway", "Stairway",2,1,0,0,getMaxX(),1 + i);
+		}	
 	}
 	
 	public void clearGrid() {

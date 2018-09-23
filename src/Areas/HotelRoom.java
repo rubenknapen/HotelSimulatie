@@ -2,6 +2,7 @@ package Areas;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 
 import Managers.GridBuilder;
 import Scenes.SimulationScene;
@@ -22,13 +23,18 @@ public class HotelRoom extends Area {
 	
 	
 	//Constructor
-	public HotelRoom(int dimensionW, int dimensionH, int stars, int x, int y)
+	public HotelRoom(String _name, int dimensionW, int dimensionH, int stars, int x, int y)
 	{
 		this.x = x;
 		this.y = y;		
 		this.dimensionW = dimensionW;
 		this.dimensionH = dimensionH;
 		this.stars = stars;
+		
+        neighbours = new HashMap<>();
+        distance = Integer.MAX_VALUE;
+        latest = null;
+        name = _name;
 				
 		// Get the right image depending on dimensions
 		try {

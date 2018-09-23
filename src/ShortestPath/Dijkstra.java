@@ -1,12 +1,13 @@
 package ShortestPath;
 
+import Areas.Area;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Map;
 
 public class Dijkstra {
 
-    private ArrayList<Node> open;
+    private ArrayList<Area> open;
 
     public Dijkstra(){
         open = new ArrayList<>();
@@ -17,14 +18,14 @@ public class Dijkstra {
     @par Node start = starting point
     @par Node end = goal to reach
      */
-    public String Dijkstra(Node start, Node end){
+    public String Dijkstra(Area start, Area end){
 
-        Node toCheck = start;
+    	Area toCheck = start;
 
         while(!Visit(toCheck, end)){
 
             //Get the best option from the to-visit list
-            Comparator<Node> comp = (n1, n2) -> Integer.compare(n1.distance, n2.distance);
+            Comparator<Area> comp = (n1, n2) -> Integer.compare(n1.distance, n2.distance);
             toCheck = open.stream().min(comp).get();
         }
 
@@ -32,7 +33,7 @@ public class Dijkstra {
         return makePath(end);
     }
 
-    public  boolean Visit(Node check, Node end){
+    public  boolean Visit(Area check, Area end){
 
         //debug info
         System.out.println("I'm visiting: " + check.name);
@@ -49,7 +50,7 @@ public class Dijkstra {
         }
 
         //check neighbours
-        for (Map.Entry<Node, Integer> entry : check.neighbours.entrySet()
+        for (Map.Entry<Area, Integer> entry : check.neighbours.entrySet()
              ) {
 
             //Distance to node if current node is followed
@@ -79,10 +80,10 @@ public class Dijkstra {
     Makes the path by walking from the end to the start and following the shortest path
     @par end = Node to walk from
      */
-    String makePath(Node end){
+    private String makePath(Area end){
         boolean cont = true;
 
-        Node current = end;
+        Area current = end;
 
         String path = "";
 

@@ -13,7 +13,7 @@ import Areas.Area;
 
 public class AreaFactory {
 	
-	public static Area createArea(String areaType, int dimensionW, int dimensionH, int stars, long capacity, int x, int y){
+	public static Area createArea(String _name, String areaType, int dimensionW, int dimensionH, int stars, long capacity, int x, int y){
 
 	      if(areaType == null)
 	      {
@@ -22,12 +22,12 @@ public class AreaFactory {
 	      
 	      if(areaType.equalsIgnoreCase("Cinema")) 
 	      {
-	    	  return new Cinema(dimensionW, dimensionH, x, y);
+	    	  return new Cinema(_name, dimensionW, dimensionH, x, y);
 	      } 
 	      
 	      else if(areaType.equalsIgnoreCase("Elevator"))
 	      {
-	         return new Elevator(dimensionW, dimensionH, x, y);
+	         return new Elevator(_name, dimensionW, dimensionH, x, y);
 	      }
 	      
 	      else if(areaType.equalsIgnoreCase("Entrance"))
@@ -37,7 +37,7 @@ public class AreaFactory {
 	      
 	      else if(areaType.equalsIgnoreCase("Fitness"))
 	      {
-	         return new Fitness(dimensionW, dimensionH, x, y);
+	         return new Fitness(_name, dimensionW, dimensionH, x, y);
 	      }
 	      
 	      else if(areaType.equalsIgnoreCase("Floor"))
@@ -46,22 +46,22 @@ public class AreaFactory {
 	      }      
 	      else if(areaType.equalsIgnoreCase("Room"))
 	      {
-	         return new HotelRoom(dimensionW, dimensionH, stars, x, y);
+	         return new HotelRoom(_name, dimensionW, dimensionH, stars, x, y);
 	      }
 	      
 	      else if(areaType.equalsIgnoreCase("Lobby"))
 	      {
-	         return new Lobby(dimensionW, dimensionH, x, y);
+	         return new Lobby(_name, dimensionW, dimensionH, x, y);
 	      }
 	      
 	      else if(areaType.equalsIgnoreCase("Restaurant"))
 	      {
-	         return new Restaurant(dimensionW, dimensionH, x, y);
+	         return new Restaurant(_name, dimensionW, dimensionH, x, y);
 	      }
 	      
 	      else if(areaType.equalsIgnoreCase("Stairway"))
 	      {
-	         return new Stairway();
+	         return new Stairway(_name, dimensionW, dimensionH, x, y);
 	      }
 	      
 	      return null;

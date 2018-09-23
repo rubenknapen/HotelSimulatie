@@ -2,6 +2,7 @@ package Areas;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 
 import Managers.GridBuilder;
 import Scenes.SimulationScene;
@@ -16,21 +17,22 @@ import javafx.scene.paint.Color;
 
 public class Lobby extends Area {
 
-	//Variables
-	String field = "";
-	
 	//Constructor
-	public Lobby(int dimensionW, int dimensionH, int x, int y)
+	public Lobby(String _name, int dimensionW, int dimensionH, int x, int y)
 	{
 		this.dimensionW = dimensionW;
 		this.dimensionH = dimensionH;
 		this.x = x;
 		this.y = y;
 		
+        neighbours = new HashMap<>();
+        distance = Integer.MAX_VALUE;
+        latest = null;
+        name = _name;
 		
 		// Get the right image depending on dimensions
 		try {
-			createSprite(new FileInputStream("src/Images/door.png"));
+			createSprite(new FileInputStream("src/Images/floor_bg_lobby.png"));
 			
         } catch (FileNotFoundException e) {
             //
@@ -38,14 +40,14 @@ public class Lobby extends Area {
         }
 		
 		HBox lobbyBackground = new HBox();
-		lobbyBackground.setMaxSize(48 * dimensionW,48 * dimensionH);
-		lobbyBackground.setMinSize(48 * dimensionW,48 * dimensionH);
 		lobbyBackground.setBackground(new Background(new BackgroundFill(Color.web("#fff"), CornerRadii.EMPTY, Insets.EMPTY)));	
 		
 		// Paint the room on the grid
-		GridBuilder.grid.add(lobbyBackground,x,y, dimensionW, dimensionH);
-		GridBuilder.grid.setHalignment(lobbyBackground, HPos.LEFT);
-		GridBuilder.grid.setValignment(lobbyBackground, VPos.BOTTOM);
+		GridBuilder.grid.add(roomImageView,x,y, dimensionW, dimensionH);
+		GridBuilder.grid.setHalignment(roomImageView, HPos.LEFT);
+		GridBuilder.grid.setValignment(roomImageView, VPos.BOTTOM);
+        roomImageView.setFitHeight(96);
+        roomImageView.setFitWidth(480);
 	}
 	
 	//Functions
