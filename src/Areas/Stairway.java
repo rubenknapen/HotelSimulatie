@@ -9,6 +9,7 @@ import Scenes.SimulationScene;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -17,7 +18,7 @@ import javafx.scene.paint.Color;
 
 public class Stairway extends Area {
 
-	public Stairway(String _name, int dimensionW, int dimensionH, int x, int y)
+	public Stairway(int id, int dimensionW, int dimensionH, int x, int y)
 	{
 		this.dimensionW = dimensionW;
 		this.dimensionH = dimensionH;
@@ -27,10 +28,14 @@ public class Stairway extends Area {
         neighbours = new HashMap<>();
         distance = Integer.MAX_VALUE;
         latest = null;
-        name = _name;
+        this.id = id;
 
 		HBox stairwayBg = new HBox();
 		stairwayBg.setBackground(new Background(new BackgroundFill(Color.web("purple"), CornerRadii.EMPTY, Insets.EMPTY)));
+		
+		Label label = new Label(Integer.toString(id));
+		
+		stairwayBg.getChildren().addAll(label);
 		
 		// Paint the room on the grid
 		GridBuilder.grid.add(stairwayBg,x,y, dimensionW, dimensionH);

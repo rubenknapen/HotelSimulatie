@@ -36,8 +36,8 @@ public class Dijkstra {
     public  boolean Visit(Area check, Area end){
 
         //debug info
-        System.out.println("I'm visiting: " + check.name);
-        System.out.println("Distance to " + check.name + " is: " + check.distance);
+        System.out.println("I'm visiting: " + check.id);
+        System.out.println("Distance to " + check.id + " is: " + check.distance);
 
         //check if we reached the end
         if(check == end){
@@ -68,7 +68,7 @@ public class Dijkstra {
                     open.add(entry.getKey());
                 }
                 //debug info
-                System.out.println("Added to open: " + entry.getKey().name);
+                System.out.println("Added to open: " + entry.getKey().id);
             }
         }
 
@@ -89,7 +89,7 @@ public class Dijkstra {
 
         while(cont){
 
-            path += current.name + "-";
+            path += current.id + "-";
 
             //Check if we reached the end
             if(current.latest != null){

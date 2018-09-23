@@ -11,8 +11,8 @@
 	}, {
 		"Capacity" : 5,
 		"AreaType" : "Restaurant",
-		"Position" : "5, 1",
 		"Dimension" : "2, 1"
+		"Position" : "5, 1",
 	}, {
 		"AreaType" : "Fitness",
 		"Position" : "1, 6",

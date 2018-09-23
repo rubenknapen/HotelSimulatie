@@ -9,33 +9,36 @@ import SimpleEvents.HotelEventManager;
 public class HotelManager {
 
 
-	int[][] currentMap;
 	//Variables
 	
 	//Constructor
 	public HotelManager()
 	{
+        ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 		GridBuilder gridBuilder = new GridBuilder();
 		SimulationTimer timer = new SimulationTimer();
 		HotelEventManager eventManager = new HotelEventManager();
 		gridBuilder.createGrid();
 		gridBuilder.createHotelBackground();
 		gridBuilder.createRooms();
-		gridBuilder.addPersons();
+//		gridBuilder.addPersons();
 		gridBuilder.createStairway();
+		gridBuilder.createEdges();     
 		
-        ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
+
+
 		
+//		Area startArea = Area.getAreaList().get(0);
+//		Area endArea = Area.getAreaList().get(27);
+//		
+//
+//		System.out.println(_ds.Dijkstra(startArea, endArea));
+//		
+//        System.out.println(_ds.Dijkstra(Area.getAreaList().get(0), Area.getAreaList().get(1)));
         
-        Area tempRoom1 = AreaFactory.createArea("A", "Restaurant",2,1,0,20, 1, 1);
-        Area tempRoom2 = AreaFactory.createArea("B", "Restaurant",2,1,0,20, 1, 3);
         
-        tempRoom1.distance = 0;
-        tempRoom1.neighbours.put(tempRoom2, 4);
-        
-        System.out.println(_ds.Dijkstra(tempRoom1, tempRoom2));
-        
-		currentMap = gridBuilder.get2DArray();
+
+//		currentMap = gridBuilder.get2DArray();
 	}
 	
 	//Functions

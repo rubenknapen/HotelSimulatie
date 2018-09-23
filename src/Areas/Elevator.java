@@ -20,7 +20,7 @@ public class Elevator extends Area {
 	private ImageView elevatorCabinImageView;
 	
 	//Constructor
-	public Elevator(String _name, int dimensionW, int dimensionH, int x, int y)
+	public Elevator(int id, int dimensionW, int dimensionH, int x, int y)
 	{
 		this.dimensionW = dimensionW;
 		this.dimensionH = dimensionH;
@@ -30,7 +30,7 @@ public class Elevator extends Area {
         neighbours = new HashMap<>();
         distance = Integer.MAX_VALUE;
         latest = null;
-        name = _name;
+        this.id = id;
 		
 		
 		// Get the right image depending on dimensions

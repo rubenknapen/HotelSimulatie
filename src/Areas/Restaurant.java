@@ -9,6 +9,7 @@ import Scenes.SimulationScene;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -21,7 +22,7 @@ public class Restaurant extends Area {
 	public int capacity = 0;
 	
 	//Constructor
-	public Restaurant(String _name, int dimensionW, int dimensionH, int x, int y)
+	public Restaurant(int id, int dimensionW, int dimensionH, int x, int y)
 	{
 		this.dimensionW = dimensionW;
 		this.dimensionH = dimensionH;
@@ -32,7 +33,7 @@ public class Restaurant extends Area {
         neighbours = new HashMap<>();
         distance = Integer.MAX_VALUE;
         latest = null;
-        name = _name;
+        this.id = id;
 		
 		// Get the right image depending on dimensions
 		try {
@@ -50,6 +51,10 @@ public class Restaurant extends Area {
 //		
 		HBox restaurantBg = new HBox();
 		restaurantBg.setBackground(new Background(new BackgroundFill(Color.web("red"), CornerRadii.EMPTY, Insets.EMPTY)));	
+		
+		Label label = new Label(Integer.toString(id));
+		
+		restaurantBg.getChildren().addAll(roomImageView, label);
 		
 		// Paint the room on the grid
 		GridBuilder.grid.add(restaurantBg,x,y, dimensionW, dimensionH);

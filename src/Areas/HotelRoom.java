@@ -10,6 +10,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -23,7 +24,7 @@ public class HotelRoom extends Area {
 	
 	
 	//Constructor
-	public HotelRoom(String _name, int dimensionW, int dimensionH, int stars, int x, int y)
+	public HotelRoom(int id, int dimensionW, int dimensionH, int stars, int x, int y)
 	{
 		this.x = x;
 		this.y = y;		
@@ -34,7 +35,7 @@ public class HotelRoom extends Area {
         neighbours = new HashMap<>();
         distance = Integer.MAX_VALUE;
         latest = null;
-        name = _name;
+        this.id = id;
 				
 		// Get the right image depending on dimensions
 		try {
@@ -57,7 +58,10 @@ public class HotelRoom extends Area {
                 "-fx-border-color: blue;");
 		roomBg.setAlignment(Pos.BOTTOM_LEFT);
 		
-		roomBg.getChildren().addAll(roomImageView);
+		
+		Label label = new Label(Integer.toString(id) + " y: " +  (Integer.toString(getRealY())));
+		
+		roomBg.getChildren().addAll(label);
 		
 		// Paint the room on the grid
 		GridBuilder.grid.add(roomBg,x,y, dimensionW, dimensionH);

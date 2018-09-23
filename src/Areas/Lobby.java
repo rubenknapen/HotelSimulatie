@@ -18,7 +18,7 @@ import javafx.scene.paint.Color;
 public class Lobby extends Area {
 
 	//Constructor
-	public Lobby(String _name, int dimensionW, int dimensionH, int x, int y)
+	public Lobby(int id, int dimensionW, int dimensionH, int x, int y)
 	{
 		this.dimensionW = dimensionW;
 		this.dimensionH = dimensionH;
@@ -28,7 +28,7 @@ public class Lobby extends Area {
         neighbours = new HashMap<>();
         distance = Integer.MAX_VALUE;
         latest = null;
-        name = _name;
+        this.id = id;
 		
 		// Get the right image depending on dimensions
 		try {
