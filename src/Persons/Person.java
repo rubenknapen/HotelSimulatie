@@ -5,7 +5,7 @@ import java.util.Observer;
 
 import EventLib.HotelEvent;
 
-public abstract class Person implements EventLib.HotelEventListener {	
+public abstract class Person{	
 	
 	String path = "";
 	

@@ -94,25 +94,4 @@ public class Cleaner extends Person{
 	public void setY(int y) {
 		this.y = y;
 	}
-
-	@Override
-	public void Notify(HotelEvent event)
-	{
-		String tempEvent = event.Type.toString();
-		
-		if (tempEvent == "CLEANING_EMERGENCY")
-		{
-			cleanRoom();
-			System.out.println("I'm a Cleaner this is my event: "+event);
-		}
-		else if (tempEvent == "EVACUATE")
-		{
-			evacuate();
-			System.out.println("I'm a Guest and my event is: " + event);
-		}
-		else if (tempEvent == "GODZILLA")
-		{
-			System.out.println("I'm a Guest and my event is: " + event);
-		}
-	}
 }

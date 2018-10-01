@@ -2,6 +2,8 @@ package Scenes;
 
 import java.io.File;
 import javax.swing.JFileChooser;
+
+import Factories.PersonFactory;
 import Managers.HotelManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -160,9 +162,11 @@ public class MainMenuScene {
 	
 	public void startSimulation()
 	{
-	    new HotelManager();
+	    HotelManager hotelManager = new HotelManager();
 	    new SimulationScene();
-	    
+	    EventLib.HotelEventManager eventManager = new EventLib.HotelEventManager();
+	    eventManager.register(hotelManager);
+	    eventManager.start();
 	    // THIS DOESN'T BELONG HERE -- ! JUST FOR TESTING !
 	    // HERE WE TEST THE DIJKSTRA ALGORITHM
 

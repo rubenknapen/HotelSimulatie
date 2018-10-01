@@ -1,16 +1,22 @@
 package Managers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import Areas.Area;
 import Factories.AreaFactory;
 import Factories.PersonFactory;
+import Persons.Guest;
 import Persons.Person;
 import ShortestPath.Dijkstra;
+import javafx.application.Platform;
 import EventLib.HotelEvent;
 import EventLib.HotelEventManager;
 
 public class HotelManager implements EventLib.HotelEventListener{
 
-
+	int guestCounter = 0;
+	ArrayList<Person> guests;
 	
 	//Variables
 	
@@ -23,21 +29,14 @@ public class HotelManager implements EventLib.HotelEventListener{
 		gridBuilder.createGrid();
 		gridBuilder.createHotelBackground();
 		gridBuilder.createRooms();
-		gridBuilder.addPersons();
-		Person guest1 = PersonFactory.createPerson("Guest","In de rij staan",true,4,4,2);
-		EventLib.HotelEventManager eventManager = new EventLib.HotelEventManager();
-		//timer.activateTimer();
-		
-		
-		eventManager.register(guest1);
-		
-		
-		
+		//gridBuilder.addPersons();
 		gridBuilder.createStairway();
 		gridBuilder.createEdges();
-		eventManager.start();
+		gridBuilder.addElevator();
+		gridBuilder.addLobby();
 		
-		//Observers toevoegen
+		//Build array list for guests
+		guests = new ArrayList();
 		
 
 
@@ -54,23 +53,54 @@ public class HotelManager implements EventLib.HotelEventListener{
 
 //		currentMap = gridBuilder.get2DArray();
 	}
+	
+	public void addGuest()
+	{
+		Person xx = PersonFactory.createPerson("Guest","In de rij staan",true,4,4,2);
+		guests.add(xx);
+	}
 
 	@Override
 	public void Notify(HotelEvent event) 
 	{
-		if (event.Type.toString() == "START_CINEMA")
+		String tempEvent = event.Type.toString();
+		
+		if (tempEvent == "CHECK_IN")
 		{
-			System.out.println("The movie has started");
-			//startMovie(); has to be implemented
+			//Because this command is not running from Java FX I've added this to update UI from a different thread.
+			Platform.runLater(
+					  () -> {
+						  addGuest();
+					  }
+					);
+			
+			guestCounter++;
+			System.out.println("Added a guest, total guests: " + guestCounter);
 		}
-		else if (event.Type.toString() == "EVACUATE")
+		else if (tempEvent == "CHECK_OUT")
 		{
-			System.out.println(event.Message);
-			System.out.println(event.Data.toString());
+			guestCounter--;
+			System.out.println("A guest left, total guests: " + guestCounter);
 		}
-		else if (event.Type.toString() == "GODZILLA")
+		else if (tempEvent == "GOTO_FITNESS")
 		{
-			System.out.println(event.Data.toString());
+			System.out.println("I'm a Guest and my event is: " + tempEvent);
+		}
+		else if (tempEvent == "NEED_FOOD")
+		{
+			System.out.println("I'm a Guest and my event is: " + tempEvent);
+		}
+		else if (tempEvent == "GOTO_CINEMA")
+		{
+			System.out.println("I'm a Guest and my event is: " + tempEvent);
+		}
+		else if (tempEvent == "EVACUATE")
+		{
+			System.out.println("I'm a Guest and my event is: " + tempEvent);
+		}
+		else if (tempEvent == "GODZILLA")
+		{
+			System.out.println("I'm a Guest and my event is: " + tempEvent);
 		}
 	}
 	

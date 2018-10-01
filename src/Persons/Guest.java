@@ -8,6 +8,7 @@ import java.util.Observer;
 import EventLib.HotelEvent;
 import Managers.GridBuilder;
 import Scenes.SimulationScene;
+import javafx.application.Platform;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.image.Image;
@@ -24,8 +25,8 @@ public class Guest extends Person{
 	private ImageView guestImageView;
 	
 	//Constructor
-	public Guest(String status, boolean visibility, int prefStars, int x, int y){
-		
+	public Guest(String status, boolean visibility, int prefStars, int x, int y)
+	{
 		this.setStatus(status);
 		this.setVisibility(visibility);
 		this.setPrefStars(prefStars);		
@@ -33,28 +34,31 @@ public class Guest extends Person{
 		this.setY(y);
 
 		// Get the right image depending on dimensions
-		try {
+		try 
+		{
 			setSprite(new FileInputStream("src/Images/guest.png"));	
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) 
+		{
             e.printStackTrace();
         }
 		
 		// Paint the guest on the grid
+		
 		GridBuilder.grid.add(this.guestImageView,x,y);
 		GridBuilder.grid.setHalignment(this.guestImageView, HPos.CENTER);
 		GridBuilder.grid.setValignment(this.guestImageView, VPos.BOTTOM);
-		
 	}
 	
-	public void setSprite(FileInputStream sprite){
+		public void setSprite(FileInputStream sprite)
+		{
 		
-        Image guestImage = new Image(sprite);
-        guestImageView = new ImageView();
-    	guestImageView.setFitHeight(21);
-    	guestImageView.setFitWidth(16); 
-    	guestImageView.setImage(guestImage);
+	        Image guestImage = new Image(sprite);
+	        guestImageView = new ImageView();
+	    	guestImageView.setFitHeight(21);
+	    	guestImageView.setFitWidth(16); 
+	    	guestImageView.setImage(guestImage);
     	
-    }
+		}
 	
 	//Functions
 	public void checkInRoom(){
@@ -113,44 +117,6 @@ public class Guest extends Person{
 
 	public void setX(int x) {
 		this.x = x;
-	}
-	
-	@Override
-	public void Notify(HotelEvent event)
-	{
-		String tempEvent = event.Type.toString();
-		
-		if (tempEvent == "CHECK_IN")
-		{
-			checkInRoom();
-			System.out.println("I'm a Guest and my event is: " + tempEvent);
-		}
-		else if (tempEvent == "CHECK_OUT")
-		{
-			checkOutRoom();
-			System.out.println("I'm a Guest and my event is: " + tempEvent);
-		}
-		else if (tempEvent == "GOTO_FITNESS")
-		{
-			System.out.println("I'm a Guest and my event is: " + tempEvent);
-		}
-		else if (tempEvent == "NEED_FOOD")
-		{
-			System.out.println("I'm a Guest and my event is: " + tempEvent);
-		}
-		else if (tempEvent == "GOTO_CINEMA")
-		{
-			System.out.println("I'm a Guest and my event is: " + tempEvent);
-		}
-		else if (tempEvent == "EVACUATE")
-		{
-			evacuate();
-			System.out.println("I'm a Guest and my event is: " + tempEvent);
-		}
-		else if (tempEvent == "GODZILLA")
-		{
-			System.out.println("I'm a Guest and my event is: " + tempEvent);
-		}
 	}
 
 	public int getY() {
