@@ -34,7 +34,7 @@ public class MainMenuScene {
 	ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 	
 	public static String baseFolder = System.getProperty("user.dir");
-	public static String fileLocation = "\\src\\layout\\hotel3.layout";
+	public static String fileLocation = "\\src\\layout\\hotel4.layout";
 	public static String selectedLayout = baseFolder+fileLocation;
 	
 	/**
@@ -154,8 +154,8 @@ public class MainMenuScene {
 	    // THIS DOESN'T BELONG HERE -- ! JUST FOR TESTING !
 	    // HERE WE TEST THE DIJKSTRA ALGORITHM
 
-	    Area.areaList.get(26).distance = 0;
-		System.out.println(_ds.Dijkstra(Area.areaList.get(26), Area.areaList.get(27)));	
+	    Area.areaList.get(25).distance = 0;
+		System.out.println(_ds.Dijkstra(Area.areaList.get(25), Area.areaList.get(27)));	
 	    
 	}
 }
