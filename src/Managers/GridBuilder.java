@@ -349,17 +349,16 @@ public class GridBuilder {
 		SettingBuilder settingBuilder = new SettingBuilder();
 		
 		//create a guest
-		Person guest1 = PersonFactory.createPerson("Guest","In de rij staan",true,4,4,2);
+		//Person guest1 = PersonFactory.createPerson("Guest","In de rij staan",true,4,4,2);
 
 		//create a cleaner
 		Person cleaner1 = PersonFactory.createPerson("Cleaner","Schoonmaken",true,4,5,2);
+		Person guest1 = PersonFactory.createPerson("Guest","In de rij staan",true,4,4,2);
 		
 		Area lift = AreaFactory.createArea(1, "Elevator",1,1,0,0,2,2);
 		Area lobby = AreaFactory.createArea(2, "Lobby",10,2,0,0,(xOffset - 1),(getMaxY() + 1));
 		
-		simulationTimer.addObserver(guest1);
-		simulationTimer.addObserver(cleaner1);
-		simulationTimer.activateTimer();
+		
 	}
 	
 	public void createStairway() {

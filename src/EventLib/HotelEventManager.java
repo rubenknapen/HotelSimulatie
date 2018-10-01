@@ -3,10 +3,11 @@ package EventLib;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Observable;
 import java.util.concurrent.TimeUnit;
 
 
-public class HotelEventManager implements Runnable {
+public class HotelEventManager extends Observable implements Runnable {
     /**
      * List of listeners to notify of a new HotelEvent
      */
@@ -58,7 +59,7 @@ public class HotelEventManager implements Runnable {
         threadName = "hotelEventManager";
         System.out.println(threadName + " has created its thread");
 
-        fireEventTimer = 1000.0;
+        fireEventTimer = 1.0;
         fireEventFactor = 1.0;
         counterHTE = 0;
 
@@ -339,6 +340,7 @@ public class HotelEventManager implements Runnable {
 
                         System.out.println("Event fired at time: " + counterHTE);
 
+                        notifyObservers();
                         cont = fireEvent();
 
                         //Reset the start time, so the check will have to fail untill the right amount of time has passed

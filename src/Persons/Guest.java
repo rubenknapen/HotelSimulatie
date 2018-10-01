@@ -3,7 +3,9 @@ package Persons;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Observable;
+import java.util.Observer;
 
+import EventLib.HotelEvent;
 import Managers.GridBuilder;
 import Scenes.SimulationScene;
 import javafx.geometry.HPos;
@@ -11,7 +13,7 @@ import javafx.geometry.VPos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Guest extends Person {
+public class Guest extends Person{
 
 	//Variables
 	private String status; // Status of the person "evacuate, check in, etc."
@@ -114,9 +116,41 @@ public class Guest extends Person {
 	}
 	
 	@Override
-	public void update(Observable observable, Object arg)
+	public void Notify(HotelEvent event)
 	{
-		System.out.println("Im a guest and I'm going to walk");
+		String tempEvent = event.Type.toString();
+		
+		if (tempEvent == "CHECK_IN")
+		{
+			checkInRoom();
+			System.out.println("I'm a Guest and my event is: " + tempEvent);
+		}
+		else if (tempEvent == "CHECK_OUT")
+		{
+			checkOutRoom();
+			System.out.println("I'm a Guest and my event is: " + tempEvent);
+		}
+		else if (tempEvent == "GOTO_FITNESS")
+		{
+			System.out.println("I'm a Guest and my event is: " + tempEvent);
+		}
+		else if (tempEvent == "NEED_FOOD")
+		{
+			System.out.println("I'm a Guest and my event is: " + tempEvent);
+		}
+		else if (tempEvent == "GOTO_CINEMA")
+		{
+			System.out.println("I'm a Guest and my event is: " + tempEvent);
+		}
+		else if (tempEvent == "EVACUATE")
+		{
+			evacuate();
+			System.out.println("I'm a Guest and my event is: " + tempEvent);
+		}
+		else if (tempEvent == "GODZILLA")
+		{
+			System.out.println("I'm a Guest and my event is: " + tempEvent);
+		}
 	}
 
 	public int getY() {

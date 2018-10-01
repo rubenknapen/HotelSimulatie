@@ -3,7 +3,9 @@ package Persons;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Observable;
+import java.util.Observer;
 
+import EventLib.HotelEvent;
 import Managers.GridBuilder;
 import Scenes.SimulationScene;
 import javafx.geometry.HPos;
@@ -11,7 +13,7 @@ import javafx.geometry.VPos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Cleaner extends Person {
+public class Cleaner extends Person{
 
 	//Variables
 	private String status; // Status of the person "evacuate, check in, etc."
@@ -94,8 +96,23 @@ public class Cleaner extends Person {
 	}
 
 	@Override
-	public void update(Observable observable, Object arg)
+	public void Notify(HotelEvent event)
 	{
-		System.out.println("Im a cleaner and I'm going to walk");
+		String tempEvent = event.Type.toString();
+		
+		if (tempEvent == "CLEANING_EMERGENCY")
+		{
+			cleanRoom();
+			System.out.println("I'm a Cleaner this is my event: "+event);
+		}
+		else if (tempEvent == "EVACUATE")
+		{
+			evacuate();
+			System.out.println("I'm a Guest and my event is: " + event);
+		}
+		else if (tempEvent == "GODZILLA")
+		{
+			System.out.println("I'm a Guest and my event is: " + event);
+		}
 	}
 }

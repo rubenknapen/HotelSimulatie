@@ -48,8 +48,5 @@ public class SettingsScene {
 				MainMenuScene.mainMenuStage.setScene(MainMenuScene.mainMenuScene);
 			}
 		});
-		
-		
 	}
-	
 }

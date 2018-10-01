@@ -3,8 +3,10 @@ package Persons;
 import java.util.Observable;
 import java.util.Observer;
 
-public abstract class Person implements Observer
-{	
+import EventLib.HotelEvent;
+
+public abstract class Person implements EventLib.HotelEventListener {	
+	
 	String path = "";
 	
 	//All functions
@@ -18,8 +20,8 @@ public abstract class Person implements Observer
 		//
 	}
 	
-	public void update(Observable observable, Object arg)
+	public void Notify(HotelEvent event)
 	{
-		System.out.print("Ik moet gaan lopen");
+		
 	}
 }
