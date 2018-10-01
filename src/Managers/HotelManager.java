@@ -22,7 +22,6 @@ public class HotelManager {
 		gridBuilder.createGrid();
 		gridBuilder.createHotelBackground();
 		gridBuilder.createRooms();
-		gridBuilder.addPersons();
 		timer.activateTimer();
 		gridBuilder.addPersons();
 		gridBuilder.createStairway();

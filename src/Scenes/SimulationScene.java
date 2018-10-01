@@ -17,24 +17,11 @@ public class SimulationScene {
 	
 	public SimulationScene()
 	{
-		setStage();
 		setBorderPane();
 		setSimulationScene();
-		showSimulationStage();
 	}
 	
-	private void showSimulationStage() 
-	{
-		simulationStage.show();
-	}
 
-	private void setStage()
-	{
-		simulationStage = new Stage();
-		simulationStage.setTitle("Hotel Simulatie");
-		simulationStage.setResizable(true);
-	}
-	
 	public void setBorderPane(){
 		bPane = new BorderPane();
 		bPane.setCenter(GridBuilder.grid);
@@ -45,8 +32,10 @@ public class SimulationScene {
 	 * method die een scene opbouwd voor het spel
 	 */	
 	public void setSimulationScene(){
+		// TO DO auto - resize 
 		simulationScene = new Scene(bPane, 800, 600);
-		simulationStage.setScene(simulationScene);
+
+		MainMenuScene.mainMenuStage.setScene(simulationScene);
 	}
 
 	public Scene getSimulationScene(){

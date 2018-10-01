@@ -9,20 +9,18 @@ public class SettingBuilder {
 
 	//Variables
 	ArrayList<String> settingList;
-	public int tickSpeed = 0;
+	public static int tickSpeed = 0;
 	public int dieInLineTime = 0;
 	public int movieTime = 0;
 	
 	//Constructor
-	public SettingBuilder()
-	{
+	public SettingBuilder(){
 		getSettings();
 		showSettings();
 	}
 	
 	//Functions
-	public void getSettings()
-	{					
+	public void getSettings(){					
 		String pathBase = System.getProperty("user.dir");
 		String pathFile = "\\src\\settings\\settings.txt";
 		String fullPath = pathBase+pathFile;
@@ -46,11 +44,37 @@ public class SettingBuilder {
 		}
 	}
 	
-	public void showSettings()
-	{
+	
+	public void showSettings(){
 		for(int i = 0; i < settingList.size(); i++)
 		{
 			System.out.println(settingList.get(i));
 		}
 	}
+	
+	
+	public static int getTickSpeed() {
+		return tickSpeed;
+	}
+
+	public void setTickSpeed(int tickSpeed) {
+		this.tickSpeed = tickSpeed;
+	}
+
+	public int getDieInLineTime() {
+		return dieInLineTime;
+	}
+
+	public void setDieInLineTime(int dieInLineTime) {
+		this.dieInLineTime = dieInLineTime;
+	}
+
+	public int getMovieTime() {
+		return movieTime;
+	}
+
+	public void setMovieTime(int movieTime) {
+		this.movieTime = movieTime;
+	}
+	
 }

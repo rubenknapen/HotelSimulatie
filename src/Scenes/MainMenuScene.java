@@ -1,36 +1,34 @@
 package Scenes;
 
 import java.io.File;
-import java.util.ArrayList;
-
 import javax.swing.JFileChooser;
-
-import Areas.Area;
-import Factories.AreaFactory;
 import Managers.HotelManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
+
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class MainMenuScene {
 	
-	public Stage mainMenuStage;
-	public Scene mainMenuScene;
-	public Pane layout;
-	public BorderPane bPane;
-	public Image image;
-	public ImageView imageView;
-	public Button closeButton;
-	public Button startButton;
-	public Button layoutSelectButton;
+	static Stage mainMenuStage;
+	static Scene mainMenuScene;
+	private VBox layout;
+	private BorderPane bPane;
+	private Image image;
+	private ImageView imageView;
+	private Button closeButton;
+	private Button startButton;
+	private Button layoutSelectButton;
+	private Button layoutSettingsButton;
 	ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 	
 	public static String baseFolder = System.getProperty("user.dir");
@@ -58,7 +56,7 @@ public class MainMenuScene {
 	
 	public void setScene()
 	{
-		mainMenuScene = new Scene(layout, 300, 300);
+		mainMenuScene = new Scene(layout, 400, 400);
 		mainMenuStage.setScene(mainMenuScene);
 	}
 
@@ -79,8 +77,9 @@ public class MainMenuScene {
 
 	public void setPane()
 	{
-		layout = new Pane();
-		layout.setPadding(new Insets(0, 0, 0, 0));
+		layout = new VBox(10);
+		layout.setAlignment(Pos.CENTER);
+
 	}
 	public void createButtons()
 	{
@@ -108,7 +107,7 @@ public class MainMenuScene {
 		closeButton = new Button("Afsluiten");
 		closeButton.setPrefSize(150, 36);
 		closeButton.setLayoutX(75);
-		closeButton.setLayoutY(50);
+		closeButton.setLayoutY(150);
 		closeButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent e) {
@@ -121,7 +120,7 @@ public class MainMenuScene {
 		layoutSelectButton = new Button("Kies Layout");
 		layoutSelectButton.setPrefSize(150, 36);
 		layoutSelectButton.setLayoutX(75);
-		layoutSelectButton.setLayoutY(100);
+		layoutSelectButton.setLayoutY(50);
 		layoutSelectButton.setOnAction(new EventHandler<ActionEvent>() {
 			
 			public void handle(ActionEvent e) {
@@ -139,11 +138,24 @@ public class MainMenuScene {
 				}
 			}
 		});
+		
+		
+		layoutSettingsButton = new Button("Instellingen");
+		layoutSettingsButton.setPrefSize(150, 36);
+		layoutSettingsButton.setLayoutX(75);
+		layoutSettingsButton.setLayoutY(100);
+		layoutSettingsButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			public void handle(ActionEvent e) {
+				SettingsScene settingScene = new SettingsScene();
+				settingScene.buildScene();
+			}
+		});
 	}
 	
 	public void addButtons()
 	{
-		layout.getChildren().addAll(startButton,closeButton,layoutSelectButton);
+		layout.getChildren().addAll(startButton,layoutSelectButton, layoutSettingsButton, closeButton);
 	}
 	
 	public void startSimulation()
