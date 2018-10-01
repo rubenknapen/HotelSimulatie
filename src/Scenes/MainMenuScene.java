@@ -1,12 +1,13 @@
 package Scenes;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 
+import Areas.Area;
+import Factories.AreaFactory;
 import Managers.HotelManager;
-import Managers.SettingBuilder;
-import Managers.SimulationTimer;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -30,7 +31,7 @@ public class MainMenuScene {
 	public Button closeButton;
 	public Button startButton;
 	public Button layoutSelectButton;
-
+	ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 	
 	public static String baseFolder = System.getProperty("user.dir");
 	public static String fileLocation = "\\src\\layout\\hotel3.layout";
@@ -149,5 +150,12 @@ public class MainMenuScene {
 	{
 	    new HotelManager();
 	    new SimulationScene();
+	    
+	    // THIS DOESN'T BELONG HERE -- ! JUST FOR TESTING !
+	    // HERE WE TEST THE DIJKSTRA ALGORITHM
+
+	    Area.areaList.get(26).distance = 0;
+		System.out.println(_ds.Dijkstra(Area.areaList.get(26), Area.areaList.get(27)));	
+	    
 	}
 }

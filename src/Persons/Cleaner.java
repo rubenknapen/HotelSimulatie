@@ -39,7 +39,6 @@ public class Cleaner extends Person {
 		GridBuilder.grid.add(this.cleanerImageView,x,y);
 		GridBuilder.grid.setHalignment(this.cleanerImageView, HPos.CENTER);
 		GridBuilder.grid.setValignment(this.cleanerImageView, VPos.BOTTOM);
-		
 	}
 	
 	public void setSprite(FileInputStream sprite){
@@ -49,12 +48,10 @@ public class Cleaner extends Person {
         cleanerImageView.setFitHeight(21);
         cleanerImageView.setFitWidth(16); 
         cleanerImageView.setImage(cleanerImage);
-    	
     }
 
 	//Functions
-	public void cleanRoom()
-	{
+	public void cleanRoom(){
 		
 	}
 

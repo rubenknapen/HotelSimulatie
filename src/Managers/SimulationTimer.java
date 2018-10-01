@@ -4,7 +4,6 @@ import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import ShortestPath.ShortestPath;
 
 public class SimulationTimer extends Observable{
 
