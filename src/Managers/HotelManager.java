@@ -9,6 +9,7 @@ import EventLib.HotelEventManager;
 public class HotelManager {
 
 
+	
 	//Variables
 	
 	//Constructor
@@ -22,12 +23,12 @@ public class HotelManager {
 		gridBuilder.createHotelBackground();
 		gridBuilder.createRooms();
 		gridBuilder.addPersons();
-		//currentMap = gridBuilder.get2DArray();
 		timer.activateTimer();
-//		gridBuilder.addPersons();
+		gridBuilder.addPersons();
 		gridBuilder.createStairway();
-		gridBuilder.createEdges();     
-		eventManager.run();
+		gridBuilder.createEdges();
+		eventManager.start();
+		
 
 
 		
