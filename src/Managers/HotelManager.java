@@ -19,6 +19,7 @@ public class HotelManager {
 		gridBuilder.createRooms();
 		gridBuilder.addPersons();
 		currentMap = gridBuilder.get2DArray();
+		timer.activateTimer();
 	}
 	
 	//Functions
