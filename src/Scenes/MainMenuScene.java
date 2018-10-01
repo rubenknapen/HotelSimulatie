@@ -154,8 +154,10 @@ public class MainMenuScene {
 	    // THIS DOESN'T BELONG HERE -- ! JUST FOR TESTING !
 	    // HERE WE TEST THE DIJKSTRA ALGORITHM
 
-	    Area.areaList.get(25).distance = 0;
-		System.out.println(_ds.Dijkstra(Area.areaList.get(25), Area.areaList.get(27)));	
+//	    Area.areaList.get(25).distance = 0;
+//		System.out.println(_ds.Dijkstra(Area.areaList.get(25), Area.areaList.get(27)));
+	    
+
 	    
 	}
 }

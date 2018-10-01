@@ -4,7 +4,7 @@ import Areas.Area;
 import Factories.AreaFactory;
 import ShortestPath.Dijkstra;
 
-import SimpleEvents.HotelEventManager;
+import EventLib.HotelEventManager;
 
 public class HotelManager {
 
@@ -17,7 +17,7 @@ public class HotelManager {
         ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 		GridBuilder gridBuilder = new GridBuilder();
 		SimulationTimer timer = new SimulationTimer();
-		HotelEventManager eventManager = new HotelEventManager();
+		EventLib.HotelEventManager eventManager = new EventLib.HotelEventManager();
 		gridBuilder.createGrid();
 		gridBuilder.createHotelBackground();
 		gridBuilder.createRooms();
@@ -27,7 +27,7 @@ public class HotelManager {
 //		gridBuilder.addPersons();
 		gridBuilder.createStairway();
 		gridBuilder.createEdges();     
-		
+		eventManager.run();
 
 
 		
