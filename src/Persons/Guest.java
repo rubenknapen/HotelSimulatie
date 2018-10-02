@@ -23,6 +23,8 @@ public class Guest extends Person{
 	private int x; // x coordinate
 	private int y; // y coordinate
 	private ImageView guestImageView;
+	private int selectedRoom;
+	private int id;
 	
 	//Constructor
 	public Guest(String status, boolean visibility, int prefStars, int x, int y)
@@ -61,6 +63,27 @@ public class Guest extends Person{
 		}
 	
 	//Functions
+		
+	public void setId(int guestId)
+	{
+		this.id = guestId;
+	}
+	
+	public int getId()
+	{
+		return id;
+	}
+		
+	public void setSelectedRoom(int roomNumber)
+	{
+		this.selectedRoom = roomNumber;
+	}
+	
+	public int getSelectedRoom()
+	{
+		return selectedRoom;
+	}
+		
 	public void checkInRoom(){
 		
 	}

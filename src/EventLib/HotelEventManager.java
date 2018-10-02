@@ -59,7 +59,7 @@ public class HotelEventManager extends Observable implements Runnable {
         threadName = "hotelEventManager";
         System.out.println(threadName + " has created its thread");
 
-        fireEventTimer = 1000.0;
+        fireEventTimer = 1.0;
         fireEventFactor = 1.0;
         counterHTE = 0;
 
