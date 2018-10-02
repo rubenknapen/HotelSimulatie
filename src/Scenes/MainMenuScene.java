@@ -3,6 +3,7 @@ package Scenes;
 import java.io.File;
 import javax.swing.JFileChooser;
 
+import Areas.Area;
 import Factories.PersonFactory;
 import Managers.HotelManager;
 import javafx.application.Platform;
@@ -165,13 +166,13 @@ public class MainMenuScene {
 	    HotelManager hotelManager = new HotelManager();
 	    new SimulationScene();
 	    EventLib.HotelEventManager eventManager = new EventLib.HotelEventManager();
-	    eventManager.register(hotelManager);
-	    eventManager.start();
+//	    eventManager.register(hotelManager);
+//	    eventManager.start();
 	    // THIS DOESN'T BELONG HERE -- ! JUST FOR TESTING !
 	    // HERE WE TEST THE DIJKSTRA ALGORITHM
 
-//	    Area.areaList.get(25).distance = 0;
-//		System.out.println(_ds.Dijkstra(Area.areaList.get(25), Area.areaList.get(27)));
+	    Area.areaList.get(27).distance = 0;
+		System.out.println(_ds.Dijkstra(Area.areaList.get(27), Area.areaList.get(25)));
 	    
 
 	    

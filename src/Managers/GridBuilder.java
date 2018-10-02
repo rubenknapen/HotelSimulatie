@@ -44,6 +44,7 @@ public class GridBuilder {
 	static int xOffset = 3;
 	private int maxY = 0;
 	private int maxX = 0;
+	private	int roomNumber = 1; // Give room numbers
 
     ArrayList<Elevator> Elevators = new ArrayList<Elevator>();
     ArrayList<Entrance> Entrances = new ArrayList<Entrance>();
@@ -169,10 +170,7 @@ public class GridBuilder {
 				}
 
 			}
-			
-			// Give room numbers
-			int roomNumber = 1;
-			
+					
 			// For-each loop to create rooms via the AreaFactory
 			
 			for (Object o: jsonArr){
@@ -263,11 +261,6 @@ public class GridBuilder {
 			            	}
 			            }
 					}
-//					System.out.println("Name: "+ _name);
-//					System.out.println("areaType: "+areaType);
-//	            	System.out.println("x: "+x+" & y: "+y+" Added");
-//	            	System.out.println("W: "+dimensionW+" H: "+dimensionH + "\n");
-
 					objectNumber += 1;
 				}
 			}
@@ -305,6 +298,22 @@ public class GridBuilder {
 		}
 	
 	}
+	
+	public void createStairway() {
+//		for(int i = 0; i < (getMaxY()); i++) {
+//			Area stairway = AreaFactory.createArea(roomNumber, "Stairway",2,1,0,0,getMaxX(),1 + i);
+//			Area.getAreaList().add(stairway);
+//			roomNumber++;
+//		}
+
+		for (Area area : Area.getAreaList()) {
+			System.out.println(area.id);
+			System.out.println(area.neighbours);
+		}
+		      
+		
+	}
+	
 	
 	public void createHotelBackground() {
 		
@@ -353,13 +362,6 @@ public class GridBuilder {
 		Area lobby = AreaFactory.createArea(2, "Lobby",10,2,0,0,(xOffset - 1),(getMaxY()));
 	}
 	
-	public void createStairway() {
-		System.out.println("MaxY = " + getMaxY());
-		for(int i = 0; i < (getMaxY()); i++) {
-			Area stairway = AreaFactory.createArea(3, "Stairway",2,1,0,0,getMaxX(),1 + i);
-		}	
-	}
-	
 	public void createEdges() {
 
 		for (Area object: Area.getAreaList()) {
@@ -375,8 +377,8 @@ public class GridBuilder {
 			    	object.neighbours.put(object2, object2.getDistance());
 			    }
 		    }
-		}	
-		        
+		}
+		  
 	}
 	
 	public void clearGrid() {
