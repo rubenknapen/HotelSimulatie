@@ -173,7 +173,20 @@ public class HotelManager implements EventLib.HotelEventListener{
 		}
 		else if (tempEvent == "NEED_FOOD")
 		{
-			System.out.println("I'm sending a guest to the restaurant, selected guest is: " + "guestId");
+			int guestId;
+			String[] splitArray = hashmapContent.split("=");
+			
+			if (splitArray[1].contains("}"))
+			{
+				String[] splitArray2 = splitArray[1].split("}");
+				guestId = Integer.parseInt(splitArray2[0]);
+			}
+			
+			else 
+			{
+				guestId = Integer.parseInt(splitArray[1]);
+			}
+			System.out.println("I'm sending a guest to the restaurant, selected guest is: " + guestId);
 		}
 		else if (tempEvent == "GOTO_CINEMA")
 		{
