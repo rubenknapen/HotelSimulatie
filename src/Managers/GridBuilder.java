@@ -58,6 +58,7 @@ public class GridBuilder {
     
 	//Constructor
 	public GridBuilder(){
+		
 	}
 	
 	public void createGrid(){
@@ -114,17 +115,7 @@ public class GridBuilder {
 		grid.setBackground(new Background(new BackgroundFill(Color.web("#102860"), CornerRadii.EMPTY, Insets.EMPTY)));	
 		
 	}
-	
-
-	public int getMaxY() {
-		return maxY;
-	}
-	
-	public int getMaxX() {
-		return maxX + xOffset;
-	}
-	
-	
+		
 	public void createRooms(){
 
 
@@ -338,10 +329,6 @@ public class GridBuilder {
 		grid.add(floorBackground, xOffset+1, 1, 8, 8);
 	}
 	
-	public int[][] get2DArray()
-	{
-		return isOcupied;
-	}
 	
 	public void addPersons() {
 		
@@ -353,10 +340,7 @@ public class GridBuilder {
 		//create a cleaner
 		Person cleaner1 = PersonFactory.createPerson("Cleaner","Schoonmaken",true,4,5,2);
 		//Person guest1 = PersonFactory.createPerson("Guest","In de rij staan",true,4,4,2);
-		
-		
-		
-		
+			
 	}
 	
 	public void addElevator()
@@ -366,12 +350,12 @@ public class GridBuilder {
 	
 	public void addLobby()
 	{
-		//															hier stond getMaxY() + 1, kwam te laag uit
 		Area lobby = AreaFactory.createArea(2, "Lobby",10,2,0,0,(xOffset - 1),(getMaxY()));
 	}
 	
 	public void createStairway() {
-		for(int i = 0; i < (getMaxY() + 1); i++) {
+		System.out.println("MaxY = " + getMaxY());
+		for(int i = 0; i < (getMaxY()); i++) {
 			Area stairway = AreaFactory.createArea(3, "Stairway",2,1,0,0,getMaxX(),1 + i);
 		}	
 	}
@@ -391,22 +375,7 @@ public class GridBuilder {
 			    	object.neighbours.put(object2, object2.getDistance());
 			    }
 		    }
-		}
-		
-
-//		Area startArea = Area.getAreaList().get(0);
-//		Area endArea = Area.getAreaList().get(27);
-		
-//		for (Area object: Area.getAreaList()) {	
-//			if(object.id == 5) {
-//				Area startArea = object;
-//				System.out.println(object.id);
-//			}
-//			if(object.id == 8) {
-////				Area endArea = object;
-////				System.out.println(object.id);
-//			}
-//		}		
+		}	
 		        
 	}
 	
@@ -416,6 +385,24 @@ public class GridBuilder {
 
 	public GridPane getGrid(){
 		return grid;
+	}
+	
+	public int getMaxY() {
+		return maxY;
+	}
+	
+	public int getMaxX() {
+		return maxX + xOffset;
+	}
+	
+	public void buildGrid() {
+		createGrid();
+		createHotelBackground();
+		createRooms();
+		createEdges();
+		addElevator();
+		addLobby();
+		createStairway();
 	}
 	
 	

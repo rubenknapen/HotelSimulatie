@@ -15,54 +15,31 @@ import EventLib.HotelEventManager;
 
 public class HotelManager implements EventLib.HotelEventListener{
 
+	//Variables
 	int guestCounter = 0;
 	ArrayList<Person> guests;
 	
-	//Variables
 	
 	//Constructor
-	public HotelManager()
-	{
+	public HotelManager(){
         ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 		GridBuilder gridBuilder = new GridBuilder();
 		SimulationTimer timer = new SimulationTimer();
-		gridBuilder.createGrid();
-		gridBuilder.createHotelBackground();
-		gridBuilder.createRooms();
-		//gridBuilder.addPersons();
-		gridBuilder.createStairway();
-		gridBuilder.createEdges();
-		gridBuilder.addElevator();
-		gridBuilder.addLobby();
+		gridBuilder.buildGrid();
 		
 		//Build array list for guests
 		guests = new ArrayList();
-		
 
-
-		
-//		Area startArea = Area.getAreaList().get(0);
-//		Area endArea = Area.getAreaList().get(27);
-//		
-//
-//		System.out.println(_ds.Dijkstra(startArea, endArea));
-//		
-//        System.out.println(_ds.Dijkstra(Area.getAreaList().get(0), Area.getAreaList().get(1)));
-        
-        
-
-//		currentMap = gridBuilder.get2DArray();
+		//System.out.println(_ds.Dijkstra(Area.getAreaList().get(0), Area.getAreaList().get(1)));
 	}
 	
-	public void addGuest()
-	{
+	public void addGuest(){
 		Person xx = PersonFactory.createPerson("Guest","In de rij staan",true,4,4,2);
 		guests.add(xx);
 	}
 
 	@Override
-	public void Notify(HotelEvent event) 
-	{
+	public void Notify(HotelEvent event) {
 		String tempEvent = event.Type.toString();
 		
 		if (tempEvent == "CHECK_IN")
@@ -104,6 +81,5 @@ public class HotelManager implements EventLib.HotelEventListener{
 		}
 	}
 	
-	//Functions
 
 }
