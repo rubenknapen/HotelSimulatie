@@ -18,10 +18,10 @@ public abstract class Area {
     public static ArrayList<Area> areaList = new ArrayList<Area>();
     	
 	// Variables
-	int x = 0;
-	int y = 0;
-	int dimensionW;
-	int dimensionH;	
+	public int x = 0;
+	public int y = 0;
+	public int dimensionW;
+	public int dimensionH;	
 	public boolean available = true;
 	public int stars = 1;
 	public int cleaningTime = 1;
@@ -83,6 +83,11 @@ public abstract class Area {
 
 	public int getY() {
 		return y;
+	}
+
+	public void setAvailability(boolean b) {
+		this.available = b;
+		
 	}
 
 	

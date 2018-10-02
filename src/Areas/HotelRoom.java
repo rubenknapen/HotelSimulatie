@@ -72,4 +72,9 @@ public class HotelRoom extends Area {
 //		GridBuilder.grid.setHalignment(roomImageView, HPos.LEFT);
 //		GridBuilder.grid.setValignment(roomImageView, VPos.BOTTOM);
 	}
+	
+	public void setAvailability(boolean TrueOrFalse)
+	{
+		this.available = TrueOrFalse;
+	}
 }

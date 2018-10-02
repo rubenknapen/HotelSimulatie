@@ -19,19 +19,18 @@ public class Guest extends Person{
 	//Variables
 	private String status; // Status of the person "evacuate, check in, etc."
 	private boolean visibility = true; // Hide or shows the person visually 
-	private int prefStars; // Preference for stars of hotelroom
 	private int x; // x coordinate
 	private int y; // y coordinate
 	private ImageView guestImageView;
-	private int selectedRoom;
+	private int roomId;
 	private int id;
 	
 	//Constructor
-	public Guest(String status, boolean visibility, int prefStars, int x, int y)
+	public Guest(String status, boolean visibility, int roomId, int x, int y)
 	{
 		this.setStatus(status);
 		this.setVisibility(visibility);
-		this.setPrefStars(prefStars);		
+		this.setSelectedRoom(roomId);		
 		this.setX(x);
 		this.setY(y);
 
@@ -63,33 +62,26 @@ public class Guest extends Person{
 		}
 	
 	//Functions
-		
-	public void setId(int guestId)
-	{
-		this.id = guestId;
-	}
+	
 	
 	public int getId()
 	{
 		return id;
 	}
+	
+	public void setId(int guestId)
+	{
+		this.id = guestId;
+	}
 		
 	public void setSelectedRoom(int roomNumber)
 	{
-		this.selectedRoom = roomNumber;
+		this.roomId = roomNumber;
 	}
 	
 	public int getSelectedRoom()
 	{
-		return selectedRoom;
-	}
-		
-	public void checkInRoom(){
-		
-	}
-	
-	public void checkOutRoom(){
-		
+		return roomId;
 	}
 
 	public void setElevatorDirection(){
@@ -124,14 +116,6 @@ public class Guest extends Person{
 
 	public void setVisibility(boolean visibility) {
 		this.visibility = visibility;
-	}
-
-	public int getPrefStars() {
-		return prefStars;
-	}
-
-	public void setPrefStars(int prefStars) {
-		this.prefStars = prefStars;
 	}
 
 	public int getX() {

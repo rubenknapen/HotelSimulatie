@@ -19,6 +19,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 
 	//Variables
 	int guestCounter = 0;
+	int selectedRoomId;
 	public ArrayList<Person> guests;
 	
 	
@@ -36,19 +37,34 @@ public class HotelManager implements EventLib.HotelEventListener{
 	
 	public void addGuest(int guestId)
 	{
-		Person xx = PersonFactory.createPerson("Guest","In de rij staan",true,4,4,GridBuilder.getMaxY() + 1);
+		Person xx = PersonFactory.createPerson("Guest","In de rij staan",true,selectedRoomId,4,GridBuilder.getMaxY() + 1);
 		Guest g = (Guest) xx;
 		g.setId(guestId);
 		guests.add(xx);
-		System.out.println("Guest: "+guestId+" added!");
+		System.out.println("Guest: " + guestId + " added!");
 	}
 
 	public void removeGuest(int guestId)
 	{
-		for(int i = 0; i <guests.size(); i++)
+		for(int i = 0; i < guests.size(); i++)
 		{
 			Guest g = (Guest) guests.get(i);
 			
+			if (g.getId() == guestId)
+			{
+				//Get Roominfo for Housekeeping
+				selectedRoomId = g.getSelectedRoom();
+				int houseKeepingLocationX = g.getX();
+				int houseKeepingLocationY = g.getY();
+				
+				//Send housekeeping based on above info
+				sendHouseKeepingOnCheckOut(selectedRoomId,houseKeepingLocationX,houseKeepingLocationY);
+				
+				//Clear the room for a new guest
+				freeRoom(selectedRoomId);
+			}
+			
+			//logging info
 			int objectGuestId = g.getId();
 			if (objectGuestId == guestId)
 			{
@@ -58,11 +74,38 @@ public class HotelManager implements EventLib.HotelEventListener{
 		}
 	}
 	
+	public void sendHouseKeepingOnCheckOut(int roomId, int x, int y)
+	{
+		System.out.println("Sending housekeeping to x: " + x + " & y: " + y);
+		//Send housekeeping to room
+	}
 	
 	public void findRoom(int prefStars) {
 		for (Area object: Area.getAreaList()) {
 			if(object instanceof HotelRoom) {
-				System.out.print("hallo ik ben room: " + object.id);
+				if (object.stars == prefStars && object.available == true)
+				{
+					selectedRoomId = object.id;
+					System.out.println("My room ID: " + object.id);
+					System.out.println("My X-Coord: " + object.x);
+					System.out.println("My Y-Coord: " + object.y);
+					((HotelRoom) object).setAvailability(false);
+					break;
+				}
+			}
+		}
+	}
+	
+	public void freeRoom(int roomId) {
+		for (Area object: Area.getAreaList()) {
+			if(object instanceof HotelRoom) {
+				if (object.id == roomId)
+				{
+					object.setAvailability(true);
+					System.out.print("Room ID: " + object.id + " is now available!");
+					System.out.print("");
+					break;
+				}
 			}
 		}
 	}
@@ -87,9 +130,12 @@ public class HotelManager implements EventLib.HotelEventListener{
 			setGuestIdValue = Integer.parseInt(guestId);
 			//Set prefStars
 			prefStars = splitArray2[1];
+			int prefStarsInt = Integer.parseInt(prefStars);
 			
 			System.out.println("Guests id: " + guestId);
 			System.out.println("Guests prefStars: " + prefStars);
+			
+			findRoom(prefStarsInt);
 			
 			//Because this command is not running from Java FX I've added this to update UI from a different thread.
 			Platform.runLater(
