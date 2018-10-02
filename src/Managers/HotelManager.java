@@ -6,6 +6,7 @@ import java.util.List;
 import Areas.Area;
 import Areas.HotelRoom;
 import Areas.Lobby;
+import Areas.Restaurant;
 import Factories.AreaFactory;
 import Factories.PersonFactory;
 import Persons.Guest;
@@ -91,6 +92,24 @@ public class HotelManager implements EventLib.HotelEventListener{
 					System.out.println("My Y-Coord: " + object.y);
 					((HotelRoom) object).setAvailability(false);
 					break;
+				}
+			}
+		}
+	}
+	
+	public void assignRoom(String type, int roomId)
+	{
+		if (type == "Restaurant")
+		{
+			for (Area object: Area.getAreaList()) {
+				if(object instanceof Restaurant) {
+					if (object.id == roomId)
+					{
+						object.setAvailability(true);
+						System.out.print("Room ID: " + object.id + " is now available!");
+						System.out.print("");
+						break;
+					}
 				}
 			}
 		}
@@ -186,6 +205,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 			{
 				guestId = Integer.parseInt(splitArray[1]);
 			}
+			assignRoom("Restaurant", guestId);
 			System.out.println("I'm sending a guest to the restaurant, selected guest is: " + guestId);
 		}
 		else if (tempEvent == "GOTO_CINEMA")
