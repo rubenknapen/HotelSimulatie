@@ -55,11 +55,9 @@ public class HotelManager implements EventLib.HotelEventListener{
 			{
 				//Get Roominfo for Housekeeping
 				selectedRoomId = g.getSelectedRoom();
-				int houseKeepingLocationX = g.getX();
-				int houseKeepingLocationY = g.getY();
 				
 				//Send housekeeping based on above info
-				sendHouseKeepingOnCheckOut(selectedRoomId,houseKeepingLocationX,houseKeepingLocationY);
+				roomToClean(selectedRoomId);
 				
 				//Clear the room for a new guest
 				freeRoom(selectedRoomId);
@@ -75,10 +73,17 @@ public class HotelManager implements EventLib.HotelEventListener{
 		}
 	}
 	
-	public void sendHouseKeepingOnCheckOut(int roomId, int x, int y)
-	{
-		System.out.println("Sending housekeeping to x: " + x + " & y: " + y);
+	public Area roomToClean(int roomId){
+		
+		for (Area a : Area.getAreaList()) {
+			if(a.id == roomId) {
+				System.out.println("Sending housekeeping to: "+ a);
+				return a;
+			}
+		}
+
 		//Send housekeeping to room
+		return null;
 	}
 	
 	public void findRoom(int prefStars) {
