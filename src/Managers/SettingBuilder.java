@@ -12,6 +12,7 @@ public class SettingBuilder {
 	public static int tickSpeed = 0;
 	public int dieInLineTime = 0;
 	public int movieTime = 0;
+	public static int stairTime = 1;
 	
 	//Constructor
 	public SettingBuilder(){

@@ -2,21 +2,13 @@ package Scenes;
 
 import java.io.File;
 import javax.swing.JFileChooser;
-
-import Areas.Area;
-import Factories.PersonFactory;
 import Managers.HotelManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -25,9 +17,6 @@ public class MainMenuScene {
 	static Stage mainMenuStage;
 	static Scene mainMenuScene;
 	private VBox layout;
-	private BorderPane bPane;
-	private Image image;
-	private ImageView imageView;
 	private Button closeButton;
 	private Button startButton;
 	private Button layoutSelectButton;
@@ -54,7 +43,7 @@ public class MainMenuScene {
 	}
 
 	public Scene getScene(){
-		return this.mainMenuScene;
+		return mainMenuScene;
 	}
 	
 	public void setScene()
@@ -64,7 +53,7 @@ public class MainMenuScene {
 	}
 
 	public void setStage(Stage stage) {
-		this.mainMenuStage = stage;
+		mainMenuStage = stage;
 		stage.setTitle("Hotel Simulatie");
 		stage.setResizable(false);
 	}
@@ -166,13 +155,14 @@ public class MainMenuScene {
 	    HotelManager hotelManager = new HotelManager();
 	    new SimulationScene();
 	    EventLib.HotelEventManager eventManager = new EventLib.HotelEventManager();
-//	    eventManager.register(hotelManager);
-//	    eventManager.start();
+	    eventManager.register(hotelManager);
+	    eventManager.start();
+	    
 	    // THIS DOESN'T BELONG HERE -- ! JUST FOR TESTING !
 	    // HERE WE TEST THE DIJKSTRA ALGORITHM
 
-	    Area.areaList.get(27).distance = 0;
-		System.out.println(_ds.Dijkstra(Area.areaList.get(27), Area.areaList.get(25)));
+//	    Area.areaList.get(38).distance = 0;
+//		System.out.println(_ds.Dijkstra(Area.areaList.get(38), Area.areaList.get(49)));
 	    
 
 	    

@@ -3,18 +3,10 @@ package Managers;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-
 import Areas.Area;
-import Areas.Elevator;
-import Areas.Entrance;
-import Areas.Fitness;
 import Areas.Lobby;
-import Areas.Restaurant;
 import Areas.Stairway;
 import Factories.AreaFactory;
-import Factories.PersonFactory;
-import Persons.Person;
 import Scenes.MainMenuScene;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
@@ -42,16 +34,9 @@ public class GridBuilder {
 	//Variables
 	public static GridPane grid;
 	static int xOffset = 3;
-	private int maxY = 0;
+	private static int maxY = 0;
 	private int maxX = 0;
 	private	int roomNumber = 1; // Give room numbers
-
-    ArrayList<Elevator> Elevators = new ArrayList<Elevator>();
-    ArrayList<Entrance> Entrances = new ArrayList<Entrance>();
-    ArrayList<Fitness> Fitnesses = new ArrayList<Fitness>();
-    ArrayList<Lobby> Lobbies = new ArrayList<Lobby>();
-    ArrayList<Restaurant> Restaurants = new ArrayList<Restaurant>();
-    ArrayList<Stairway> Stairways = new ArrayList<Stairway>();
     int[][] isOcupied = new int[25][25];
     int objectNumber = 1;
     ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
@@ -135,8 +120,6 @@ public class GridBuilder {
 			// Get max Y coordinate first !! CODE NEEDS CLEANING UP THOUGH !!
 						
 			for (Object o: jsonArr){
-				int stars = 0;
-				long capacity = 0;
 				int x = 0;
 				int y = 0;
 	
@@ -145,7 +128,6 @@ public class GridBuilder {
 				int dimensionH = 0;
 				
 				JSONObject obj = (JSONObject)o;
-				String areaType = (String) obj.get("AreaType");
 				String dimension = (String) obj.get("Dimension");
 				
 				//Spliting dimension and putting it in ints
@@ -300,18 +282,11 @@ public class GridBuilder {
 	}
 	
 	public void createStairway() {
-//		for(int i = 0; i < (getMaxY()); i++) {
-//			Area stairway = AreaFactory.createArea(roomNumber, "Stairway",2,1,0,0,getMaxX(),1 + i);
-//			Area.getAreaList().add(stairway);
-//			roomNumber++;
-//		}
-
-		for (Area area : Area.getAreaList()) {
-			System.out.println(area.id);
-			System.out.println(area.neighbours);
-		}
-		      
-		
+		for(int i = 0; i < (getMaxY() + 1); i++) {
+			Area stairway = AreaFactory.createArea(roomNumber, "Stairway",2,1,0,0,getMaxX(),1 + i);
+			Area.getAreaList().add(stairway);
+			roomNumber++;
+		}	      		
 	}
 	
 	
@@ -339,18 +314,7 @@ public class GridBuilder {
 	}
 	
 	
-	public void addPersons() {
-		
-		SettingBuilder settingBuilder = new SettingBuilder();
-		
-		//create a guest
-		//Person guest1 = PersonFactory.createPerson("Guest","In de rij staan",true,4,4,2);
 
-		//create a cleaner
-		Person cleaner1 = PersonFactory.createPerson("Cleaner","Schoonmaken",true,4,5,2);
-		//Person guest1 = PersonFactory.createPerson("Guest","In de rij staan",true,4,4,2);
-			
-	}
 	
 	public void addElevator()
 	{
@@ -359,7 +323,8 @@ public class GridBuilder {
 	
 	public void addLobby()
 	{
-		Area lobby = AreaFactory.createArea(2, "Lobby",10,2,0,0,(xOffset - 1),(getMaxY()));
+		Area lobby = AreaFactory.createArea(roomNumber, "Lobby",10,2,0,0,(xOffset - 1),(getMaxY() + 1));
+		Area.getAreaList().add(lobby);
 	}
 	
 	public void createEdges() {
@@ -368,17 +333,32 @@ public class GridBuilder {
 			for (Area object2: Area.getAreaList()) {		 
 				// Check left for neighbours
 			    if ((object.getX() - 1 == object2.getX() || object.getX() - 1 == object2.getXEnd()) && object.getRealY() == object2.getRealY() ) {
-//			    	 System.out.println("Ik " + object.id + " ben buurtjes met " + object2.id + " met gewicht: " + object2.getDistance());
+			    	 //System.out.println("Ik " + object.id + " ben buurtjes met " + object2.id + " met gewicht: " + object2.getDistance());
 			    	 object.neighbours.put(object2, object2.getDistance());
 		        }
 			    // Check right for neighbours
 			    if (object.getXEnd() + 1 == object2.getX() && object.getRealY() == object2.getRealY() ) {
-//			    	 System.out.println("Ik " + object.id + " ben buurtjes met " + object2.id + " met gewicht: " + object.getDistance());
+			    	//System.out.println("Ik " + object.id + " ben buurtjes met " + object2.id + " met gewicht: " + object.getDistance());
 			    	object.neighbours.put(object2, object2.getDistance());
 			    }
+				if(object instanceof Stairway) {
+					if ((object.getY() == object2.getY()-1) && object.getX() == object2.getX()) {
+				    	//System.out.println("Ik " + object.id + " ben buurtjes met " + object2.id + " met gewicht: " + SettingBuilder.stairTime);
+				    	object.neighbours.put(object2, SettingBuilder.stairTime);
+				    }
+					if ((object.getY() == object2.getY()+1) && object.getX() == object2.getX()) {
+				    	//System.out.println("Ik " + object.id + " ben buurtjes met " + object2.id + " met gewicht: " + SettingBuilder.stairTime);
+				    	object.neighbours.put(object2, SettingBuilder.stairTime);
+				    }					
+				}
+				if(object instanceof Lobby) {
+					if((object.getXEnd() == object2.getX() && object.getY() == object2.getY())){
+						object.neighbours.put(object2, 7); // value 7 moet nog dynamisch gemaakt worden aan de hand van entrance point
+						object2.neighbours.put(object, 7); // value 7 moet nog dynamisch gemaakt worden aan de hand van entrance point
+					}
+				}
 		    }
-		}
-		  
+		}					  
 	}
 	
 	public void clearGrid() {
@@ -389,7 +369,7 @@ public class GridBuilder {
 		return grid;
 	}
 	
-	public int getMaxY() {
+	public static int getMaxY() {
 		return maxY;
 	}
 	
@@ -401,11 +381,10 @@ public class GridBuilder {
 		createGrid();
 		createHotelBackground();
 		createRooms();
-		createEdges();
 		addElevator();
-		addLobby();
 		createStairway();
+		addLobby();
+		createEdges();
 	}
-	
 	
 }

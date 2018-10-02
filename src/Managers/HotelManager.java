@@ -17,7 +17,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 
 	//Variables
 	int guestCounter = 0;
-	ArrayList<Person> guests;
+	public ArrayList<Person> guests;
 	
 	
 	//Constructor
@@ -30,11 +30,10 @@ public class HotelManager implements EventLib.HotelEventListener{
 		//Build array list for guests
 		guests = new ArrayList();
 
-		//System.out.println(_ds.Dijkstra(Area.getAreaList().get(0), Area.getAreaList().get(1)));
 	}
 	
 	public void addGuest(){
-		Person xx = PersonFactory.createPerson("Guest","In de rij staan",true,4,4,2);
+		Person xx = PersonFactory.createPerson("Guest","In de rij staan",true,4,4,GridBuilder.getMaxY() + 1);
 		guests.add(xx);
 	}
 

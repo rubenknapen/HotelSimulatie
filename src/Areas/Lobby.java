@@ -9,6 +9,7 @@ import Scenes.SimulationScene;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -40,12 +41,17 @@ public class Lobby extends Area {
         }
 		
 		HBox lobbyBackground = new HBox();
+		lobbyBackground.setMinHeight(48 * 2);
 		lobbyBackground.setBackground(new Background(new BackgroundFill(Color.web("#fff"), CornerRadii.EMPTY, Insets.EMPTY)));	
 		
+		Label label = new Label(Integer.toString(id));
+		
+		lobbyBackground.getChildren().addAll(label);
+		
 		// Paint the room on the grid
-		GridBuilder.grid.add(roomImageView,x,y, dimensionW, dimensionH);
-		GridBuilder.grid.setHalignment(roomImageView, HPos.LEFT);
-		GridBuilder.grid.setValignment(roomImageView, VPos.BOTTOM);
+		GridBuilder.grid.add(lobbyBackground,x,y, dimensionW, dimensionH);
+		GridBuilder.grid.setHalignment(lobbyBackground, HPos.LEFT);
+		GridBuilder.grid.setValignment(lobbyBackground, VPos.BOTTOM);
         roomImageView.setFitHeight(96);
         roomImageView.setFitWidth(480);
 	}
