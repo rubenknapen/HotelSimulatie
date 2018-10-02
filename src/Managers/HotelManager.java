@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Areas.Area;
+import Areas.HotelRoom;
+import Areas.Lobby;
 import Factories.AreaFactory;
 import Factories.PersonFactory;
 import Persons.Guest;
@@ -26,7 +28,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 		GridBuilder gridBuilder = new GridBuilder();
 		SimulationTimer timer = new SimulationTimer();
 		gridBuilder.buildGrid();
-		
+			
 		//Build array list for guests
 		guests = new ArrayList();
 
@@ -52,6 +54,15 @@ public class HotelManager implements EventLib.HotelEventListener{
 			{
 				System.out.println("Guest: "+guestId+" removed!");
 				guests.remove(i);
+			}
+		}
+	}
+	
+	
+	public void findRoom(int prefStars) {
+		for (Area object: Area.getAreaList()) {
+			if(object instanceof HotelRoom) {
+				System.out.print("hallo ik ben room: " + object.id);
 			}
 		}
 	}
