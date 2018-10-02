@@ -32,23 +32,27 @@ public class HotelManager implements EventLib.HotelEventListener{
 
 	}
 	
-	public void addGuest()
+	public void addGuest(int guestId)
 	{
 		Person xx = PersonFactory.createPerson("Guest","In de rij staan",true,4,4,GridBuilder.getMaxY() + 1);
+		Guest g = (Guest) xx;
+		g.setId(guestId);
 		guests.add(xx);
+		System.out.println("Guest: "+guestId+" added!");
 	}
 
 	public void removeGuest(int guestId)
 	{
-		//Loopje maken die zoekt naar guestId om te removen in alle beschikbare guests objecten
 		for(int i = 0; i <guests.size(); i++)
 		{
-			//System.out.println(guests.get(i));
-			//objectGuestId = guests.get(i).getId();
-			//if (objectGuestId == guestId)
-			//{
-			//	guests.remove(i);
-			//}
+			Guest g = (Guest) guests.get(i);
+			
+			int objectGuestId = g.getId();
+			if (objectGuestId == guestId)
+			{
+				System.out.println("Guest: "+guestId+" removed!");
+				guests.remove(i);
+			}
 		}
 	}
 	
@@ -61,6 +65,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 		if (tempEvent == "CHECK_IN")
 		{
 			String guestId;
+			int setGuestIdValue;
 			String prefStars;
 			
 			String[] splitArray = hashmapContent.split("\\s");
@@ -68,6 +73,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 			
 			//Set GuestID
 			guestId = splitArray2[0];
+			setGuestIdValue = Integer.parseInt(guestId);
 			//Set prefStars
 			prefStars = splitArray2[1];
 			
@@ -77,7 +83,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 			//Because this command is not running from Java FX I've added this to update UI from a different thread.
 			Platform.runLater(
 					  () -> {
-						  addGuest();
+						  addGuest(setGuestIdValue);
 					  }
 					);
 			
@@ -101,9 +107,8 @@ public class HotelManager implements EventLib.HotelEventListener{
 			}
 			
 			guestCounter--;
-			System.out.println("Guest: "+guestId+" left, total guests: " + guestCounter);
-			System.out.println(hashmapContent);
 			removeGuest(guestId);
+			System.out.println("Guest: "+guestId+" left, total guests: " + guestCounter);
 		}
 		else if (tempEvent == "GOTO_FITNESS")
 		{
