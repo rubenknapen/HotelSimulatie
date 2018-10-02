@@ -64,8 +64,8 @@ public class Restaurant extends Area {
 	}
 	
 	//Functions
-	public void setCapacity()
+	public void setCapacity(int capacity)
 	{
-		
+		this.capacity = capacity;
 	}
 }

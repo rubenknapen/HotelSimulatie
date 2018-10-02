@@ -189,7 +189,7 @@ public class GridBuilder {
 					stars = Integer.parseInt(classification.charAt(0) + "");
 				}
 				
-				//Check if capacity if available
+				//Check if capacity is available
 				if(obj.containsKey("Capacity"))
 				{
 					capacity = (long) obj.get("Capacity");
