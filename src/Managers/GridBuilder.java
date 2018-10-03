@@ -7,6 +7,8 @@ import Areas.Area;
 import Areas.Lobby;
 import Areas.Stairway;
 import Factories.AreaFactory;
+import Factories.PersonFactory;
+import Persons.Person;
 import Scenes.MainMenuScene;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
@@ -37,6 +39,8 @@ public class GridBuilder {
 	private static int maxY = 0;
 	private int maxX = 0;
 	private	int roomNumber = 1; // Give room numbers
+	public static int colSize = 48;
+	public static int rowSize= 48;
     int[][] isOcupied = new int[25][25];
     int objectNumber = 1;
     ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
@@ -56,8 +60,7 @@ public class GridBuilder {
 		
 		int cols = 14;
 		int rows = 11;
-		int colSize = 48;
-		int rowSize= 48;
+
 		
 		for (int i = 0; i < cols; i++) {
 		      ColumnConstraints colConst = new ColumnConstraints();
@@ -246,7 +249,6 @@ public class GridBuilder {
 					objectNumber += 1;
 				}
 			}
-			System.out.println("Added stairs to Array");
 			isOcupied[7][0] = 9;
 			isOcupied[7][1] = 9;
 			isOcupied[7][2] = 9;
@@ -283,7 +285,7 @@ public class GridBuilder {
 	
 	public void createStairway() {
 		for(int i = 0; i < (getMaxY() + 1); i++) {
-			Area stairway = AreaFactory.createArea(roomNumber, "Stairway",2,1,0,0,getMaxX(),1 + i);
+			Area stairway = AreaFactory.createArea(roomNumber, "Stairway",1,1,0,0,getMaxX(),1 + i);
 			Area.getAreaList().add(stairway);
 			roomNumber++;
 		}	      		
@@ -384,7 +386,7 @@ public class GridBuilder {
 		addElevator();
 		createStairway();
 		addLobby();
-		createEdges();
+		createEdges();		
 	}
 	
 }

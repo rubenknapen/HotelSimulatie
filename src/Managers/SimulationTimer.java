@@ -4,14 +4,17 @@ import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import Persons.Person;
+import Scenes.MainMenuScene;
+
 
 public class SimulationTimer extends Observable{
 
 	//Variables
-	int delay = 1;
-	int tickRate = 1;
-	int interval = tickRate*1000;  // iterate every sec.
-	int currentTick = 0;
+	private int delay = 1;
+	private int tickRate = 1;
+	private int interval = tickRate*1000;  // iterate every sec.
+	private int currentTick = 0;
 	
 	//Constructor
 	public SimulationTimer()
@@ -36,6 +39,8 @@ public class SimulationTimer extends Observable{
 //		        	  notifyObservers();
 //		              System.out.println("tick: "+currentTick);
 //		              currentTick++;
+			      		HotelManager.moveGuests();
+
 		          }
 		      }, delay, interval);
 	}

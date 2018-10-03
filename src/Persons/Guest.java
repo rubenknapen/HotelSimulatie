@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.Observable;
 import java.util.Observer;
 
+import Areas.Area;
+import Areas.Stairway;
 import EventLib.HotelEvent;
 import Managers.GridBuilder;
 import Scenes.SimulationScene;
@@ -19,11 +21,13 @@ public class Guest extends Person{
 	//Variables
 	private String status; // Status of the person "evacuate, check in, etc."
 	private boolean visibility = true; // Hide or shows the person visually 
-	private int x; // x coordinate
-	private int y; // y coordinate
+	private int x = 10; // x coordinate
+	private int y = 9; // y coordinate
 	private ImageView guestImageView;
 	private int roomId;
 	private int id;
+	private int translateXVal;
+	private int translateYVal;
 	
 	//Constructor
 	public Guest(String status, boolean visibility, int roomId, int x, int y)
@@ -63,6 +67,72 @@ public class Guest extends Person{
 	
 	//Functions
 	
+	public void getRoute(Area destinationArea){
+		getCurrentPosition().distance = 0;
+	    currentRoute = _ds.Dijkstra(getCurrentPosition(), destinationArea);
+	}
+	
+	public Area getCurrentPosition() {
+		for (Area object: Area.getAreaList()) {
+			if(object.getX() == x && object.getY() == y) {
+				return object;
+			} else if(object.getXEnd() == x && object.getY() == y) {
+				return object;
+			}
+		}
+		return null;
+	}
+	
+	public void moveToArea(){
+		if(getLastArea() == null) {
+			System.out.println("Reached end of route");
+		} else if((getLastArea().getX() - x == 1) && getLastArea().getY() == y ) {
+			x = getLastArea().getX();
+			translateXVal += GridBuilder.colSize;
+			guestImageView.setTranslateX(translateXVal);
+			if(getLastArea().dimensionW > 1) {
+				
+			} else {
+				currentRoute.remove(getLastArea());
+			}
+		} else if((getLastArea().getXEnd() - x == 1) && getLastArea().getY() == y ) {
+			x = getLastArea().getXEnd();
+			translateXVal += GridBuilder.colSize;
+			guestImageView.setTranslateX(translateXVal);
+			currentRoute.remove(getLastArea());
+		} else if ((getLastArea().getX() - x == -1) && getLastArea().getY() == y ) {
+			x = getLastArea().getX();
+			translateXVal -= GridBuilder.colSize;
+			guestImageView.setTranslateX(translateXVal);
+			currentRoute.remove(getLastArea());			
+		} else if((getLastArea().getXEnd() - x == -1) && getLastArea().getY() == y ) {
+			x = getLastArea().getXEnd();
+			translateXVal -= GridBuilder.colSize;
+			guestImageView.setTranslateX(translateXVal);		} else if(getLastArea().getY() != y ) {
+			if(getLastArea().getY() - y == -1) {
+				y = getLastArea().getY();
+				translateYVal -= GridBuilder.rowSize;
+				guestImageView.setTranslateY(translateYVal);
+				currentRoute.remove(getLastArea());
+			} else {
+				y = getLastArea().getY();
+				translateYVal += GridBuilder.rowSize;
+				guestImageView.setTranslateY(translateYVal);
+				currentRoute.remove(getLastArea());				
+			}
+		}
+		else {
+			currentRoute.remove(getLastArea());
+		}	
+	}	
+	
+	public Area getLastArea() {
+		if(currentRoute.size() == 0) {
+			return null;
+		}else {
+			return currentRoute.get(currentRoute.size() - 1) ;
+		}
+	}	
 	
 	public int getId()
 	{

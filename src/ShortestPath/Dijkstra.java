@@ -18,7 +18,7 @@ public class Dijkstra {
     @par Node start = starting point
     @par Node end = goal to reach
      */
-    public String Dijkstra(Area start, Area end){
+    public ArrayList<Area> Dijkstra(Area start, Area end){
 
     	Area toCheck = start;
 
@@ -36,8 +36,8 @@ public class Dijkstra {
     public  boolean Visit(Area check, Area end){
 
         //debug info
-        System.out.println("I'm visiting: " + check.id);
-        System.out.println("Distance to " + check.id + " is: " + check.distance);
+//        System.out.println("I'm visiting: " + check.id);
+//        System.out.println("Distance to " + check.id + " is: " + check.distance);
 
         //check if we reached the end
         if(check == end){
@@ -68,7 +68,7 @@ public class Dijkstra {
                     open.add(entry.getKey());
                 }
                 //debug info
-                System.out.println("Added to open: " + entry.getKey().id);
+//                System.out.println("Added to open: " + entry.getKey().id);
             }
         }
 
@@ -80,16 +80,18 @@ public class Dijkstra {
     Makes the path by walking from the end to the start and following the shortest path
     @par end = Node to walk from
      */
-    private String makePath(Area end){
+    private ArrayList<Area> makePath(Area end){
         boolean cont = true;
 
         Area current = end;
 
-        String path = "";
+        ArrayList<Area> pathWithAreas = new ArrayList<Area>();
+        
 
         while(cont){
 
-            path += current.id + "-";
+        	pathWithAreas.add(current);
+        	
 
             //Check if we reached the end
             if(current.latest != null){
@@ -100,6 +102,6 @@ public class Dijkstra {
 
         }
 
-        return path;
+        return pathWithAreas;
     }
 }

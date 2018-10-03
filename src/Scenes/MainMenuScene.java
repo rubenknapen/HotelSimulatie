@@ -2,7 +2,12 @@ package Scenes;
 
 import java.io.File;
 import javax.swing.JFileChooser;
+
+import Areas.Area;
+import Factories.PersonFactory;
+import Managers.GridBuilder;
 import Managers.HotelManager;
+import Persons.Person;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -26,7 +31,7 @@ public class MainMenuScene {
 	public static String baseFolder = System.getProperty("user.dir");
 	public static String fileLocation = "\\src\\layout\\hotel4.layout";
 	public static String selectedLayout = baseFolder+fileLocation;
-	
+		
 	/**
 	 * constructor die zorgt dat de stage gebouwt en weergegeven wordt.
 	 * @param stage
@@ -154,17 +159,16 @@ public class MainMenuScene {
 	{
 	    HotelManager hotelManager = new HotelManager();
 	    new SimulationScene();
-	    EventLib.HotelEventManager eventManager = new EventLib.HotelEventManager();
-	    eventManager.register(hotelManager);
-	    eventManager.start();
+//	    EventLib.HotelEventManager eventManager = new EventLib.HotelEventManager();
+//	    eventManager.register(hotelManager);
+//	    eventManager.start();
 	    
 	    // THIS DOESN'T BELONG HERE -- ! JUST FOR TESTING !
 	    // HERE WE TEST THE DIJKSTRA ALGORITHM
 
 //	    Area.areaList.get(38).distance = 0;
 //		System.out.println(_ds.Dijkstra(Area.areaList.get(38), Area.areaList.get(49)));
-	    
 
-	    
+
 	}
 }

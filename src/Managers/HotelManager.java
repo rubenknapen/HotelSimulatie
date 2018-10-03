@@ -21,28 +21,41 @@ public class HotelManager implements EventLib.HotelEventListener{
 	//Variables
 	int guestCounter = 0;
 	int selectedRoomId;
-	public ArrayList<Person> guests;
+	public static ArrayList<Person> guests;
 	
 	
 	//Constructor
 	public HotelManager(){
         ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 		GridBuilder gridBuilder = new GridBuilder();
-		SimulationTimer timer = new SimulationTimer();
 		gridBuilder.buildGrid();
 			
 		//Build array list for guests
 		guests = new ArrayList();
 
+		// testing purpose
+		addGuest(1);
+		guests.get(0).getRoute(Area.areaList.get(22));
+	
+		
+		SimulationTimer timer = new SimulationTimer();
+		timer.activateTimer();		
+						
+				
+	}
+	
+	public static void moveGuests() {
+  		for(Person guest : guests) {
+			guest.moveToArea();
+		}
 	}
 	
 	public void addGuest(int guestId)
 	{
-		Person xx = PersonFactory.createPerson("Guest","In de rij staan",true,selectedRoomId,4,GridBuilder.getMaxY() + 1);
-		Guest g = (Guest) xx;
-		g.setId(guestId);
+		Person xx = PersonFactory.createPerson("Guest","In de rij staan",true,selectedRoomId,10,3);
+		xx.setId(guestId);
 		guests.add(xx);
-		System.out.println("Guest: " + guestId + " added!");
+//		System.out.println("Guest: " + guestId + " added!");
 	}
 
 	public void removeGuest(int guestId)
