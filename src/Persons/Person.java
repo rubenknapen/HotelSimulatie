@@ -8,6 +8,7 @@ import EventLib.HotelEvent;
 public abstract class Person{	
 	
 	String path = "";
+	String status = "";
 	
 	//All functions
 	public void evacuate()

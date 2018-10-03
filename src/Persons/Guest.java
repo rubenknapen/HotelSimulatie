@@ -17,7 +17,6 @@ import javafx.scene.image.ImageView;
 public class Guest extends Person{
 
 	//Variables
-	private String status; // Status of the person "evacuate, check in, etc."
 	private boolean visibility = true; // Hide or shows the person visually 
 	private int x; // x coordinate
 	private int y; // y coordinate
@@ -63,7 +62,7 @@ public class Guest extends Person{
 	
 	//Functions
 	
-	
+		
 	public int getId()
 	{
 		return id;
@@ -97,9 +96,9 @@ public class Guest extends Person{
 	}
 	
 	@Override
-	public void evacuate() {
-		// TODO Auto-generated method stub
-		
+	public void evacuate() 
+	{
+		//
 	}
 
 	public String getStatus() {

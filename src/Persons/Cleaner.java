@@ -20,6 +20,7 @@ public class Cleaner extends Person{
 	private boolean visibility = true; // Hide or shows the person visually 
 	private int x; // x coordinate
 	private int y; // y coordinate
+	private int id;
 	private ImageView cleanerImageView;
 	
 	//Constructor
@@ -77,6 +78,16 @@ public class Cleaner extends Person{
 
 	public void setVisibility(boolean visibility) {
 		this.visibility = visibility;
+	}
+	
+	public void setId(int id)
+	{
+		this.id = id;
+	}
+	
+	public int getId()
+	{
+		return id;
 	}
 
 	public int getX() {

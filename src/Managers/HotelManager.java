@@ -11,6 +11,7 @@ import Areas.Lobby;
 import Areas.Restaurant;
 import Factories.AreaFactory;
 import Factories.PersonFactory;
+import Persons.Cleaner;
 import Persons.Guest;
 import Persons.Person;
 import ShortestPath.Dijkstra;
@@ -25,6 +26,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 	int guestCounter = 0;
 	int selectedRoomId;
 	public ArrayList<Person> guests;
+	public ArrayList<Person> cleaners;
 	ShortestPath.Dijkstra _ds;
 	
 	
@@ -34,16 +36,32 @@ public class HotelManager implements EventLib.HotelEventListener{
 		GridBuilder gridBuilder = new GridBuilder();
 		SimulationTimer timer = new SimulationTimer();
 		gridBuilder.buildGrid();
+		
 			
 		//Build array list for guests
 		guests = new ArrayList();
-
+		cleaners = new ArrayList();
+		
+		
+		addCleaners(2);
+	}
+	
+	public void addCleaners(int amount)
+	{
+		for(int i = 1; i <= amount; i++)
+		{
+			Person xx = PersonFactory.createPerson("Cleaner","Inactive",true,0,4,GridBuilder.getMaxY() - 4);
+			Cleaner c = (Cleaner) xx;
+			c.setId(i);
+			cleaners.add(xx);
+			System.out.println("Cleaner: " + c.getId() + " added!");
+		}
 	}
 	
 	public void addGuest(int guestId)
 	{
 		//moet hier + 1 zijn, staat op iets anders voor testing
-		Person xx = PersonFactory.createPerson("Guest","In de rij staan",true,selectedRoomId,4,GridBuilder.getMaxY() + 1);
+		Person xx = PersonFactory.createPerson("Guest","Inactive",true,selectedRoomId,4,GridBuilder.getMaxY() - 5);
 		Guest g = (Guest) xx;
 		g.setId(guestId);
 		guests.add(xx);
@@ -52,6 +70,8 @@ public class HotelManager implements EventLib.HotelEventListener{
 
 	public void removeGuest(int guestId)
 	{
+		int availableCleanerId;
+		
 		for(int i = 0; i < guests.size(); i++)
 		{
 			Guest g = (Guest) guests.get(i);
@@ -60,6 +80,8 @@ public class HotelManager implements EventLib.HotelEventListener{
 			{
 				//Get Roominfo for Housekeeping
 				selectedRoomId = g.getSelectedRoom();
+				
+				availableCleanerId = getAvailableCleaner("CLEANING");
 				
 				//Send housekeeping based on above info
 				//this is endPosition for Dijkstra
@@ -87,8 +109,6 @@ public class HotelManager implements EventLib.HotelEventListener{
 				return a;
 			}
 		}
-
-		//Send housekeeping to room
 		return null;
 	}
 	
@@ -154,9 +174,9 @@ public class HotelManager implements EventLib.HotelEventListener{
 				if(object instanceof Restaurant) 
 				{
 					System.out.println("I found a restaurant for Dijkstra");
-					System.out.println("###TESTVALUE### X: " + object.getX());
-					System.out.println("###TESTVALUE### Y: " + object.getY());
-					_ds.Dijkstra(start,object);
+					//System.out.println("###TESTVALUE### X: " + object.getX());
+					//System.out.println("###TESTVALUE### Y: " + object.getY());
+					//_ds.Dijkstra(start,object);
 					
 					if (_ds.distance < shortestDistance)
 					{
@@ -189,7 +209,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 				{
 					System.out.println("I found a Fitness room for Dijkstra");
 					
-					_ds.Dijkstra(start,object);
+					//_ds.Dijkstra(start,object);
 					
 					if (_ds.distance < shortestDistance)
 					{
@@ -220,7 +240,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 				if(object instanceof Cinema) 
 				{
 					System.out.println("I found a Cinema for Dijkstra");
-					_ds.Dijkstra(start,object);
+					//_ds.Dijkstra(start,object);
 					
 					if (_ds.distance < shortestDistance)
 					{
@@ -260,11 +280,68 @@ public class HotelManager implements EventLib.HotelEventListener{
 		}
 	}
 	
+	public int getAvailableCleaner(String type)
+	{
+		int availableCleanerId = 0;
+		
+		if (type == "CLEANING EMERGENCY")
+		{
+			for(int i = 0; i < cleaners.size(); i++)
+			{
+				Cleaner c = (Cleaner) cleaners.get(i);
+				if (c.getStatus() != "CLEANING EMERGENCY")
+				{
+					availableCleanerId = c.getId();
+					System.out.println("### TESTVALUE ### I've change availableCleanerId from 0 -> "+c.getId());
+					c.setStatus("CLEANING EMERGENCY");
+					break;
+				}		
+			}
+		}
+		else if (type == "CLEANING")
+		{
+			for(int i = 0; i < cleaners.size(); i++)
+			{
+				Cleaner c = (Cleaner) cleaners.get(i);
+				if (c.getStatus() == "Inactive")
+				{
+					availableCleanerId = c.getId();
+					c.setStatus("CLEANING");
+				}		
+			}
+		}
+		return availableCleanerId;
+	}
+	
+	
+	public int getRoomOfGuest(int guestId)
+	{
+		int guestRoomId = 0;
+		
+		for(int i = 0; i < guests.size(); i++)
+		{
+			Guest g = (Guest) guests.get(i);
+			if (g.getId() == guestId)
+			{
+				System.out.println("Guest found for cleaning emergency");
+				guestRoomId = g.getSelectedRoom();
+			}
+		}
+		return guestRoomId;
+	}
+	
 	@Override
 	public void Notify(HotelEvent event) {
 		String tempEvent = event.Type.toString();
 		String hashmapContent = event.Data.toString();
 		
+		
+		//Debug purpose for loop
+		for(int i = 0; i < cleaners.size(); i++)
+		{
+			Cleaner c = (Cleaner) cleaners.get(i);
+			System.out.println("### TESTVALUE ### cleaner "+ c.getId() +" status : " + c.getStatus());
+		}
 		
 		if (tempEvent == "CHECK_IN")
 		{
@@ -356,6 +433,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 			System.out.println("I'm sending a guest to the restaurant, selected guest is: " + guestId);
 			assignRoom("Restaurant", guestId);
 		}
+		
 		else if (tempEvent == "GOTO_CINEMA")
 		{
 			int guestId;
@@ -374,6 +452,43 @@ public class HotelManager implements EventLib.HotelEventListener{
 			assignRoom("Cinema", guestId);
 			System.out.println("I'm sending a guest to the cinema, selected guest is: " + guestId);
 		}
+		
+		else if (tempEvent == "CLEANING_EMERGENCY")
+		{
+			int guestId;
+			int availableCleanerId;
+			int emergencyRoomId;
+			
+			String[] splitArray = hashmapContent.split("=");
+			
+			if (splitArray[1].contains("}"))
+			{
+				String[] splitArray2 = splitArray[1].split("}");
+				guestId = Integer.parseInt(splitArray2[0]);
+			}
+			
+			else 
+			{
+				guestId = Integer.parseInt(splitArray[1]);
+			}
+			
+			emergencyRoomId = getRoomOfGuest(guestId);
+			availableCleanerId = getAvailableCleaner("CLEANING EMERGENCY");
+			
+			if (availableCleanerId == 0)
+			{
+				System.out.println("All cleaners in emergency cleaning status already");
+			}
+			
+			System.out.println("The room of guest ID: "+guestId+" must be cleaned!");
+			System.out.println("His Room ID is: "+emergencyRoomId);
+			
+			//Send housekeeping based on above info
+			//this is endPosition for Dijkstra
+			roomToClean(emergencyRoomId);
+			
+		}
+		
 		else if (tempEvent == "EVACUATE")
 		{
 			System.out.println("I'm sending all persons to evacuate");
