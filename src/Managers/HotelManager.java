@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Areas.Area;
+import Areas.Cinema;
+import Areas.Fitness;
 import Areas.HotelRoom;
 import Areas.Lobby;
 import Areas.Restaurant;
@@ -13,6 +15,7 @@ import Persons.Guest;
 import Persons.Person;
 import ShortestPath.Dijkstra;
 import javafx.application.Platform;
+import javafx.scene.Node;
 import EventLib.HotelEvent;
 import EventLib.HotelEventManager;
 
@@ -22,11 +25,12 @@ public class HotelManager implements EventLib.HotelEventListener{
 	int guestCounter = 0;
 	int selectedRoomId;
 	public ArrayList<Person> guests;
+	ShortestPath.Dijkstra _ds;
 	
 	
 	//Constructor
 	public HotelManager(){
-        ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
+        _ds = new ShortestPath.Dijkstra();
 		GridBuilder gridBuilder = new GridBuilder();
 		SimulationTimer timer = new SimulationTimer();
 		gridBuilder.buildGrid();
@@ -38,11 +42,12 @@ public class HotelManager implements EventLib.HotelEventListener{
 	
 	public void addGuest(int guestId)
 	{
-		Person xx = PersonFactory.createPerson("Guest","In de rij staan",true,selectedRoomId,4,GridBuilder.getMaxY() + 1);
+		//moet hier + 1 zijn, staat op iets anders voor testing
+		Person xx = PersonFactory.createPerson("Guest","In de rij staan",true,selectedRoomId,4,GridBuilder.getMaxY() - 5);
 		Guest g = (Guest) xx;
 		g.setId(guestId);
 		guests.add(xx);
-		System.out.println("Guest: " + guestId + " added!");
+		System.out.println("Guest: " + g.getId() + " added!");
 	}
 
 	public void removeGuest(int guestId)
@@ -57,6 +62,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 				selectedRoomId = g.getSelectedRoom();
 				
 				//Send housekeeping based on above info
+				//this is endPosition for Dijkstra
 				roomToClean(selectedRoomId);
 				
 				//Clear the room for a new guest
@@ -77,7 +83,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 		
 		for (Area a : Area.getAreaList()) {
 			if(a.id == roomId) {
-				System.out.println("Sending housekeeping to: "+ a);
+				System.out.println("Sending housekeeping to object ID: "+ a.id);
 				return a;
 			}
 		}
@@ -92,9 +98,9 @@ public class HotelManager implements EventLib.HotelEventListener{
 				if (object.stars == prefStars && object.available == true)
 				{
 					selectedRoomId = object.id;
-					System.out.println("My room ID: " + object.id);
-					System.out.println("My X-Coord: " + object.x);
-					System.out.println("My Y-Coord: " + object.y);
+					System.out.println("selected room ID: " + object.id);
+					System.out.println("selected room X-Coord: " + object.x);
+					System.out.println("selected room Y-Coord: " + object.y);
 					((HotelRoom) object).setAvailability(false);
 					break;
 				}
@@ -102,22 +108,143 @@ public class HotelManager implements EventLib.HotelEventListener{
 		}
 	}
 	
-	public void assignRoom(String type, int roomId)
+	public Area getAreaNode(int x, int y)
 	{
+		for (Area object: Area.getAreaList()) 
+		{
+			//System.out.println("object x: " + object.getX() + " & object y: " + object.getY());
+			if (object.getX() == x && object.getY() == y)
+			{
+				object.distance = 0;
+				return object;
+			}
+		}
+		return null;
+	}
+	
+	public Area assignRoom(String type, int guestId)
+	{
+		int distance = 0;
+		int shortestDistance = 1000;
+		int shortestDistanceObjectId = 0;
+		Area start = null;
+		
+		for(int i = 0; i < guests.size(); i++)
+		{
+			Guest g = (Guest) guests.get(i);
+			
+			//System.out.println("I'm looking for id: " + guestId);
+			//System.out.println("I'm comparing with id: " + g.getId());
+			
+			if (g.getId() == guestId)
+			{
+				start = getAreaNode(g.getX(),g.getY());
+				//System.out.println("I found startNode: " + start);
+			}
+			else
+			{
+				//System.out.println("No guest was found for id: " + guestId);
+			}
+		}
+		
 		if (type == "Restaurant")
 		{
-			for (Area object: Area.getAreaList()) {
-				if(object instanceof Restaurant) {
-					if (object.id == roomId)
+			for (Area object: Area.getAreaList()) 
+			{
+				if(object instanceof Restaurant) 
+				{
+					System.out.println("I found a restaurant for Dijkstra");
+					//_ds.Dijkstra(start,object);
+					
+					if (distance < shortestDistance)
 					{
-						object.setAvailability(true);
-						System.out.print("Room ID: " + object.id + " is now available!");
-						System.out.print("");
-						break;
+						shortestDistance = distance;
+						shortestDistanceObjectId = object.id;
 					}
+					
+					System.out.println("Restaurant object ID: " + object.id + " is the chosen one!");
+					for (Area finalObject: Area.getAreaList()) 
+					{
+						if(finalObject instanceof Restaurant) 
+						{
+							if(finalObject.id == shortestDistanceObjectId)
+							{
+								System.out.println("selected destination X-Coord: " + finalObject.x);
+								System.out.println("selected destination Y-Coord: " + finalObject.y);
+								return finalObject;
+							}
+						}
+					}
+					
 				}
 			}
 		}
+		
+		else if (type == "Fitness")
+		{
+			for (Area object: Area.getAreaList()) 
+			{
+				if(object instanceof Fitness) 
+				{
+					System.out.println("I found a Fitness room for Dijkstra");
+					//_ds.Dijkstra(start,object);
+					
+					if (distance < shortestDistance)
+					{
+						shortestDistance = distance;
+						shortestDistanceObjectId = object.id;
+					}
+					
+					System.out.println("Fitness object ID: " + object.id + " is the chosen room!");
+					for (Area finalObject: Area.getAreaList()) 
+					{
+						if(finalObject instanceof Fitness) 
+						{
+							if(finalObject.id == shortestDistanceObjectId)
+							{
+								System.out.println("selected destination X-Coord: " + finalObject.x);
+								System.out.println("selected destination Y-Coord: " + finalObject.y);
+								return finalObject;
+							}
+						}
+					}
+					
+				}
+			}
+		}
+		else if (type == "Cinema")
+		{
+			for (Area object: Area.getAreaList()) 
+			{
+				if(object instanceof Cinema) 
+				{
+					System.out.println("I found a Cinema for Dijkstra");
+					//_ds.Dijkstra(start,object);
+					
+					if (distance < shortestDistance)
+					{
+						shortestDistance = distance;
+						shortestDistanceObjectId = object.id;
+					}
+					
+					System.out.println("Cinema object ID: " + object.id + " is the chosen cinema!");
+					for (Area finalObject: Area.getAreaList()) 
+					{
+						if(finalObject instanceof Cinema) 
+						{
+							if(finalObject.id == shortestDistanceObjectId)
+							{
+								System.out.println("selected destination X-Coord: " + finalObject.x);
+								System.out.println("selected destination Y-Coord: " + finalObject.y);
+								return finalObject;
+							}
+						}
+					}
+					
+				}
+			}
+		}
+		return null;
 	}
 	
 	public void freeRoom(int roomId) {
@@ -126,8 +253,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 				if (object.id == roomId)
 				{
 					object.setAvailability(true);
-					System.out.print("Room ID: " + object.id + " is now available!");
-					System.out.print("");
+					System.out.println("Room ID: " + object.id + " is now available!");
 					break;
 				}
 			}
@@ -193,7 +319,23 @@ public class HotelManager implements EventLib.HotelEventListener{
 		}
 		else if (tempEvent == "GOTO_FITNESS")
 		{
-			System.out.println("I'm sending a guest to fitness, selected guest is: " + "guestId");
+			int guestId;
+			//System.out.println("###TESTVALUE### "+hashmapContent);
+			String[] splitArray = hashmapContent.split("=");
+			
+			if (splitArray[0].contains("}"))
+			{
+				String[] splitArray2 = splitArray[1].split("}");
+				guestId = Integer.parseInt(splitArray2[0]);
+			}
+			
+			else 
+			{
+				String[] splitArray2 = splitArray[1].split("\\s");
+				guestId = Integer.parseInt(splitArray2[0]);
+			}
+			assignRoom("Fitness", guestId);
+			System.out.println("I'm sending a guest to fitness, selected guest is: " + guestId);
 		}
 		else if (tempEvent == "NEED_FOOD")
 		{
@@ -215,7 +357,21 @@ public class HotelManager implements EventLib.HotelEventListener{
 		}
 		else if (tempEvent == "GOTO_CINEMA")
 		{
-			System.out.println("I'm sending a guest to the cinema, selected guest is: " + "guestId");
+			int guestId;
+			String[] splitArray = hashmapContent.split("=");
+			
+			if (splitArray[1].contains("}"))
+			{
+				String[] splitArray2 = splitArray[1].split("}");
+				guestId = Integer.parseInt(splitArray2[0]);
+			}
+			
+			else 
+			{
+				guestId = Integer.parseInt(splitArray[1]);
+			}
+			assignRoom("Cinema", guestId);
+			System.out.println("I'm sending a guest to the cinema, selected guest is: " + guestId);
 		}
 		else if (tempEvent == "EVACUATE")
 		{
