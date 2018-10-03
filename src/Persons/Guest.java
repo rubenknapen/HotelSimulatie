@@ -125,10 +125,9 @@ public class Guest extends Person{
 			translateXVal -= GridBuilder.colSize;
 			guestImageView.setTranslateX(translateXVal);
 			if(getLastArea().dimensionW > 1) {
-				System.out.println("links mijn x is: " + x + "      next id: " + getLastArea().id + "          XEnd = " + getLastArea().getXEnd() );
+				
 			} else {
 				currentRoute.remove(getLastArea());
-				System.out.println("links mijn x is: " + x + "      next id: " + getLastArea().id + "          XEnd = " + getLastArea().getXEnd() );
 			}
 		
 		} 
@@ -147,13 +146,11 @@ public class Guest extends Person{
 			// Up and down movement
 			
 			if(getLastArea().getY() - y == -1) {
-				System.out.println("boven");
 				y = getLastArea().getY();
 				translateYVal -= GridBuilder.rowSize;
 				guestImageView.setTranslateY(translateYVal);
 				currentRoute.remove(getLastArea());
 			} else {
-				System.out.println("onder");
 				y = getLastArea().getY();
 				translateYVal += GridBuilder.rowSize;
 				guestImageView.setTranslateY(translateYVal);
