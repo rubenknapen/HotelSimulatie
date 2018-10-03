@@ -30,8 +30,9 @@ public class Guest extends Person{
 	private int translateYVal;
 	
 	//Constructor
-	public Guest(String status, boolean visibility, int roomId, int x, int y)
+	public Guest(String status, int id, boolean visibility, int roomId, int x, int y)
 	{
+		this.id = id;
 		this.setStatus(status);
 		this.setVisibility(visibility);
 		this.setSelectedRoom(roomId);		
@@ -70,6 +71,13 @@ public class Guest extends Person{
 	public void getRoute(Area destinationArea){
 		getCurrentPosition().distance = 0;
 	    currentRoute = _ds.Dijkstra(getCurrentPosition(), destinationArea);
+	    clearDistances();
+	}
+	
+	private void clearDistances() {
+		for (Area a : Area.getAreaList()) {
+			a.distance = Integer.MAX_VALUE;;
+		}		
 	}
 	
 	public Area getCurrentPosition() {

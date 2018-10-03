@@ -44,9 +44,12 @@ public class HotelManager implements EventLib.HotelEventListener{
 
 
 		// testing purpose
-		addGuest(1);
-		addCleaners(2);
-		guests.get(0).getRoute(Area.areaList.get(22));
+//		addGuest(1);
+//		addGuest(2);
+//		addCleaners(2);
+//		guests.get(0).getRoute(Area.areaList.get(22));
+//				
+//		guests.get(1).getRoute(Area.areaList.get(37));
 	
 		
 		SimulationTimer timer = new SimulationTimer();
@@ -77,7 +80,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 	{
 
 		//moet hier + 1 zijn, staat op iets anders voor testing
-		Person xx = PersonFactory.createPerson("Guest","In de rij staan",true,selectedRoomId,10,3);
+		Person xx = PersonFactory.createPerson("Guest","In de rij staan", guestId,true,selectedRoomId,10,3);
 		Guest g = (Guest) xx;
 		g.setId(guestId);
 		guests.add(xx);
@@ -129,20 +132,18 @@ public class HotelManager implements EventLib.HotelEventListener{
 		return null;
 	}
 	
-	public void findRoom(int prefStars) {
+	public Area findRoom(int prefStars) {
 		for (Area object: Area.getAreaList()) {
 			if(object instanceof HotelRoom) {
 				if (object.stars == prefStars && object.available == true)
-				{
+				{					
 					selectedRoomId = object.id;
-					System.out.println("selected room ID: " + object.id);
-					System.out.println("selected room X-Coord: " + object.x);
-					System.out.println("selected room Y-Coord: " + object.y);
-					((HotelRoom) object).setAvailability(false);
-					break;
+					object.setAvailability(false);
+					return object;
 				}
 			}
 		}
+		return null;
 	}
 	
 	public Area getAreaNode(int x, int y)
@@ -379,141 +380,144 @@ public class HotelManager implements EventLib.HotelEventListener{
 			System.out.println("Guests id: " + guestId);
 			System.out.println("Guests prefStars: " + prefStars);
 			
-			findRoom(prefStarsInt);
+
 			
 			//Because this command is not running from Java FX I've added this to update UI from a different thread.
 			Platform.runLater(
 					  () -> {
-						  addGuest(setGuestIdValue);
+						  Person xx = PersonFactory.createPerson("Guest","In de rij staan", setGuestIdValue,true,selectedRoomId,10,3);
+						  guests.add(xx);
+						  xx.getRoute(findRoom(prefStarsInt));
 					  }
 					);
+			
 			
 			guestCounter++;
 			System.out.println("Added a guest, total guests: " + guestCounter);
 		}
-		else if (tempEvent == "CHECK_OUT")
-		{
-			int guestId;
-			String[] splitArray = hashmapContent.split("=");
-			
-			if (splitArray[1].contains("}"))
-			{
-				String[] splitArray2 = splitArray[1].split("}");
-				guestId = Integer.parseInt(splitArray2[0]);
-			}
-			
-			else 
-			{
-				guestId = Integer.parseInt(splitArray[1]);
-			}
-			
-			guestCounter--;
-			removeGuest(guestId);
-			System.out.println("Guest: "+guestId+" left, total guests: " + guestCounter);
-		}
-		else if (tempEvent == "GOTO_FITNESS")
-		{
-			int guestId;
-			//System.out.println("###TESTVALUE### "+hashmapContent);
-			String[] splitArray = hashmapContent.split("=");
-			
-			if (splitArray[0].contains("}"))
-			{
-				String[] splitArray2 = splitArray[1].split("}");
-				guestId = Integer.parseInt(splitArray2[0]);
-			}
-			
-			else 
-			{
-				String[] splitArray2 = splitArray[1].split("\\s");
-				guestId = Integer.parseInt(splitArray2[0]);
-			}
-			assignRoom("Fitness", guestId);
-			System.out.println("I'm sending a guest to fitness, selected guest is: " + guestId);
-		}
-		else if (tempEvent == "NEED_FOOD")
-		{
-			int guestId;
-			String[] splitArray = hashmapContent.split("=");
-			
-			if (splitArray[1].contains("}"))
-			{
-				String[] splitArray2 = splitArray[1].split("}");
-				guestId = Integer.parseInt(splitArray2[0]);
-			}
-			
-			else 
-			{
-				guestId = Integer.parseInt(splitArray[1]);
-			}
-
-			System.out.println("I'm sending a guest to the restaurant, selected guest is: " + guestId);
-			assignRoom("Restaurant", guestId);
-		}
-		
-		else if (tempEvent == "GOTO_CINEMA")
-		{
-			int guestId;
-			String[] splitArray = hashmapContent.split("=");
-			
-			if (splitArray[1].contains("}"))
-			{
-				String[] splitArray2 = splitArray[1].split("}");
-				guestId = Integer.parseInt(splitArray2[0]);
-			}
-			
-			else 
-			{
-				guestId = Integer.parseInt(splitArray[1]);
-			}
-			assignRoom("Cinema", guestId);
-			System.out.println("I'm sending a guest to the cinema, selected guest is: " + guestId);
-		}
-		
-		else if (tempEvent == "CLEANING_EMERGENCY")
-		{
-			int guestId;
-			int availableCleanerId;
-			int emergencyRoomId;
-			
-			String[] splitArray = hashmapContent.split("=");
-			
-			if (splitArray[1].contains("}"))
-			{
-				String[] splitArray2 = splitArray[1].split("}");
-				guestId = Integer.parseInt(splitArray2[0]);
-			}
-			
-			else 
-			{
-				guestId = Integer.parseInt(splitArray[1]);
-			}
-			
-			emergencyRoomId = getRoomOfGuest(guestId);
-			availableCleanerId = getAvailableCleaner("CLEANING EMERGENCY");
-			
-			if (availableCleanerId == 0)
-			{
-				System.out.println("All cleaners in emergency cleaning status already");
-			}
-			
-			System.out.println("The room of guest ID: "+guestId+" must be cleaned!");
-			System.out.println("His Room ID is: "+emergencyRoomId);
-			
-			//Send housekeeping based on above info
-			//this is endPosition for Dijkstra
-			roomToClean(emergencyRoomId);
-			
-		}
-		
-		else if (tempEvent == "EVACUATE")
-		{
-			System.out.println("I'm sending all persons to evacuate");
-		}
-		else if (tempEvent == "GODZILLA")
-		{
-			System.out.println("Godzilla event, message: " + hashmapContent);
-		}
+//		else if (tempEvent == "CHECK_OUT")
+//		{
+//			int guestId;
+//			String[] splitArray = hashmapContent.split("=");
+//			
+//			if (splitArray[1].contains("}"))
+//			{
+//				String[] splitArray2 = splitArray[1].split("}");
+//				guestId = Integer.parseInt(splitArray2[0]);
+//			}
+//			
+//			else 
+//			{
+//				guestId = Integer.parseInt(splitArray[1]);
+//			}
+//			
+//			guestCounter--;
+//			removeGuest(guestId);
+//			System.out.println("Guest: "+guestId+" left, total guests: " + guestCounter);
+//		}
+//		else if (tempEvent == "GOTO_FITNESS")
+//		{
+//			int guestId;
+//			//System.out.println("###TESTVALUE### "+hashmapContent);
+//			String[] splitArray = hashmapContent.split("=");
+//			
+//			if (splitArray[0].contains("}"))
+//			{
+//				String[] splitArray2 = splitArray[1].split("}");
+//				guestId = Integer.parseInt(splitArray2[0]);
+//			}
+//			
+//			else 
+//			{
+//				String[] splitArray2 = splitArray[1].split("\\s");
+//				guestId = Integer.parseInt(splitArray2[0]);
+//			}
+//			assignRoom("Fitness", guestId);
+//			System.out.println("I'm sending a guest to fitness, selected guest is: " + guestId);
+//		}
+//		else if (tempEvent == "NEED_FOOD")
+//		{
+//			int guestId;
+//			String[] splitArray = hashmapContent.split("=");
+//			
+//			if (splitArray[1].contains("}"))
+//			{
+//				String[] splitArray2 = splitArray[1].split("}");
+//				guestId = Integer.parseInt(splitArray2[0]);
+//			}
+//			
+//			else 
+//			{
+//				guestId = Integer.parseInt(splitArray[1]);
+//			}
+//
+//			System.out.println("I'm sending a guest to the restaurant, selected guest is: " + guestId);
+//			assignRoom("Restaurant", guestId);
+//		}
+//		
+//		else if (tempEvent == "GOTO_CINEMA")
+//		{
+//			int guestId;
+//			String[] splitArray = hashmapContent.split("=");
+//			
+//			if (splitArray[1].contains("}"))
+//			{
+//				String[] splitArray2 = splitArray[1].split("}");
+//				guestId = Integer.parseInt(splitArray2[0]);
+//			}
+//			
+//			else 
+//			{
+//				guestId = Integer.parseInt(splitArray[1]);
+//			}
+//			assignRoom("Cinema", guestId);
+//			System.out.println("I'm sending a guest to the cinema, selected guest is: " + guestId);
+//		}
+//		
+//		else if (tempEvent == "CLEANING_EMERGENCY")
+//		{
+//			int guestId;
+//			int availableCleanerId;
+//			int emergencyRoomId;
+//			
+//			String[] splitArray = hashmapContent.split("=");
+//			
+//			if (splitArray[1].contains("}"))
+//			{
+//				String[] splitArray2 = splitArray[1].split("}");
+//				guestId = Integer.parseInt(splitArray2[0]);
+//			}
+//			
+//			else 
+//			{
+//				guestId = Integer.parseInt(splitArray[1]);
+//			}
+//			
+//			emergencyRoomId = getRoomOfGuest(guestId);
+//			availableCleanerId = getAvailableCleaner("CLEANING EMERGENCY");
+//			
+//			if (availableCleanerId == 0)
+//			{
+//				System.out.println("All cleaners in emergency cleaning status already");
+//			}
+//			
+//			System.out.println("The room of guest ID: "+guestId+" must be cleaned!");
+//			System.out.println("His Room ID is: "+emergencyRoomId);
+//			
+//			//Send housekeeping based on above info
+//			//this is endPosition for Dijkstra
+//			roomToClean(emergencyRoomId);
+//			
+//		}
+//		
+//		else if (tempEvent == "EVACUATE")
+//		{
+//			System.out.println("I'm sending all persons to evacuate");
+//		}
+//		else if (tempEvent == "GODZILLA")
+//		{
+//			System.out.println("Godzilla event, message: " + hashmapContent);
+//		}
 	}
 	
 

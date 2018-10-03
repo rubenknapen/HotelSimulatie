@@ -159,15 +159,10 @@ public class MainMenuScene {
 	{
 	    HotelManager hotelManager = new HotelManager();
 	    new SimulationScene();
-//	    EventLib.HotelEventManager eventManager = new EventLib.HotelEventManager();
-//	    eventManager.register(hotelManager);
-//	    eventManager.start();
-	    
-	    // THIS DOESN'T BELONG HERE -- ! JUST FOR TESTING !
-	    // HERE WE TEST THE DIJKSTRA ALGORITHM
+	    EventLib.HotelEventManager eventManager = new EventLib.HotelEventManager();
+	    eventManager.register(hotelManager);
+	    eventManager.start();
 
-//	    Area.areaList.get(38).distance = 0;
-//		System.out.println(_ds.Dijkstra(Area.areaList.get(38), Area.areaList.get(49)));
 
 
 	}
