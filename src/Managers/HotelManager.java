@@ -44,6 +44,10 @@ public class HotelManager implements EventLib.HotelEventListener{
 
 
 		// testing purpose
+		
+//		Person xx = PersonFactory.createPerson("Guest","In de rij staan", 1,true,selectedRoomId,4,7);
+//		guests.add(xx);
+//		xx.getRoute(findRoom(5));
 //		addGuest(1);
 //		addGuest(2);
 //		addCleaners(2);
@@ -76,17 +80,17 @@ public class HotelManager implements EventLib.HotelEventListener{
 		}
 	}
 	
-	public void addGuest(int guestId)
-	{
-
-		//moet hier + 1 zijn, staat op iets anders voor testing
-		Person xx = PersonFactory.createPerson("Guest","In de rij staan", guestId,true,selectedRoomId,10,3);
-		Guest g = (Guest) xx;
-		g.setId(guestId);
-		guests.add(xx);
-		System.out.println("Guest: " + g.getId() + " added!");
-
-	}
+//	public void addGuest(int guestId)
+//	{
+//
+//		//moet hier + 1 zijn, staat op iets anders voor testing
+//		Person xx = PersonFactory.createPerson("Guest","In de rij staan", guestId,true,selectedRoomId,10,3);
+//		Guest g = (Guest) xx;
+//		g.setId(guestId);
+//		guests.add(xx);
+//		System.out.println("Guest: " + g.getId() + " added!");
+//
+//	}
 
 	public void removeGuest(int guestId)
 	{
@@ -135,7 +139,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 	public Area findRoom(int prefStars) {
 		for (Area object: Area.getAreaList()) {
 			if(object instanceof HotelRoom) {
-				if (object.stars == prefStars && object.available == true)
+				if (object.stars == 5)
 				{					
 					selectedRoomId = object.id;
 					object.setAvailability(false);
@@ -354,13 +358,13 @@ public class HotelManager implements EventLib.HotelEventListener{
 		String hashmapContent = event.Data.toString();
 		
 		
-		//Debug purpose for loop
-		for(int i = 0; i < cleaners.size(); i++)
-		{
-			Cleaner c = (Cleaner) cleaners.get(i);
-			System.out.println("### TESTVALUE ### cleaner "+ c.getId() +" status : " + c.getStatus());
-		}
-		
+//		//Debug purpose for loop
+//		for(int i = 0; i < cleaners.size(); i++)
+//		{
+//			Cleaner c = (Cleaner) cleaners.get(i);
+//			System.out.println("### TESTVALUE ### cleaner "+ c.getId() +" status : " + c.getStatus());
+//		}
+//		
 		if (tempEvent == "CHECK_IN")
 		{
 			String guestId;

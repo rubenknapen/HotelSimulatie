@@ -82,9 +82,9 @@ public class Guest extends Person{
 	
 	public Area getCurrentPosition() {
 		for (Area object: Area.getAreaList()) {
-			if(object.getX() == x && object.getY() == y) {
+			if(object.getX() == x && object.getRealY() == y) {
 				return object;
-			} else if(object.getXEnd() == x && object.getY() == y) {
+			} else if(object.getXEnd() == x && object.getRealY() == y) {
 				return object;
 			}
 		}
@@ -93,8 +93,12 @@ public class Guest extends Person{
 	
 	public void moveToArea(){
 		if(getLastArea() == null) {
-			System.out.println("Reached end of route");
-		} else if((getLastArea().getX() - x == 1) && getLastArea().getY() == y ) {
+//			System.out.println("Reached end of route");
+		} 
+		else if((getLastArea().getX() - x == 1) && getLastArea().getRealY() == y ) {
+			
+			// Right movement
+			
 			x = getLastArea().getX();
 			translateXVal += GridBuilder.colSize;
 			guestImageView.setTranslateX(translateXVal);
@@ -103,31 +107,59 @@ public class Guest extends Person{
 			} else {
 				currentRoute.remove(getLastArea());
 			}
-		} else if((getLastArea().getXEnd() - x == 1) && getLastArea().getY() == y ) {
+		} 
+		else if((getLastArea().getXEnd() - x == 1) && getLastArea().getRealY() == y ) {
+			
+			// Right movement
+			
 			x = getLastArea().getXEnd();
 			translateXVal += GridBuilder.colSize;
 			guestImageView.setTranslateX(translateXVal);
 			currentRoute.remove(getLastArea());
-		} else if ((getLastArea().getX() - x == -1) && getLastArea().getY() == y ) {
-			x = getLastArea().getX();
-			translateXVal -= GridBuilder.colSize;
-			guestImageView.setTranslateX(translateXVal);
-			currentRoute.remove(getLastArea());			
-		} else if((getLastArea().getXEnd() - x == -1) && getLastArea().getY() == y ) {
+		} 
+		else if((getLastArea().getXEnd() - x == -1) && getLastArea().getRealY() == y ) {
+			
+			// Left movement
+			
 			x = getLastArea().getXEnd();
 			translateXVal -= GridBuilder.colSize;
-			guestImageView.setTranslateX(translateXVal);		} else if(getLastArea().getY() != y ) {
+			guestImageView.setTranslateX(translateXVal);
+			if(getLastArea().dimensionW > 1) {
+				System.out.println("links mijn x is: " + x + "      next id: " + getLastArea().id + "          XEnd = " + getLastArea().getXEnd() );
+			} else {
+				currentRoute.remove(getLastArea());
+				System.out.println("links mijn x is: " + x + "      next id: " + getLastArea().id + "          XEnd = " + getLastArea().getXEnd() );
+			}
+		
+		} 
+		else if ((getLastArea().getX() - x == -1) && getLastArea().getRealY() == y ) {
+
+			// Left movement
+			
+			x = getLastArea().getX();
+			translateXVal -= GridBuilder.colSize;
+			guestImageView.setTranslateX(translateXVal);	
+			currentRoute.remove(getLastArea());
+
+		}
+		else if(getLastArea().getY() != y ) {
+			
+			// Up and down movement
+			
 			if(getLastArea().getY() - y == -1) {
+				System.out.println("boven");
 				y = getLastArea().getY();
 				translateYVal -= GridBuilder.rowSize;
 				guestImageView.setTranslateY(translateYVal);
 				currentRoute.remove(getLastArea());
 			} else {
+				System.out.println("onder");
 				y = getLastArea().getY();
 				translateYVal += GridBuilder.rowSize;
 				guestImageView.setTranslateY(translateYVal);
 				currentRoute.remove(getLastArea());				
 			}
+			
 		}
 		else {
 			currentRoute.remove(getLastArea());

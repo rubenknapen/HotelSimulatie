@@ -29,7 +29,7 @@ public class MainMenuScene {
 	ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 	
 	public static String baseFolder = System.getProperty("user.dir");
-	public static String fileLocation = "\\src\\layout\\hotel4.layout";
+	public static String fileLocation = "\\src\\layout\\hotel3.layout";
 	public static String selectedLayout = baseFolder+fileLocation;
 		
 	/**

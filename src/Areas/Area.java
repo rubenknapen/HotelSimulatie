@@ -74,7 +74,7 @@ public abstract class Area {
 	}
 
 	public int getXEnd() {
-		return x + dimensionW - 1;
+		return x + dimensionW -1;
 	}
 	
 	public int getRealY() {

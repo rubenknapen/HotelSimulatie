@@ -59,7 +59,8 @@ public class HotelRoom extends Area {
 		roomBg.setAlignment(Pos.BOTTOM_LEFT);
 		
 		
-		Label label = new Label(Integer.toString(id) + " x: " +  (Integer.toString(getXEnd())));
+		Label label = new Label(Integer.toString(id) + " x: " +  (Integer.toString(x)));
+
 		
 		roomBg.getChildren().addAll(label);
 		
