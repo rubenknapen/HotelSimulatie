@@ -13,7 +13,9 @@ public abstract class Person{
 	ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 	ArrayList<Area> currentRoute = new ArrayList<Area>();
 	private int id;
-	
+	String path = "";
+	String status = "";
+
 	
 	//All functions
 

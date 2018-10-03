@@ -7,8 +7,6 @@ import Areas.Area;
 import Areas.Lobby;
 import Areas.Stairway;
 import Factories.AreaFactory;
-import Factories.PersonFactory;
-import Persons.Person;
 import Scenes.MainMenuScene;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
