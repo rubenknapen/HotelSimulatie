@@ -43,7 +43,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 	public void addGuest(int guestId)
 	{
 		//moet hier + 1 zijn, staat op iets anders voor testing
-		Person xx = PersonFactory.createPerson("Guest","In de rij staan",true,selectedRoomId,4,GridBuilder.getMaxY() - 5);
+		Person xx = PersonFactory.createPerson("Guest","In de rij staan",true,selectedRoomId,4,GridBuilder.getMaxY() + 1);
 		Guest g = (Guest) xx;
 		g.setId(guestId);
 		guests.add(xx);
@@ -154,28 +154,29 @@ public class HotelManager implements EventLib.HotelEventListener{
 				if(object instanceof Restaurant) 
 				{
 					System.out.println("I found a restaurant for Dijkstra");
-					//_ds.Dijkstra(start,object);
+					System.out.println("###TESTVALUE### X: " + object.getX());
+					System.out.println("###TESTVALUE### Y: " + object.getY());
+					_ds.Dijkstra(start,object);
 					
-					if (distance < shortestDistance)
+					if (_ds.distance < shortestDistance)
 					{
-						shortestDistance = distance;
+						shortestDistance = _ds.distance;
 						shortestDistanceObjectId = object.id;
 					}
-					
-					System.out.println("Restaurant object ID: " + object.id + " is the chosen one!");
-					for (Area finalObject: Area.getAreaList()) 
+				}
+			}
+			
+			System.out.println("Restaurant object ID: " + shortestDistanceObjectId + " is the chosen one!");
+			for (Area finalObject: Area.getAreaList()) 
+			{
+				if(finalObject instanceof Restaurant) 
+				{
+					if(finalObject.id == shortestDistanceObjectId)
 					{
-						if(finalObject instanceof Restaurant) 
-						{
-							if(finalObject.id == shortestDistanceObjectId)
-							{
-								System.out.println("selected destination X-Coord: " + finalObject.x);
-								System.out.println("selected destination Y-Coord: " + finalObject.y);
-								return finalObject;
-							}
-						}
+						System.out.println("selected destination X-Coord: " + finalObject.x);
+						System.out.println("selected destination Y-Coord: " + finalObject.y);
+						return finalObject;
 					}
-					
 				}
 			}
 		}
@@ -187,31 +188,31 @@ public class HotelManager implements EventLib.HotelEventListener{
 				if(object instanceof Fitness) 
 				{
 					System.out.println("I found a Fitness room for Dijkstra");
-					//_ds.Dijkstra(start,object);
 					
-					if (distance < shortestDistance)
+					_ds.Dijkstra(start,object);
+					
+					if (_ds.distance < shortestDistance)
 					{
-						shortestDistance = distance;
+						shortestDistance = _ds.distance;
 						shortestDistanceObjectId = object.id;
 					}
-					
-					System.out.println("Fitness object ID: " + object.id + " is the chosen room!");
-					for (Area finalObject: Area.getAreaList()) 
+				}
+			}
+			System.out.println("Fitness object ID: " + shortestDistanceObjectId + " is the chosen room!");
+			for (Area finalObject: Area.getAreaList()) 
+			{
+				if(finalObject instanceof Fitness) 
+				{
+					if(finalObject.id == shortestDistanceObjectId)
 					{
-						if(finalObject instanceof Fitness) 
-						{
-							if(finalObject.id == shortestDistanceObjectId)
-							{
-								System.out.println("selected destination X-Coord: " + finalObject.x);
-								System.out.println("selected destination Y-Coord: " + finalObject.y);
-								return finalObject;
-							}
-						}
+						System.out.println("selected destination X-Coord: " + finalObject.x);
+						System.out.println("selected destination Y-Coord: " + finalObject.y);
+						return finalObject;
 					}
-					
 				}
 			}
 		}
+		
 		else if (type == "Cinema")
 		{
 			for (Area object: Area.getAreaList()) 
@@ -219,28 +220,27 @@ public class HotelManager implements EventLib.HotelEventListener{
 				if(object instanceof Cinema) 
 				{
 					System.out.println("I found a Cinema for Dijkstra");
-					//_ds.Dijkstra(start,object);
+					_ds.Dijkstra(start,object);
 					
-					if (distance < shortestDistance)
+					if (_ds.distance < shortestDistance)
 					{
-						shortestDistance = distance;
+						shortestDistance = _ds.distance;
 						shortestDistanceObjectId = object.id;
 					}
-					
-					System.out.println("Cinema object ID: " + object.id + " is the chosen cinema!");
-					for (Area finalObject: Area.getAreaList()) 
+				}
+			}
+			
+			System.out.println("Cinema object ID: " + shortestDistanceObjectId + " is the chosen cinema!");
+			for (Area finalObject: Area.getAreaList()) 
+			{
+				if(finalObject instanceof Cinema) 
+				{
+					if(finalObject.id == shortestDistanceObjectId)
 					{
-						if(finalObject instanceof Cinema) 
-						{
-							if(finalObject.id == shortestDistanceObjectId)
-							{
-								System.out.println("selected destination X-Coord: " + finalObject.x);
-								System.out.println("selected destination Y-Coord: " + finalObject.y);
-								return finalObject;
-							}
-						}
+						System.out.println("selected destination X-Coord: " + finalObject.x);
+						System.out.println("selected destination Y-Coord: " + finalObject.y);
+						return finalObject;
 					}
-					
 				}
 			}
 		}
@@ -352,8 +352,9 @@ public class HotelManager implements EventLib.HotelEventListener{
 			{
 				guestId = Integer.parseInt(splitArray[1]);
 			}
-			assignRoom("Restaurant", guestId);
+
 			System.out.println("I'm sending a guest to the restaurant, selected guest is: " + guestId);
+			assignRoom("Restaurant", guestId);
 		}
 		else if (tempEvent == "GOTO_CINEMA")
 		{

@@ -8,6 +8,7 @@ import java.util.Map;
 public class Dijkstra {
 
     private ArrayList<Area> open;
+    public int distance = 0;
 
     public Dijkstra(){
         open = new ArrayList<>();
@@ -38,6 +39,7 @@ public class Dijkstra {
         //debug info
         System.out.println("I'm visiting: " + check.id);
         System.out.println("Distance to " + check.id + " is: " + check.distance);
+        distance = check.distance;
 
         //check if we reached the end
         if(check == end){
