@@ -28,12 +28,12 @@ public class HotelManager implements EventLib.HotelEventListener{
 
 	public static ArrayList<Person> guests;
 	public ArrayList<Person> cleaners;
-
+	ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 	
 	
 	//Constructor
 	public HotelManager(){
-		ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
+
 		GridBuilder gridBuilder = new GridBuilder();
 		gridBuilder.buildGrid();
 		
