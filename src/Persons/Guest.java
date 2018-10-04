@@ -77,10 +77,18 @@ public class Guest extends Person{
 		}
 	
 	public void getRoute(Area destinationArea){
+		System.out.println(" I Broke");
+		ShortestPath.Dijkstra _ds2 = new ShortestPath.Dijkstra();
+		System.out.println(" I Broke");
 		getCurrentPosition().distance = 0;
-		System.out.println("TESTVALUE: getRoute(Guest) value 1: "+getCurrentPosition()+" value 2: "+ destinationArea);
-	    currentRoute = _ds.Dijkstra(getCurrentPosition(), destinationArea);
+		System.out.println(" I Broke");
+		System.out.println("current pos: " + getCurrentPosition());
+		System.out.println("I broke3");
+	    currentRoute = _ds2.Dijkstra(getCurrentPosition(), destinationArea);
+	    System.out.println(" I Broke 4");
+//		System.out.println("Mijn route is nu " + currentRoute);
 	    clearDistances();
+	    System.out.println(" I Broke");
 	}
 	
 	private void clearDistances() {

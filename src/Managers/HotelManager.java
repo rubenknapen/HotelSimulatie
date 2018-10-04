@@ -45,16 +45,23 @@ public class HotelManager implements EventLib.HotelEventListener{
 
 		// testing purpose
 		
-//		Person xx = PersonFactory.createPerson("Guest","In de rij staan", 1,true,selectedRoomId,4,7);
+		
+//		Person xx = PersonFactory.createPerson("Guest","Go To Room", 133,true,20,10,3);
 //		guests.add(xx);
-//		xx.getRoute(findRoom(5));
-//		addGuest(1);
-//		addGuest(2);
-//		addCleaners(2);
-//		guests.get(0).getRoute(Area.areaList.get(22));
-//				
-//		guests.get(1).getRoute(Area.areaList.get(37));
-	
+//		xx.getRoute(Area.getAreaList().get(36));
+////		xx.getRoute(findClosestFitness());
+//		
+//		for(Person guest : guests) {
+//			if(guest.getId() == 134) {
+//				System.out.println(guest.getId());
+//				System.out.println("+++++++++++++++++++++++  Fitness comming in ==============================================");
+//				guest.currentRoute.clear();
+//				guest.getRoute(findClosestFitness());
+//				System.out.println("loop je vast?");
+//	//			System.out.println(guest.currentRoute);
+//			}
+//		}
+		
 		
 		SimulationTimer timer = new SimulationTimer();
 		timer.activateTimer();		
@@ -149,8 +156,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 			{
 				System.out.println("Aantal sterren niet beschikbaar, hoog op met 1 ster");
 				starAmount += 1;
-			}
-			else if (starAmount == 5)
+			} else if (starAmount == 5)
 			{
 				checkForRoom = false;
 			}
@@ -186,126 +192,135 @@ public class HotelManager implements EventLib.HotelEventListener{
 		return null;
 	}
 	
-	public Area getClosestArea(String type, int guestId)
-	{
-		int distance = 0;
-		int shortestDistance = 1000;
-		int shortestDistanceObjectId = 0;
-		Area start = null;
-		
-		for(int i = 0; i < guests.size(); i++)
-		{
-			Guest g = (Guest) guests.get(i);
-			
-			//System.out.println("I'm looking for id: " + guestId);
-			//System.out.println("I'm comparing with id: " + g.getId());
-			
-			if (g.getId() == guestId)
-			{
-				//start = getAreaNode(g.getX(),g.getY());
-				//System.out.println("I found startNode: " + start);
-			}
-			else
-			{
-				//System.out.println("No guest was found for id: " + guestId);
-			}
-		}
-		
-		if (type == "Restaurant")
-		{
-			for (Area object: Area.getAreaList()) 
-			{
-				if(object instanceof Restaurant) 
-				{
-					System.out.println("I found a restaurant for Dijkstra");
-					//System.out.println("###TESTVALUE### X: " + object.getX());
-					//System.out.println("###TESTVALUE### Y: " + object.getY());
-					//_ds.Dijkstra(start,object);
-					
-					if (_ds.distance < shortestDistance)
-					{
-						shortestDistance = _ds.distance;
-						shortestDistanceObjectId = object.id;
-					}
-				}
-			}
-			
-			System.out.println("Restaurant object ID: " + shortestDistanceObjectId + " is the chosen one!");
-			for (Area finalObject: Area.getAreaList()) 
-			{
-				if(finalObject instanceof Restaurant) 
-				{
-					if(finalObject.id == shortestDistanceObjectId)
-					{
-						System.out.println("selected destination X-Coord: " + finalObject.x);
-						System.out.println("selected destination Y-Coord: " + finalObject.y);
-						return finalObject;
-					}
-				}
-			}
-		}
-		
-		else if (type == "Fitness")
-		{
-			for (Area object: Area.getAreaList()) 
-			{
-				if(object instanceof Fitness) 
-				{
-					System.out.println("I found a Fitness room for Dijkstra");
-					
-					//_ds.Dijkstra(start,object);
-					
-					if (_ds.distance < shortestDistance)
-					{
-						shortestDistance = _ds.distance;
-						shortestDistanceObjectId = object.id;
-					}
-				}
-			}
-			System.out.println("Fitness object ID: " + shortestDistanceObjectId + " is the chosen room!");
-			for (Area finalObject: Area.getAreaList()) 
-			{
-				if(finalObject instanceof Fitness) 
-				{
-					if(finalObject.id == shortestDistanceObjectId)
-					{
-						System.out.println("selected destination X-Coord: " + finalObject.x);
-						System.out.println("selected destination Y-Coord: " + finalObject.y);
-						return finalObject;
-					}
-				}
-			}
-		}
-		
-		else if (type == "Cinema")
-		{
-			for (Area object: Area.getAreaList()) 
-			{
-				if(object instanceof Cinema) 
-				{
-					System.out.println("I found a Cinema for Dijkstra");
-					//_ds.Dijkstra(start,object);
-					
-					if (_ds.distance < shortestDistance)
-					{
-						shortestDistance = _ds.distance;
-						shortestDistanceObjectId = object.id;
-					}
-				}
-			}
-			
-			System.out.println("Cinema object ID: " + shortestDistanceObjectId + " is the chosen cinema!");
-			for (Area finalObject: Area.getAreaList()) 
-			{
-				if(finalObject instanceof Cinema) 
-				{
-					if(finalObject.id == shortestDistanceObjectId)
-					{
-						System.out.println("selected destination X-Coord: " + finalObject.x);
-						System.out.println("selected destination Y-Coord: " + finalObject.y);
-						return finalObject;
-					}
-				}
+//	public Area getClosestArea(String type, int guestId)
+//	{
+//		int distance = 0;
+//		int shortestDistance = 1000;
+//		int shortestDistanceObjectId = 0;
+//		Area start = null;
+//		
+//		for(int i = 0; i < guests.size(); i++)
+//		{
+//			Guest g = (Guest) guests.get(i);
+//			
+//			//System.out.println("I'm looking for id: " + guestId);
+//			//System.out.println("I'm comparing with id: " + g.getId());
+//			
+//			if (g.getId() == guestId)
+//			{
+//				start = getAreaNode(g.getX(),g.getY());
+//				//System.out.println("I found startNode: " + start);
+//			}
+//			else
+//			{
+//				//System.out.println("No guest was found for id: " + guestId);
+//			}
+//		}
+//		
+//		if (type == "Restaurant")
+//		{
+//			for (Area object: Area.getAreaList()) 
+//			{
+//				if(object instanceof Restaurant) 
+//				{
+//					System.out.println("I found a restaurant for Dijkstra");
+//					//System.out.println("###TESTVALUE### X: " + object.getX());
+//					//System.out.println("###TESTVALUE### Y: " + object.getY());
+//					//_ds.Dijkstra(start,object);
+//					
+//					if (_ds.distance < shortestDistance)
+//					{
+//						shortestDistance = _ds.distance;
+//						shortestDistanceObjectId = object.id;
+//					}
+//				}
+//			}
+//			
+//			System.out.println("Restaurant object ID: " + shortestDistanceObjectId + " is the chosen one!");
+//			for (Area finalObject: Area.getAreaList()) 
+//			{
+//				if(finalObject instanceof Restaurant) 
+//				{
+//					if(finalObject.id == shortestDistanceObjectId)
+//					{
+//						System.out.println("selected destination X-Coord: " + finalObject.x);
+//						System.out.println("selected destination Y-Coord: " + finalObject.y);
+//						return finalObject;
+//					}
+//				}
+//			}
+//		}
+//		
+//		else if (type == "Fitness")
+//		{
+//			for (Area object: Area.getAreaList()) 
+//			{
+//				if(object instanceof Fitness) 
+//				{
+//					System.out.println("I found a Fitness room for Dijkstra");
+//					
+//					//_ds.Dijkstra(start,object);
+//					
+//					if (_ds.distance < shortestDistance)
+//					{
+//						shortestDistance = _ds.distance;
+//						shortestDistanceObjectId = object.id;
+//					}
+//				}
+//			}
+//			System.out.println("Fitness object ID: " + shortestDistanceObjectId + " is the chosen room!");
+//			for (Area finalObject: Area.getAreaList()) 
+//			{
+//				if(finalObject instanceof Fitness) 
+//				{
+//					if(finalObject.id == shortestDistanceObjectId)
+//					{
+//						System.out.println("selected destination X-Coord: " + finalObject.x);
+//						System.out.println("selected destination Y-Coord: " + finalObject.y);
+//						return finalObject;
+//					}
+//				}
+//			}
+//		}
+//		
+//		else if (type == "Cinema")
+//		{
+//			for (Area object: Area.getAreaList()) 
+//			{
+//				if(object instanceof Cinema) 
+//				{
+//					System.out.println("I found a Cinema for Dijkstra");
+//					//_ds.Dijkstra(start,object);
+//					
+//					if (_ds.distance < shortestDistance)
+//					{
+//						shortestDistance = _ds.distance;
+//						shortestDistanceObjectId = object.id;
+//					}
+//				}
+//			}
+//			
+//			System.out.println("Cinema object ID: " + shortestDistanceObjectId + " is the chosen cinema!");
+//			for (Area finalObject: Area.getAreaList()) 
+//			{
+//				if(finalObject instanceof Cinema) 
+//				{
+//					if(finalObject.id == shortestDistanceObjectId)
+//					{
+//						System.out.println("selected destination X-Coord: " + finalObject.x);
+//						System.out.println("selected destination Y-Coord: " + finalObject.y);
+//						return finalObject;
+//					}
+//				}
+//			}
+//		}
+//		return null;
+//	}
+	
+	private Area findClosestFitness() {
+		for (Area object: Area.getAreaList()) {
+			if(object instanceof Fitness) {
+				return object;
 			}
 		}
 		return null;
@@ -375,6 +390,23 @@ public class HotelManager implements EventLib.HotelEventListener{
 		return guestRoomId;
 	}
 	
+	public void sendGuestToFitness(int guestId) {
+		for(Person guest : guests) {
+			if(guest.getId() == guestId) {
+				System.out.println(guest.getId());
+				System.out.println("+++++++++++++++++++++++  Fitness comming in ==============================================");
+				guest.currentRoute.clear();
+				System.out.println("fitness: " + findClosestFitness());
+				guest.getRoute(findClosestFitness());
+				
+				
+				
+				System.out.println("loop je vast?");
+//				System.out.println(guest.currentRoute);
+			}
+  		}
+	}
+	
 	@Override
 	public void Notify(HotelEvent event) {
 		String tempEvent = event.Type.toString();
@@ -406,7 +438,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 			int prefStarsInt = Integer.parseInt(prefStars);
 			
 			System.out.println("Guests id: " + guestId);
-			System.out.println("Guests prefStars: " + prefStars);
+			//System.out.println("Guests prefStars: " + prefStars);
 			
 			
 
@@ -419,11 +451,12 @@ public class HotelManager implements EventLib.HotelEventListener{
 						  
 						  if (selectedRoomId != 0)
 						  {
-							  System.out.println("gekozen room ID: "+selectedRoomId);
+							  //System.out.println("gekozen room ID: "+selectedRoomId);
 							  Person xx = PersonFactory.createPerson("Guest","Go To Room", setGuestIdValue,true,selectedRoomId,10,3);
 							  guests.add(xx);
 							  xx.getRoute(getRoomNode(selectedRoomId));
-							  System.out.println("###TESTVALUE### x: " + getRoomNode(selectedRoomId).getX()+" y: " + getRoomNode(selectedRoomId).getY());
+//							  System.out.println("room node : " + getRoomNode(selectedRoomId).id);
+//							  System.out.println(" ****************************** Guest array = " + guests);
 						  }
 						  else
 						  {
@@ -434,7 +467,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 			
 			
 			guestCounter++;
-			System.out.println("Added a guest, total guests: " + guestCounter);
+//			System.out.println("Added a guest, total guests: " + guestCounter);
 		}
 		else if (tempEvent == "CHECK_OUT")
 		{
@@ -456,26 +489,36 @@ public class HotelManager implements EventLib.HotelEventListener{
 			removeGuest(guestId);
 			System.out.println("Guest: "+guestId+" left, total guests: " + guestCounter);
 		}
-		else if (tempEvent == "GOTO_FITNESS")
-		{
-			int guestId;
-			
-			String[] splitArray = hashmapContent.split("=");
-			
-			if (splitArray[0].contains("}"))
-			{
-				String[] splitArray2 = splitArray[1].split("}");
-				guestId = Integer.parseInt(splitArray2[0]);
-			}
-			
-			else 
-			{
-				String[] splitArray2 = splitArray[1].split("\\s");
-				guestId = Integer.parseInt(splitArray2[0]);
-			}
-			getClosestArea("Fitness", guestId);
-			System.out.println("I'm sending a guest to fitness, selected guest is: " + guestId);
-		}
+//		else if (tempEvent == "GOTO_FITNESS")
+//		{
+//			String guestId;
+//			int setGuestIdValue;
+//			String prefStars;
+//			
+//			String[] splitArray = hashmapContent.split("\\s");
+//			String[] splitArray2 = splitArray[1].split("=");
+//			
+//			//Set GuestID
+//			guestId = splitArray2[0];
+//			setGuestIdValue = Integer.parseInt(guestId);
+//			
+//			System.out.println("Guest ID for fitness: " + setGuestIdValue);
+//			
+//			sendGuestToFitness(setGuestIdValue);
+//
+////			for(Person guest : guests) {
+////				if(guest.getId() == setGuestIdValue) {
+////					System.out.println(guest.getId());
+////					System.out.println("+++++++++++++++++++++++  Fitness comming in ==============================================");
+////					guest.currentRoute.clear();
+////					guest.getRoute(Area.getAreaList().get(5));
+////					System.out.println("loop je vast?");
+//////					System.out.println(guest.currentRoute);
+////				}
+////	  		}
+////					
+//
+//		}
 //		else if (tempEvent == "NEED_FOOD")
 //		{
 //			int guestId;
