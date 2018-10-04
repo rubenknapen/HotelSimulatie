@@ -53,7 +53,7 @@ public class Guest extends Person{
 		GridBuilder.grid.add(this.guestImageView,x,y);
 		GridBuilder.grid.setHalignment(this.guestImageView, HPos.CENTER);
 		GridBuilder.grid.setValignment(this.guestImageView, VPos.BOTTOM);
-	}
+		}
 	
 		public void setSprite(FileInputStream sprite)
 		{
@@ -67,9 +67,18 @@ public class Guest extends Person{
 		}
 	
 	//Functions
+		
+		public void deleteSprite()
+		{
+	        guestImageView = new ImageView();
+	    	guestImageView.setFitHeight(21);
+	    	guestImageView.setFitWidth(16);
+    	
+		}
 	
 	public void getRoute(Area destinationArea){
 		getCurrentPosition().distance = 0;
+		System.out.println("TESTVALUE: getRoute(Guest) value 1: "+getCurrentPosition()+" value 2: "+ destinationArea);
 	    currentRoute = _ds.Dijkstra(getCurrentPosition(), destinationArea);
 	    clearDistances();
 	}

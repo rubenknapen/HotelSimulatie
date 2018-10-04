@@ -79,18 +79,6 @@ public class HotelManager implements EventLib.HotelEventListener{
 			System.out.println("Cleaner: " + c.getId() + " added!");
 		}
 	}
-	
-//	public void addGuest(int guestId)
-//	{
-//
-//		//moet hier + 1 zijn, staat op iets anders voor testing
-//		Person xx = PersonFactory.createPerson("Guest","In de rij staan", guestId,true,selectedRoomId,10,3);
-//		Guest g = (Guest) xx;
-//		g.setId(guestId);
-//		guests.add(xx);
-//		System.out.println("Guest: " + g.getId() + " added!");
-//
-//	}
 
 	public void removeGuest(int guestId)
 	{
@@ -104,6 +92,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 			{
 				//Get Roominfo for Housekeeping
 				selectedRoomId = g.getSelectedRoom();
+				g.deleteSprite();
 				
 				availableCleanerId = getAvailableCleaner("CLEANING");
 				
@@ -213,7 +202,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 			
 			if (g.getId() == guestId)
 			{
-				start = getAreaNode(g.getX(),g.getY());
+				//start = getAreaNode(g.getX(),g.getY());
 				//System.out.println("I found startNode: " + start);
 			}
 			else
@@ -329,6 +318,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 				{
 					object.setAvailability(true);
 					System.out.println("Room ID: " + object.id + " is now available!");
+					System.out.println("Room X: " + object.x + " Y: " + object.y);
 					break;
 				}
 			}
@@ -466,26 +456,26 @@ public class HotelManager implements EventLib.HotelEventListener{
 			removeGuest(guestId);
 			System.out.println("Guest: "+guestId+" left, total guests: " + guestCounter);
 		}
-//		else if (tempEvent == "GOTO_FITNESS")
-//		{
-//			int guestId;
-//			//System.out.println("###TESTVALUE### "+hashmapContent);
-//			String[] splitArray = hashmapContent.split("=");
-//			
-//			if (splitArray[0].contains("}"))
-//			{
-//				String[] splitArray2 = splitArray[1].split("}");
-//				guestId = Integer.parseInt(splitArray2[0]);
-//			}
-//			
-//			else 
-//			{
-//				String[] splitArray2 = splitArray[1].split("\\s");
-//				guestId = Integer.parseInt(splitArray2[0]);
-//			}
-//			assignRoom("Fitness", guestId);
-//			System.out.println("I'm sending a guest to fitness, selected guest is: " + guestId);
-//		}
+		else if (tempEvent == "GOTO_FITNESS")
+		{
+			int guestId;
+			
+			String[] splitArray = hashmapContent.split("=");
+			
+			if (splitArray[0].contains("}"))
+			{
+				String[] splitArray2 = splitArray[1].split("}");
+				guestId = Integer.parseInt(splitArray2[0]);
+			}
+			
+			else 
+			{
+				String[] splitArray2 = splitArray[1].split("\\s");
+				guestId = Integer.parseInt(splitArray2[0]);
+			}
+			getClosestArea("Fitness", guestId);
+			System.out.println("I'm sending a guest to fitness, selected guest is: " + guestId);
+		}
 //		else if (tempEvent == "NEED_FOOD")
 //		{
 //			int guestId;
