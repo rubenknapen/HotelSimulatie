@@ -72,7 +72,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 	{
 		for(int i = 1; i <= amount; i++)
 		{
-			Person xx = PersonFactory.createPerson("Cleaner","Inactive",true,0,4,GridBuilder.getMaxY() - 4);
+			Person xx = PersonFactory.createPerson("Cleaner","Inactive",i,true,0,4,GridBuilder.getMaxY() - 4);
 			Cleaner c = (Cleaner) xx;
 			c.setId(i);
 			cleaners.add(xx);
@@ -136,12 +136,45 @@ public class HotelManager implements EventLib.HotelEventListener{
 		return null;
 	}
 	
-	public Area findRoom(int prefStars) {
+	
+	public int getRoom(int prefStars)
+	{
+		int starAmount = prefStars;
+		System.out.println("Ik zoek een kamer met "+prefStars+" sterren!");
+		boolean checkForRoom = true;
+		while(checkForRoom)
+		{
+			for (Area object: Area.getAreaList()) 
+			{
+				if(object instanceof HotelRoom) 
+				{
+					if (object.stars == starAmount && object.available == true)
+					{					
+						object.setAvailability(false);
+						System.out.println("Kamer gevonden ik return het object! "+object.id);
+						return object.id;
+					}
+				}
+			}
+			if (starAmount < 5)
+			{
+				System.out.println("Aantal sterren niet beschikbaar, hoog op met 1 ster");
+				starAmount += 1;
+			}
+			else if (starAmount == 5)
+			{
+				checkForRoom = false;
+			}
+		}
+		return 0;
+	}
+	
+	
+	public Area getRoomNode(int roomId) {
 		for (Area object: Area.getAreaList()) {
 			if(object instanceof HotelRoom) {
-				if (object.stars == 5)
+				if (object.id == roomId)
 				{					
-					selectedRoomId = object.id;
 					object.setAvailability(false);
 					return object;
 				}
@@ -164,7 +197,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 		return null;
 	}
 	
-	public Area assignRoom(String type, int guestId)
+	public Area getClosestArea(String type, int guestId)
 	{
 		int distance = 0;
 		int shortestDistance = 1000;
@@ -377,6 +410,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 			//Set GuestID
 			guestId = splitArray2[0];
 			setGuestIdValue = Integer.parseInt(guestId);
+			
 			//Set prefStars
 			prefStars = splitArray2[1];
 			int prefStarsInt = Integer.parseInt(prefStars);
@@ -384,41 +418,54 @@ public class HotelManager implements EventLib.HotelEventListener{
 			System.out.println("Guests id: " + guestId);
 			System.out.println("Guests prefStars: " + prefStars);
 			
+			
 
 			
 			//Because this command is not running from Java FX I've added this to update UI from a different thread.
 			Platform.runLater(
 					  () -> {
-						  Person xx = PersonFactory.createPerson("Guest","In de rij staan", setGuestIdValue,true,selectedRoomId,10,3);
-						  guests.add(xx);
-						  xx.getRoute(findRoom(prefStarsInt));
-					  }
+
+						  selectedRoomId = getRoom(prefStarsInt);
+						  
+						  if (selectedRoomId != 0)
+						  {
+							  System.out.println("gekozen room ID: "+selectedRoomId);
+							  Person xx = PersonFactory.createPerson("Guest","Go To Room", setGuestIdValue,true,selectedRoomId,10,3);
+							  guests.add(xx);
+							  xx.getRoute(getRoomNode(selectedRoomId));
+							  System.out.println("###TESTVALUE### x: " + getRoomNode(selectedRoomId).getX()+" y: " + getRoomNode(selectedRoomId).getY());
+						  }
+						  else
+						  {
+							  System.out.println("No room available, guest will leave the hotel!");
+						  }
+					   }
 					);
 			
 			
 			guestCounter++;
 			System.out.println("Added a guest, total guests: " + guestCounter);
 		}
-//		else if (tempEvent == "CHECK_OUT")
-//		{
-//			int guestId;
-//			String[] splitArray = hashmapContent.split("=");
-//			
-//			if (splitArray[1].contains("}"))
-//			{
-//				String[] splitArray2 = splitArray[1].split("}");
-//				guestId = Integer.parseInt(splitArray2[0]);
-//			}
-//			
-//			else 
-//			{
-//				guestId = Integer.parseInt(splitArray[1]);
-//			}
-//			
-//			guestCounter--;
-//			removeGuest(guestId);
-//			System.out.println("Guest: "+guestId+" left, total guests: " + guestCounter);
-//		}
+		else if (tempEvent == "CHECK_OUT")
+		{
+			int guestId;
+			String[] splitArray = hashmapContent.split("=");
+			
+			if (splitArray[1].contains("}"))
+			{
+				String[] splitArray2 = splitArray[1].split("}");
+				guestId = Integer.parseInt(splitArray2[0]);
+			}
+			
+			else 
+			{
+				guestId = Integer.parseInt(splitArray[1]);
+			}
+			
+			guestCounter--;
+			removeGuest(guestId);
+			System.out.println("Guest: "+guestId+" left, total guests: " + guestCounter);
+		}
 //		else if (tempEvent == "GOTO_FITNESS")
 //		{
 //			int guestId;
