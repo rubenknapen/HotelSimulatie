@@ -108,8 +108,10 @@ public class HotelManager implements EventLib.HotelEventListener{
 				
 				//Clear the room for a new guest
 				freeRoom(selectedRoomId);
-				}
-			guests.remove(i);
+				
+				g.getRoute(Area.getAreaList().get(47));
+			}
+			//guests.remove(i);
 		}
 	}
 	

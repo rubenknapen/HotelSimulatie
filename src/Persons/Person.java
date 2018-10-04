@@ -44,5 +44,10 @@ public abstract class Person{
 	{
 		this.id = guestId;
 	}
+
+	public void performAction() 
+	{
+		//#OPROTTENMETDIECAMERA
+	}
 	
 }
