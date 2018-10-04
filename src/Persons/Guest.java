@@ -35,6 +35,7 @@ public class Guest extends Person{
 		this.id = id;
 		this.setStatus(status);
 		this.setVisibility(visibility);
+		this.setVisible();
 		this.setSelectedRoom(roomId);		
 		this.setX(x);
 		this.setY(y);
@@ -67,28 +68,14 @@ public class Guest extends Person{
 		}
 	
 	//Functions
-		
-		public void deleteSprite()
-		{
-	        guestImageView = new ImageView();
-	    	guestImageView.setFitHeight(21);
-	    	guestImageView.setFitWidth(16);
-    	
-		}
 	
 	public void getRoute(Area destinationArea){
-		System.out.println(" I Broke");
 		ShortestPath.Dijkstra _ds2 = new ShortestPath.Dijkstra();
-		System.out.println(" I Broke");
 		getCurrentPosition().distance = 0;
-		System.out.println(" I Broke");
-		System.out.println("current pos: " + getCurrentPosition());
-		System.out.println("I broke3");
+		//System.out.println("current pos: " + getCurrentPosition());
 	    currentRoute = _ds2.Dijkstra(getCurrentPosition(), destinationArea);
-	    System.out.println(" I Broke 4");
 //		System.out.println("Mijn route is nu " + currentRoute);
 	    clearDistances();
-	    System.out.println(" I Broke");
 	}
 	
 	private void clearDistances() {
@@ -232,6 +219,24 @@ public class Guest extends Person{
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public void setVisible()
+	{
+		Platform.runLater(
+				  () -> {
+						guestImageView.setVisible(true);
+						visibility = true;
+				  });
+	}
+	
+	public void setInvisible()
+	{
+		Platform.runLater(
+				  () -> {
+					guestImageView.setVisible(false);
+					visibility = false;
+				  });
 	}
 
 	public boolean isVisibility() {

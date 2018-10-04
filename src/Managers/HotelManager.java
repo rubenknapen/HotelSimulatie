@@ -99,7 +99,6 @@ public class HotelManager implements EventLib.HotelEventListener{
 			{
 				//Get Roominfo for Housekeeping
 				selectedRoomId = g.getSelectedRoom();
-				g.deleteSprite();
 				
 				availableCleanerId = getAvailableCleaner("CLEANING");
 				
@@ -109,15 +108,8 @@ public class HotelManager implements EventLib.HotelEventListener{
 				
 				//Clear the room for a new guest
 				freeRoom(selectedRoomId);
-			}
-			
-			//logging info
-			int objectGuestId = g.getId();
-			if (objectGuestId == guestId)
-			{
-				System.out.println("Guest: "+guestId+" removed!");
-				guests.remove(i);
-			}
+				}
+			guests.remove(i);
 		}
 	}
 	
