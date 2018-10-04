@@ -35,6 +35,7 @@ public class Guest extends Person{
 		this.id = id;
 		this.setStatus(status);
 		this.setVisibility(visibility);
+		this.setVisible();
 		this.setSelectedRoom(roomId);		
 		this.setX(x);
 		this.setY(y);
@@ -67,22 +68,12 @@ public class Guest extends Person{
 		}
 	
 	//Functions
-		
-		public void deleteSprite()
-		{
-	        guestImageView = new ImageView();
-	    	guestImageView.setFitHeight(21);
-	    	guestImageView.setFitWidth(16);
-    	
-		}
 	
-	public void getRoute(Area destinationArea){
-		
+	public void getRoute(Area destinationArea){	
 		ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 		getCurrentPosition().distance = 0;	
 	    currentRoute = _ds.Dijkstra(getCurrentPosition(), destinationArea);
 	    clearDistances();
-
 	}
 	
 	private void clearDistances() {
@@ -227,6 +218,24 @@ public class Guest extends Person{
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public void setVisible()
+	{
+		Platform.runLater(
+				  () -> {
+						guestImageView.setVisible(true);
+						visibility = true;
+				  });
+	}
+	
+	public void setInvisible()
+	{
+		Platform.runLater(
+				  () -> {
+					guestImageView.setVisible(false);
+					visibility = false;
+				  });
 	}
 
 	public boolean isVisibility() {
