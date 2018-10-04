@@ -52,7 +52,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 ////		xx.getRoute(findClosestFitness());
 //		
 //		for(Person guest : guests) {
-//			if(guest.getId() == 134) {
+//			if(guest.getId() == 133) {
 //				System.out.println(guest.getId());
 //				System.out.println("+++++++++++++++++++++++  Fitness comming in ==============================================");
 //				guest.currentRoute.clear();
@@ -136,7 +136,6 @@ public class HotelManager implements EventLib.HotelEventListener{
 	public int getRoom(int prefStars)
 	{
 		int starAmount = prefStars;
-		System.out.println("Ik zoek een kamer met "+prefStars+" sterren!");
 		boolean checkForRoom = true;
 		while(checkForRoom)
 		{
@@ -147,14 +146,12 @@ public class HotelManager implements EventLib.HotelEventListener{
 					if (object.stars == starAmount && object.available == true)
 					{					
 						object.setAvailability(false);
-						System.out.println("Kamer gevonden ik return het object! "+object.id);
 						return object.id;
 					}
 				}
 			}
 			if (starAmount < 5)
 			{
-				System.out.println("Aantal sterren niet beschikbaar, hoog op met 1 ster");
 				starAmount += 1;
 			} else if (starAmount == 5)
 			{
@@ -393,16 +390,8 @@ public class HotelManager implements EventLib.HotelEventListener{
 	public void sendGuestToFitness(int guestId) {
 		for(Person guest : guests) {
 			if(guest.getId() == guestId) {
-				System.out.println(guest.getId());
-				System.out.println("+++++++++++++++++++++++  Fitness comming in ==============================================");
 				guest.currentRoute.clear();
-				System.out.println("fitness: " + findClosestFitness());
 				guest.getRoute(findClosestFitness());
-				
-				
-				
-				System.out.println("loop je vast?");
-//				System.out.println(guest.currentRoute);
 			}
   		}
 	}
@@ -489,36 +478,36 @@ public class HotelManager implements EventLib.HotelEventListener{
 			removeGuest(guestId);
 			System.out.println("Guest: "+guestId+" left, total guests: " + guestCounter);
 		}
-//		else if (tempEvent == "GOTO_FITNESS")
-//		{
-//			String guestId;
-//			int setGuestIdValue;
-//			String prefStars;
-//			
-//			String[] splitArray = hashmapContent.split("\\s");
-//			String[] splitArray2 = splitArray[1].split("=");
-//			
-//			//Set GuestID
-//			guestId = splitArray2[0];
-//			setGuestIdValue = Integer.parseInt(guestId);
-//			
-//			System.out.println("Guest ID for fitness: " + setGuestIdValue);
-//			
-//			sendGuestToFitness(setGuestIdValue);
-//
-////			for(Person guest : guests) {
-////				if(guest.getId() == setGuestIdValue) {
-////					System.out.println(guest.getId());
-////					System.out.println("+++++++++++++++++++++++  Fitness comming in ==============================================");
-////					guest.currentRoute.clear();
-////					guest.getRoute(Area.getAreaList().get(5));
-////					System.out.println("loop je vast?");
-//////					System.out.println(guest.currentRoute);
-////				}
-////	  		}
-////					
-//
-//		}
+		else if (tempEvent == "GOTO_FITNESS")
+		{
+			String guestId;
+			int setGuestIdValue;
+			String prefStars;
+			
+			String[] splitArray = hashmapContent.split("\\s");
+			String[] splitArray2 = splitArray[1].split("=");
+			
+			//Set GuestID
+			guestId = splitArray2[0];
+			setGuestIdValue = Integer.parseInt(guestId);
+			
+			System.out.println("Guest ID for fitness: " + setGuestIdValue);
+			
+			sendGuestToFitness(setGuestIdValue);
+
+//			for(Person guest : guests) {
+//				if(guest.getId() == setGuestIdValue) {
+//					System.out.println(guest.getId());
+//					System.out.println("+++++++++++++++++++++++  Fitness comming in ==============================================");
+//					guest.currentRoute.clear();
+//					guest.getRoute(Area.getAreaList().get(5));
+//					System.out.println("loop je vast?");
+////					System.out.println(guest.currentRoute);
+//				}
+//	  		}
+//					
+
+		}
 //		else if (tempEvent == "NEED_FOOD")
 //		{
 //			int guestId;

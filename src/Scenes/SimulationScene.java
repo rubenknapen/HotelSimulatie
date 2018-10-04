@@ -1,7 +1,6 @@
 package Scenes;
 
 import javafx.scene.layout.BorderPane;
-import Areas.HotelRoom;
 import Managers.GridBuilder;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
@@ -13,7 +12,7 @@ public class SimulationScene {
 	public BorderPane bPane;
 	public Scene simulationScene;
 	public Stage simulationStage;
-	public static HotelRoom room;
+
 	
 	public SimulationScene()
 	{
