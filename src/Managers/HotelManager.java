@@ -27,7 +27,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 	int selectedRoomId;
 
 	public static ArrayList<Person> guests;
-	public ArrayList<Person> cleaners;
+	public static ArrayList<Person> cleaners;
 	ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 	
 	
@@ -67,6 +67,15 @@ public class HotelManager implements EventLib.HotelEventListener{
 		timer.activateTimer();		
 						
 				
+	}
+	public static void personsPerformActions()
+	{
+		for(Person guest : guests) {
+			guest.performAction();
+		}
+		for(Person cleaner : cleaners) {
+			cleaner.performAction();
+		}
 	}
 	
 	public static void moveGuests() {
@@ -110,6 +119,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 				freeRoom(selectedRoomId);
 				
 				g.getRoute(Area.getAreaList().get(47));
+				g.setStatus("Go To Exit");
 			}
 			//guests.remove(i);
 		}
