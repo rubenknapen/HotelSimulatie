@@ -44,17 +44,12 @@ public abstract class Person{
 		return id;
 	}
 	
-<<<<<<< HEAD
 	public void clearRoute()
 	{
 		currentRoute.clear();
 	}
 	
-	public void setId(int guestId)
-	{
-=======
 	public void setId(int guestId){
->>>>>>> ea574325bda46437617656210df0efaad1b0caf3
 		this.id = guestId;
 	}
 
