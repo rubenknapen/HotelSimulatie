@@ -86,13 +86,14 @@ public class Cleaner extends Person{
 	}
 	
 	public void moveToArea(){
+
 		if(getLastArea() == null) {
 //			System.out.println("Reached end of route");
 		} 
 		else if((getLastArea().getX() - x == 1) && getLastArea().getRealY() == y ) {
 			
 			// Right movement
-			
+						
 			x = getLastArea().getX();
 			translateXVal += GridBuilder.colSize;
 			cleanerImageView.setTranslateX(translateXVal);
@@ -110,8 +111,7 @@ public class Cleaner extends Person{
 			translateXVal += GridBuilder.colSize;
 			cleanerImageView.setTranslateX(translateXVal);
 			currentRoute.remove(getLastArea());
-		} 
-		else if((getLastArea().getXEnd() - x == -1) && getLastArea().getRealY() == y ) {
+		} else if((getLastArea().getXEnd() - x == -1) && getLastArea().getRealY() == y ) {
 			
 			// Left movement
 			
@@ -135,26 +135,34 @@ public class Cleaner extends Person{
 			currentRoute.remove(getLastArea());
 
 		}
+		else if(((getLastArea().getXEnd() - x == 0) && getLastArea().getRealY() == y ) && x > getLastArea().getX()) {
+			//System.out.println("Ik loop naar rechts 3");
+			currentRoute.remove(getLastArea());
+		}
 		else if(getLastArea().getY() != y ) {
 			
 			// Up and down movement
 			
 			if(getLastArea().getY() - y == -1) {
+				//System.out.println("Ik loop naar boven");
 				y = getLastArea().getY();
 				translateYVal -= GridBuilder.rowSize;
 				cleanerImageView.setTranslateY(translateYVal);
 				currentRoute.remove(getLastArea());
 			} else {
+				//System.out.println("Ik loop naar beneden");
 				y = getLastArea().getY();
 				translateYVal += GridBuilder.rowSize;
 				cleanerImageView.setTranslateY(translateYVal);
 				currentRoute.remove(getLastArea());				
 			}
+			
 		}
 		else {
 			currentRoute.remove(getLastArea());
-		}	
-	}	
+		}		
+		
+	}		
 	
 	public Area getLastArea() {
 		if(currentRoute.size() == 0) {

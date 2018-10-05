@@ -47,9 +47,9 @@ public class HotelManager implements EventLib.HotelEventListener{
 		// testing purpose
 		
 		
-//		Person xx = PersonFactory.createPerson("Guest","Go To Room", 133,true,20,10,3);
+//		Person xx = PersonFactory.createPerson("Guest","Go To Room", 133,true,20,4,3);
 //		guests.add(xx);
-//		xx.getRoute(Area.getAreaList().get(36));
+//		xx.getRoute(Area.getAreaList().get(38));
 ////		xx.getRoute(findClosestFitness());
 //		
 //		for(Person guest : guests) {
