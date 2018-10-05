@@ -79,6 +79,15 @@ public class Guest extends Person{
 	    clearDistances();		
 	}
 	
+	public int checkDistanceRestaurant(Area destinationArea){	
+		ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
+		getCurrentPosition().distance = 0;	
+	    _ds.Dijkstra(getCurrentPosition(), destinationArea);
+	    int foundDistance = destinationArea.distance;
+	    clearDistances();		
+	    return foundDistance;
+	}	
+	
 	private void clearDistances() {
 		for (Area a : Area.getAreaList()) {
 			a.distance = Integer.MAX_VALUE;;
@@ -114,6 +123,8 @@ public class Guest extends Person{
 			setVisible();
 			setStatus("WALKING_BACK_TO_ROOM");
 			getRoute(HotelManager.getRoomNode(roomId));
+		}if(status.equals("GO_BACK_TO_ROOM")) {
+			
 		}
 	}
 	

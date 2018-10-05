@@ -212,15 +212,6 @@ public class HotelManager implements EventLib.HotelEventListener{
 		}
 		return null;
 	}
-		
-	private Area findClosestFitness() {
-		for (Area object: Area.getAreaList()) {
-			if(object instanceof Fitness) {
-				return object;
-			}
-		}
-		return null;
-	}
 	
 	public void freeRoom(int roomId) {
 		for (Area object: Area.getAreaList()) {
@@ -299,6 +290,50 @@ public class HotelManager implements EventLib.HotelEventListener{
 			}
   		}
 	}
+		
+	private Area findClosestFitness() {
+		for (Area object: Area.getAreaList()) {
+			if(object instanceof Fitness) {
+				return object;
+			}
+		}
+		return null;
+	}
+	
+	public void sendGuestToRestaurant(int guestId) {
+		String status = "NEED_FOOD";
+		for(Person guest : guests) {
+			if(guest.getId() == guestId) {
+				guest.setStatus(status);
+				guest.currentRoute.clear();
+				guest.getRoute(findClosestRestaurant(guest));
+			}
+  		}
+	}	
+		
+	private Area findClosestRestaurant(Person guest) {
+		Person currentGuest = guest;
+
+		Area closestRestaurant = null;
+		int closestDistance = 100;
+		
+		for (Area object: Area.getAreaList()) {
+			if(object instanceof Restaurant) {
+
+				if(currentGuest.checkDistanceRestaurant(object) < closestDistance) {
+					closestRestaurant = object;
+					closestDistance = currentGuest.checkDistanceRestaurant(object);
+					System.out.println("ClosestDistance is now: " + closestDistance);
+				}
+				
+			}
+		}
+		
+		System.out.println("Destination id =    " + closestRestaurant.id);
+		
+		return closestRestaurant;		
+	}
+		
 	
 	@Override
 	public void Notify(HotelEvent event) {
@@ -402,25 +437,28 @@ public class HotelManager implements EventLib.HotelEventListener{
 			sendGuestToFitness(setGuestIdValue, HTE);
 
 		}
-//		else if (tempEvent == "NEED_FOOD")
-//		{
-//			int guestId;
-//			String[] splitArray = hashmapContent.split("=");
-//			
-//			if (splitArray[1].contains("}"))
-//			{
-//				String[] splitArray2 = splitArray[1].split("}");
-//				guestId = Integer.parseInt(splitArray2[0]);
-//			}
-//			
-//			else 
-//			{
-//				guestId = Integer.parseInt(splitArray[1]);
-//			}
-//
-//			System.out.println("I'm sending a guest to the restaurant, selected guest is: " + guestId);
-//			assignRoom("Restaurant", guestId);
-//		}
+		else if (tempEvent == "NEED_FOOD")
+		{
+			int guestId;
+			String[] splitArray = hashmapContent.split("=");
+			
+			if (splitArray[1].contains("}"))
+			{
+				String[] splitArray2 = splitArray[1].split("}");
+				guestId = Integer.parseInt(splitArray2[0]);
+			}
+			
+			else 
+			{
+				guestId = Integer.parseInt(splitArray[1]);
+			}
+			
+//			findClosestRestaurant(guestId);
+			sendGuestToRestaurant(guestId);
+			
+			System.out.println("I'm sending a guest to the restaurant, selected guest is: " + guestId);
+
+		}
 //		
 //		else if (tempEvent == "GOTO_CINEMA")
 //		{

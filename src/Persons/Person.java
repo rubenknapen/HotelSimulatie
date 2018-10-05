@@ -24,6 +24,10 @@ public abstract class Person{
 		
 	}
 	
+	public int checkDistanceRestaurant(Area destinationArea){	
+		return 0;
+	}		
+	
 	public void moveToArea(){
 		
 	}
