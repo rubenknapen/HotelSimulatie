@@ -40,6 +40,11 @@ public abstract class Person{
 		return id;
 	}
 	
+	public void clearRoute()
+	{
+		currentRoute.clear();
+	}
+	
 	public void setId(int guestId)
 	{
 		this.id = guestId;

@@ -126,13 +126,20 @@ public class HotelManager implements EventLib.HotelEventListener{
 				
 				for(int j = 0; j < cleaners.size(); j++)
 				{
-					System.out.println(j);
 					Cleaner c = (Cleaner) cleaners.get(j);
 					
-					if (c.getId() == availableCleanerId)
+					if (availableCleanerId != 0)
 					{
-						c.getRoute(roomToClean(selectedRoomId));
+						if (c.getId() == availableCleanerId)
+						{
+							c.getRoute(roomToClean(selectedRoomId));
+						}
 					}
+					else
+					{
+						System.out.println("Geen cleaner beschikbaar voor check out cleaning");
+					}
+					
 					
 				//Clear the room for a new guest
 				freeRoom(selectedRoomId);
@@ -370,11 +377,12 @@ public class HotelManager implements EventLib.HotelEventListener{
 			for(int i = 0; i < cleaners.size(); i++)
 			{
 				Cleaner c = (Cleaner) cleaners.get(i);
-				if (c.getStatus() != "CLEANING EMERGENCY")
+				if (c.getStatus() != "EMERGENCY")
 				{
 					availableCleanerId = c.getId();
 					System.out.println("### TESTVALUE ### I've change availableCleanerId from 0 -> "+c.getId());
 					c.setStatus("EMERGENCY");
+					c.clearRoute();
 					return availableCleanerId;
 				}		
 			}
@@ -389,8 +397,17 @@ public class HotelManager implements EventLib.HotelEventListener{
 					availableCleanerId = c.getId();
 					System.out.println("### TESTVALUE ### I've change availableCleanerId from 0 -> "+c.getId());
 					c.setStatus("CLEANING");
+					c.clearRoute();
 					return availableCleanerId;
-				}		
+				}
+				else if (c.getStatus() == "Go To Lobby")
+				{
+					availableCleanerId = c.getId();
+					System.out.println("### TESTVALUE ### I've change availableCleanerId from 0 -> "+c.getId());
+					c.setStatus("CLEANING");
+					c.clearRoute();
+					return availableCleanerId;
+				}	
 			}
 		}
 		return availableCleanerId;
@@ -584,22 +601,32 @@ public class HotelManager implements EventLib.HotelEventListener{
 			}
 			
 			emergencyRoomId = getRoomOfGuest(guestId);
-			availableCleanerId = getAvailableCleaner("CLEANING EMERGENCY");
+			availableCleanerId = getAvailableCleaner("EMERGENCY");
 			
 			if (availableCleanerId == 0)
 			{
 				System.out.println("All cleaners in emergency cleaning status already");
 			}
 			
-			System.out.println("The room of guest ID: "+guestId+" must be cleaned!");
-			System.out.println("His Room ID is: "+emergencyRoomId);
-			
-			//Send housekeeping based on above info
-			//this is endPosition for Dijkstra
-			roomToClean(emergencyRoomId);
-			
+			else if (availableCleanerId != 0)
+			{
+				for(int i = 0; i < cleaners.size(); i++)
+				{
+					Cleaner c = (Cleaner) cleaners.get(i);
+					
+					if (c.getId() == availableCleanerId)
+					{
+						c.clearRoute();
+						c.getRoute(roomToClean(emergencyRoomId));
+						
+						System.out.println("EMERGENCY called received, sending a cleaner right away!");
+						System.out.println("The room of guest ID: "+guestId+" must be cleaned!");
+						System.out.println("His Room ID is: "+emergencyRoomId);
+					}
+				}
+			}
 		}
-//		
+		
 //		else if (tempEvent == "EVACUATE")
 //		{
 //			System.out.println("I'm sending all persons to evacuate");

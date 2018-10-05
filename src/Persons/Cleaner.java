@@ -22,6 +22,7 @@ public class Cleaner extends Person{
 	private boolean visibility = true; // Hide or shows the person visually
 	private int cleaningTime = 3;
 	private int cleaningTimeRemaining;
+	private int waitInFrontOfDoor = 0;
 	private int x; // x coordinate
 	private int y; // y coordinate
 	private int id;
@@ -166,9 +167,24 @@ public class Cleaner extends Person{
 	@Override
 	public void performAction()
 	{
-		if(status.equals("CLEANING") &&currentRoute.isEmpty())
+		if(status.equals("CLEANING") && currentRoute.isEmpty())
 		{
 			cleanRoom();
+		}
+		else if(status.equals("EMERGENCY") && currentRoute.isEmpty())
+		{
+			cleanRoom();
+		}
+		
+		else if (status.equals("Inactive") && currentRoute.isEmpty())
+		{
+			System.out.println("I have no task and I will go to the lobby!");
+			getLobbyRoute();
+		}
+		
+		else if (status.equals("Go To Lobby") && currentRoute.isEmpty())
+		{
+			setStatus("Inactive");
 		}
 	}
 
@@ -177,15 +193,22 @@ public class Cleaner extends Person{
 	{
 		if(visibility)
 		{
-			setInvisible();
-			cleaningTimeRemaining = cleaningTime;
+			if (waitInFrontOfDoor == 0)
+			{
+				waitInFrontOfDoor++;
+			}
+			else if (waitInFrontOfDoor == 1)
+			{
+				setInvisible();
+				cleaningTimeRemaining = cleaningTime;
+			}
 		}
 		else if (!visibility)
 		{
 			if(cleaningTimeRemaining == 0)
 			{
 				setVisible();
-				status = "Inactive";
+				getLobbyRoute();
 			}
 			else
 			{
@@ -214,6 +237,12 @@ public class Cleaner extends Person{
 				  });
 	}
 
+	public void getLobbyRoute()
+	{
+		getRoute(Area.getAreaList().get(39));
+		setStatus("Go To Lobby");
+	}
+	
 	@Override
 	public void evacuate() {
 		// TODO Auto-generated method stub
