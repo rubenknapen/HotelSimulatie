@@ -39,7 +39,8 @@ public class SimulationTimer extends Observable{
 		        	  notifyObservers();
 		              System.out.println("tick: "+currentTick);
 		              currentTick++;
-			      		HotelManager.moveGuests();
+		              
+			      		HotelManager.moveCharacters();
 			      		HotelManager.personsPerformActions();
 
 		          }
