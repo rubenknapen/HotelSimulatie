@@ -12,6 +12,7 @@ public abstract class Person{
 	
 	ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 	public ArrayList<Area> currentRoute = new ArrayList<Area>();
+	public static ArrayList<Area> roomCleaningList = new ArrayList<Area>();
 	private int id;
 	private int fitnessTickAmount;
 	String path = "";
@@ -56,6 +57,10 @@ public abstract class Person{
 	public void performAction() {
 		
 	}
+	
+	public void setInvisible() {
+		
+	}
 
 	public void setStatus(String status) {
 		this.status = status;		
@@ -71,6 +76,20 @@ public abstract class Person{
 
 	public void setFitnessTickAmount(int fitnessTickAmount) {
 		this.fitnessTickAmount = fitnessTickAmount;
+	}
+	
+	public void setSelectedRoom(int roomNumber)
+	{
+
+	}
+	
+	public int getSelectedRoom()
+	{
+		return 0;
+	}
+	
+	public int getX() {
+		return 0;
 	}
 	
 }

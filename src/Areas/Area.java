@@ -4,8 +4,14 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 public abstract class Area {
 
@@ -35,6 +41,7 @@ public abstract class Area {
 	public Image roomImage;
 	
 	String imageLocation;
+	public HBox roomBg = new HBox();
 
 		
 	//Functions
@@ -87,6 +94,10 @@ public abstract class Area {
 
 	public void setAvailability(boolean b) {
 		this.available = b;
+		
+	}
+	
+	public void makeRoomDirty(){
 		
 	}
 

@@ -10,6 +10,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -21,7 +22,7 @@ public class HotelRoom extends Area {
 
 
 	//Variables
-	
+
 	
 	//Constructor
 	public HotelRoom(int id, int dimensionW, int dimensionH, int stars, int x, int y)
@@ -48,13 +49,13 @@ public class HotelRoom extends Area {
         }
 		
 		HBox roomBg = new HBox();
-		roomBg.setBackground(new Background(new BackgroundFill(Color.web("green"), CornerRadii.EMPTY, Insets.EMPTY)));
-		
+
 		roomBg.setStyle("-fx-padding: 0;" + 
                 "-fx-border-style: solid inside;" + 
                 "-fx-border-width: 2;" +
                 "-fx-border-insets: 5;" + 
                 "-fx-border-radius: 5;" + 
+                "-fx-background-color: green;" + 
                 "-fx-border-color: blue;");
 		roomBg.setAlignment(Pos.BOTTOM_LEFT);
 		
@@ -73,6 +74,11 @@ public class HotelRoom extends Area {
 //		GridBuilder.grid.setHalignment(roomImageView, HPos.LEFT);
 //		GridBuilder.grid.setValignment(roomImageView, VPos.BOTTOM);
 	}
+	
+//	public void makeRoomDirty(){
+//		roomBg.setStyle("-fx-background-color: yellow;");
+//		
+//	}
 	
 	public void setAvailability(boolean TrueOrFalse)
 	{
