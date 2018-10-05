@@ -69,9 +69,9 @@ public class HotelEventManager extends Observable implements Runnable {
         }}));
 
         
-        events.add(new HotelEvent(HotelEventType.GOTO_FITNESS, "", 3, new HashMap<String, String>() {{
-            put("Guest: 1", "25 HTE");
-        }}));        
+        events.add(new HotelEvent(HotelEventType.NEED_FOOD, "", 3, new HashMap<String, String>() {{
+            put("Guest", "1");
+        }}));      
         events.add(new HotelEvent(HotelEventType.CLEANING_EMERGENCY, "", 20, new HashMap<String, String>() {{
             put("Guest", "1");
         }}));

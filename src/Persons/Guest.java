@@ -6,9 +6,11 @@ import java.util.Observable;
 import java.util.Observer;
 
 import Areas.Area;
+import Areas.Fitness;
 import Areas.Stairway;
 import EventLib.HotelEvent;
 import Managers.GridBuilder;
+import Managers.HotelManager;
 import Scenes.SimulationScene;
 import javafx.application.Platform;
 import javafx.geometry.HPos;
@@ -28,6 +30,7 @@ public class Guest extends Person{
 	private int id;
 	private int translateXVal;
 	private int translateYVal;
+	private int fitnessTickAmount;
 	
 	//Constructor
 	public Guest(String status, int id, boolean visibility, int roomId, int x, int y)
@@ -73,8 +76,17 @@ public class Guest extends Person{
 		ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 		getCurrentPosition().distance = 0;	
 	    currentRoute = _ds.Dijkstra(getCurrentPosition(), destinationArea);
-	    clearDistances();
+	    clearDistances();		
 	}
+	
+	public int checkDistanceRestaurant(Area destinationArea){	
+		ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
+		getCurrentPosition().distance = 0;	
+	    _ds.Dijkstra(getCurrentPosition(), destinationArea);
+	    int foundDistance = destinationArea.distance;
+	    clearDistances();		
+	    return foundDistance;
+	}	
 	
 	private void clearDistances() {
 		for (Area a : Area.getAreaList()) {
@@ -92,6 +104,28 @@ public class Guest extends Person{
 			}
 		}
 		return null;
+	}
+	
+	@Override
+	public void performAction() {
+		if(status.equals("GOTO_FITNESS") && currentRoute.isEmpty() ) {
+			setStatus("INSIDE_FITNESS");
+		}
+		if(status.equals("INSIDE_FITNESS")) {
+			if(fitnessTickAmount == 0) {
+				setStatus("GO_BACK_TO_ROOM");
+			} else {
+				setInvisible();
+				fitnessTickAmount--;
+			}
+		}
+		if(status.equals("GO_BACK_TO_ROOM")) {
+			setVisible();
+			setStatus("WALKING_BACK_TO_ROOM");
+			getRoute(HotelManager.getRoomNode(roomId));
+		}if(status.equals("GO_BACK_TO_ROOM")) {
+			
+		}
 	}
 	
 	public void moveToArea(){
@@ -205,6 +239,15 @@ public class Guest extends Person{
 	public void die(){
 		
 	}
+	
+	public int getFitnessTickAmount() {
+		return fitnessTickAmount;
+	}
+
+	public void setFitnessTickAmount(int fitnessTickAmount) {
+		this.fitnessTickAmount = fitnessTickAmount;
+	}
+
 	
 	@Override
 	public void evacuate() {

@@ -13,6 +13,7 @@ public abstract class Person{
 	ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 	public ArrayList<Area> currentRoute = new ArrayList<Area>();
 	private int id;
+	private int fitnessTickAmount;
 	String path = "";
 	String status = "";
 
@@ -22,6 +23,10 @@ public abstract class Person{
 	public void getRoute(Area destinationArea){
 		
 	}
+	
+	public int checkDistanceRestaurant(Area destinationArea){	
+		return 0;
+	}		
 	
 	public void moveToArea(){
 		
@@ -35,11 +40,11 @@ public abstract class Person{
 		
 	}
 	
-	public int getId()
-	{
+	public int getId(){
 		return id;
 	}
 	
+<<<<<<< HEAD
 	public void clearRoute()
 	{
 		currentRoute.clear();
@@ -47,12 +52,30 @@ public abstract class Person{
 	
 	public void setId(int guestId)
 	{
+=======
+	public void setId(int guestId){
+>>>>>>> ea574325bda46437617656210df0efaad1b0caf3
 		this.id = guestId;
 	}
 
-	public void performAction() 
-	{
-		//#OPROTTENMETDIECAMERA
+	public void performAction() {
+		
+	}
+
+	public void setStatus(String status) {
+		this.status = status;		
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+	
+	public int getFitnessTickAmount() {
+		return fitnessTickAmount;
+	}
+
+	public void setFitnessTickAmount(int fitnessTickAmount) {
+		this.fitnessTickAmount = fitnessTickAmount;
 	}
 	
 }

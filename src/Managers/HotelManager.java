@@ -193,7 +193,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 	}
 	
 	
-	public Area getRoomNode(int roomId) {
+	public static Area getRoomNode(int roomId) {
 		for (Area object: Area.getAreaList()) {
 			if(object instanceof HotelRoom) {
 				if (object.id == roomId)
@@ -218,6 +218,338 @@ public class HotelManager implements EventLib.HotelEventListener{
 			}
 		}
 		return null;
+	}
+	
+	public void freeRoom(int roomId) {
+		for (Area object: Area.getAreaList()) {
+			if(object instanceof HotelRoom) {
+				if (object.id == roomId)
+				{
+					object.setAvailability(true);
+					System.out.println("Room ID: " + object.id + " is now available!");
+					System.out.println("Room X: " + object.x + " Y: " + object.y);
+					break;
+				}
+			}
+		}
+	}
+	
+	public int getAvailableCleaner(String type)
+	{
+		int availableCleanerId = 0;
+		
+		if (type == "EMERGENCY")
+		{
+			for(int i = 0; i < cleaners.size(); i++)
+			{
+				Cleaner c = (Cleaner) cleaners.get(i);
+				if (c.getStatus() != "EMERGENCY")
+				{
+					availableCleanerId = c.getId();
+					System.out.println("### TESTVALUE ### I've change availableCleanerId from 0 -> "+c.getId());
+					c.setStatus("EMERGENCY");
+					c.clearRoute();
+					return availableCleanerId;
+				}		
+			}
+		}
+		else if (type == "CLEANING")
+		{
+			for(int i = 0; i < cleaners.size(); i++)
+			{
+				Cleaner c = (Cleaner) cleaners.get(i);
+				if (c.getStatus() == "Inactive")
+				{
+					availableCleanerId = c.getId();
+					System.out.println("### TESTVALUE ### I've change availableCleanerId from 0 -> "+c.getId());
+					c.setStatus("CLEANING");
+					c.clearRoute();
+					return availableCleanerId;
+				}
+				else if (c.getStatus() == "Go To Lobby")
+				{
+					availableCleanerId = c.getId();
+					System.out.println("### TESTVALUE ### I've change availableCleanerId from 0 -> "+c.getId());
+					c.setStatus("CLEANING");
+					c.clearRoute();
+					return availableCleanerId;
+				}	
+			}
+		}
+		return availableCleanerId;
+	}
+	
+	
+	public int getRoomOfGuest(int guestId)
+	{
+		int guestRoomId = 0;
+		
+		for(int i = 0; i < guests.size(); i++)
+		{
+			Guest g = (Guest) guests.get(i);
+			if (g.getId() == guestId)
+			{
+				System.out.println("Guest found for cleaning emergency");
+				guestRoomId = g.getSelectedRoom();
+			}
+		}
+		return guestRoomId;
+	}
+	
+	public void sendGuestToFitness(int guestId, int hte) {
+		String status = "GOTO_FITNESS";
+		for(Person guest : guests) {
+			if(guest.getId() == guestId) {
+				guest.setStatus(status);
+				guest.setFitnessTickAmount(hte);
+				guest.currentRoute.clear();
+				guest.getRoute(findClosestFitness());
+			}
+  		}
+	}
+		
+	private Area findClosestFitness() {
+		for (Area object: Area.getAreaList()) {
+			if(object instanceof Fitness) {
+				return object;
+			}
+		}
+		return null;
+	}
+	
+	public void sendGuestToRestaurant(int guestId) {
+		String status = "NEED_FOOD";
+		for(Person guest : guests) {
+			if(guest.getId() == guestId) {
+				guest.setStatus(status);
+				guest.currentRoute.clear();
+				guest.getRoute(findClosestRestaurant(guest));
+			}
+  		}
+	}	
+		
+	private Area findClosestRestaurant(Person guest) {
+		Person currentGuest = guest;
+
+		Area closestRestaurant = null;
+		int closestDistance = 100;
+		
+		for (Area object: Area.getAreaList()) {
+			if(object instanceof Restaurant) {
+
+				if(currentGuest.checkDistanceRestaurant(object) < closestDistance) {
+					closestRestaurant = object;
+					closestDistance = currentGuest.checkDistanceRestaurant(object);
+					System.out.println("ClosestDistance is now: " + closestDistance);
+				}
+				
+			}
+		}
+		
+		System.out.println("Destination id =    " + closestRestaurant.id);
+		
+		return closestRestaurant;		
+	}
+		
+	
+	@Override
+	public void Notify(HotelEvent event) {
+		String tempEvent = event.Type.toString();
+		String hashmapContent = event.Data.toString();
+		
+		
+//		//Debug purpose for loop
+//		for(int i = 0; i < cleaners.size(); i++)
+//		{
+//			Cleaner c = (Cleaner) cleaners.get(i);
+//			System.out.println("### TESTVALUE ### cleaner "+ c.getId() +" status : " + c.getStatus());
+//		}
+//		
+		if (tempEvent == "CHECK_IN")
+		{
+			String guestId;
+			int setGuestIdValue;
+			String prefStars;
+			String status = tempEvent;
+			
+			String[] splitArray = hashmapContent.split("\\s");
+			String[] splitArray2 = splitArray[1].split("=");
+			
+			//Set GuestID
+			guestId = splitArray2[0];
+			setGuestIdValue = Integer.parseInt(guestId);
+			
+			//Set prefStars
+			prefStars = splitArray2[1];
+			int prefStarsInt = Integer.parseInt(prefStars);
+			
+			System.out.println("Guests id: " + guestId);
+			//System.out.println("Guests prefStars: " + prefStars);
+			
+			
+
+			
+			//Because this command is not running from Java FX I've added this to update UI from a different thread.
+			Platform.runLater(
+					  () -> {
+
+						  selectedRoomId = getRoom(prefStarsInt);
+						  
+						  if (selectedRoomId != 0)
+						  {
+							  //System.out.println("gekozen room ID: "+selectedRoomId);
+							  Person xx = PersonFactory.createPerson("Guest",status, setGuestIdValue,true,selectedRoomId,10,3);
+							  guests.add(xx);
+							  xx.getRoute(getRoomNode(selectedRoomId));
+//							  System.out.println("room node : " + getRoomNode(selectedRoomId).id);
+//							  System.out.println(" ****************************** Guest array = " + guests);
+						  }
+						  else
+						  {
+							  System.out.println("No room available, guest will leave the hotel!");
+						  }
+					   }
+					);
+			
+			
+			guestCounter++;
+//			System.out.println("Added a guest, total guests: " + guestCounter);
+		}
+		else if (tempEvent == "CHECK_OUT")
+		{
+			int guestId;
+			String[] splitArray = hashmapContent.split("=");
+			
+			if (splitArray[1].contains("}"))
+			{
+				String[] splitArray2 = splitArray[1].split("}");
+				guestId = Integer.parseInt(splitArray2[0]);
+			}
+			
+			else 
+			{
+				guestId = Integer.parseInt(splitArray[1]);
+			}
+			
+			guestCounter--;
+			removeGuest(guestId);
+			System.out.println("Guest: "+guestId+" left, total guests: " + guestCounter);
+		}
+		else if (tempEvent == "GOTO_FITNESS")
+		{
+
+			String guestId;
+			int setGuestIdValue;
+			int HTE;
+			String prefStars;
+			
+			String[] splitArray = hashmapContent.split("\\s");
+			String[] splitArray2 = splitArray[1].split("=");
+			
+			//Set GuestID
+			guestId = splitArray2[0];
+			setGuestIdValue = Integer.parseInt(guestId);
+			HTE = Integer.parseInt(splitArray2[1]);
+						
+			sendGuestToFitness(setGuestIdValue, HTE);
+
+		}
+		else if (tempEvent == "NEED_FOOD")
+		{
+			int guestId;
+			String[] splitArray = hashmapContent.split("=");
+			
+			if (splitArray[1].contains("}"))
+			{
+				String[] splitArray2 = splitArray[1].split("}");
+				guestId = Integer.parseInt(splitArray2[0]);
+			}
+			
+			else 
+			{
+				guestId = Integer.parseInt(splitArray[1]);
+			}
+			
+//			findClosestRestaurant(guestId);
+			sendGuestToRestaurant(guestId);
+			
+			System.out.println("I'm sending a guest to the restaurant, selected guest is: " + guestId);
+
+		}
+//		
+//		else if (tempEvent == "GOTO_CINEMA")
+//		{
+//			int guestId;
+//			String[] splitArray = hashmapContent.split("=");
+//			
+//			if (splitArray[1].contains("}"))
+//			{
+//				String[] splitArray2 = splitArray[1].split("}");
+//				guestId = Integer.parseInt(splitArray2[0]);
+//			}
+//			
+//			else 
+//			{
+//				guestId = Integer.parseInt(splitArray[1]);
+//			}
+//			assignRoom("Cinema", guestId);
+//			System.out.println("I'm sending a guest to the cinema, selected guest is: " + guestId);
+//		}
+//		
+		else if (tempEvent == "CLEANING_EMERGENCY")
+		{
+			int guestId;
+			int availableCleanerId;
+			int emergencyRoomId;
+			
+			String[] splitArray = hashmapContent.split("=");
+			
+			if (splitArray[1].contains("}"))
+			{
+				String[] splitArray2 = splitArray[1].split("}");
+				guestId = Integer.parseInt(splitArray2[0]);
+			}
+			
+			else 
+			{
+				guestId = Integer.parseInt(splitArray[1]);
+			}
+			
+			emergencyRoomId = getRoomOfGuest(guestId);
+			availableCleanerId = getAvailableCleaner("EMERGENCY");
+			
+			if (availableCleanerId == 0)
+			{
+				System.out.println("All cleaners in emergency cleaning status already");
+			}
+			
+			else if (availableCleanerId != 0)
+			{
+				for(int i = 0; i < cleaners.size(); i++)
+				{
+					Cleaner c = (Cleaner) cleaners.get(i);
+					
+					if (c.getId() == availableCleanerId)
+					{
+						c.clearRoute();
+						c.getRoute(roomToClean(emergencyRoomId));
+						
+						System.out.println("EMERGENCY called received, sending a cleaner right away!");
+						System.out.println("The room of guest ID: "+guestId+" must be cleaned!");
+						System.out.println("His Room ID is: "+emergencyRoomId);
+					}
+				}
+			}
+		}
+		
+//		else if (tempEvent == "EVACUATE")
+//		{
+//			System.out.println("I'm sending all persons to evacuate");
+//		}
+//		else if (tempEvent == "GODZILLA")
+//		{
+//			System.out.println("Godzilla event, message: " + hashmapContent);
+//		}
 	}
 	
 //	public Area getClosestArea(String type, int guestId)
@@ -344,298 +676,6 @@ public class HotelManager implements EventLib.HotelEventListener{
 //		}
 //		return null;
 //	}
-	
-	private Area findClosestFitness() {
-		for (Area object: Area.getAreaList()) {
-			if(object instanceof Fitness) {
-				return object;
-			}
-		}
-		return null;
-	}
-	
-	public void freeRoom(int roomId) {
-		for (Area object: Area.getAreaList()) {
-			if(object instanceof HotelRoom) {
-				if (object.id == roomId)
-				{
-					object.setAvailability(true);
-					System.out.println("Room ID: " + object.id + " is now available!");
-					System.out.println("Room X: " + object.x + " Y: " + object.y);
-					break;
-				}
-			}
-		}
-	}
-	
-	public int getAvailableCleaner(String type)
-	{
-		int availableCleanerId = 0;
-		
-		if (type == "EMERGENCY")
-		{
-			for(int i = 0; i < cleaners.size(); i++)
-			{
-				Cleaner c = (Cleaner) cleaners.get(i);
-				if (c.getStatus() != "EMERGENCY")
-				{
-					availableCleanerId = c.getId();
-					System.out.println("### TESTVALUE ### I've change availableCleanerId from 0 -> "+c.getId());
-					c.setStatus("EMERGENCY");
-					c.clearRoute();
-					return availableCleanerId;
-				}		
-			}
-		}
-		else if (type == "CLEANING")
-		{
-			for(int i = 0; i < cleaners.size(); i++)
-			{
-				Cleaner c = (Cleaner) cleaners.get(i);
-				if (c.getStatus() == "Inactive")
-				{
-					availableCleanerId = c.getId();
-					System.out.println("### TESTVALUE ### I've change availableCleanerId from 0 -> "+c.getId());
-					c.setStatus("CLEANING");
-					c.clearRoute();
-					return availableCleanerId;
-				}
-				else if (c.getStatus() == "Go To Lobby")
-				{
-					availableCleanerId = c.getId();
-					System.out.println("### TESTVALUE ### I've change availableCleanerId from 0 -> "+c.getId());
-					c.setStatus("CLEANING");
-					c.clearRoute();
-					return availableCleanerId;
-				}	
-			}
-		}
-		return availableCleanerId;
-	}
-	
-	
-	public int getRoomOfGuest(int guestId)
-	{
-		int guestRoomId = 0;
-		
-		for(int i = 0; i < guests.size(); i++)
-		{
-			Guest g = (Guest) guests.get(i);
-			if (g.getId() == guestId)
-			{
-				System.out.println("Guest found for cleaning emergency");
-				guestRoomId = g.getSelectedRoom();
-			}
-		}
-		return guestRoomId;
-	}
-	
-	public void sendGuestToFitness(int guestId) {
-		for(Person guest : guests) {
-			if(guest.getId() == guestId) {
-				guest.currentRoute.clear();
-				guest.getRoute(findClosestFitness());
-			}
-  		}
-	}
-	
-	@Override
-	public void Notify(HotelEvent event) {
-		String tempEvent = event.Type.toString();
-		String hashmapContent = event.Data.toString();
-		
-		
-//		//Debug purpose for loop
-//		for(int i = 0; i < cleaners.size(); i++)
-//		{
-//			Cleaner c = (Cleaner) cleaners.get(i);
-//			System.out.println("### TESTVALUE ### cleaner "+ c.getId() +" status : " + c.getStatus());
-//		}
-//		
-		if (tempEvent == "CHECK_IN")
-		{
-			String guestId;
-			int setGuestIdValue;
-			String prefStars;
-			
-			String[] splitArray = hashmapContent.split("\\s");
-			String[] splitArray2 = splitArray[1].split("=");
-			
-			//Set GuestID
-			guestId = splitArray2[0];
-			setGuestIdValue = Integer.parseInt(guestId);
-			
-			//Set prefStars
-			prefStars = splitArray2[1];
-			int prefStarsInt = Integer.parseInt(prefStars);
-			
-			System.out.println("Guests id: " + guestId);
-			//System.out.println("Guests prefStars: " + prefStars);
-			
-			
-
-			
-			//Because this command is not running from Java FX I've added this to update UI from a different thread.
-			Platform.runLater(
-					  () -> {
-
-						  selectedRoomId = getRoom(prefStarsInt);
-						  
-						  if (selectedRoomId != 0)
-						  {
-							  //System.out.println("gekozen room ID: "+selectedRoomId);
-							  Person xx = PersonFactory.createPerson("Guest","Go To Room", setGuestIdValue,true,selectedRoomId,10,3);
-							  guests.add(xx);
-							  xx.getRoute(getRoomNode(selectedRoomId));
-//							  System.out.println("room node : " + getRoomNode(selectedRoomId).id);
-//							  System.out.println(" ****************************** Guest array = " + guests);
-						  }
-						  else
-						  {
-							  System.out.println("No room available, guest will leave the hotel!");
-						  }
-					   }
-					);
-			
-			
-			guestCounter++;
-//			System.out.println("Added a guest, total guests: " + guestCounter);
-		}
-		else if (tempEvent == "CHECK_OUT")
-		{
-			int guestId;
-			String[] splitArray = hashmapContent.split("=");
-			
-			if (splitArray[1].contains("}"))
-			{
-				String[] splitArray2 = splitArray[1].split("}");
-				guestId = Integer.parseInt(splitArray2[0]);
-			}
-			
-			else 
-			{
-				guestId = Integer.parseInt(splitArray[1]);
-			}
-			
-			guestCounter--;
-			removeGuest(guestId);
-			System.out.println("Guest: "+guestId+" left, total guests: " + guestCounter);
-		}
-		else if (tempEvent == "GOTO_FITNESS")
-		{
-			String guestId;
-			int setGuestIdValue;
-			int HTE;
-			String prefStars;
-			
-			String[] splitArray = hashmapContent.split("\\s");
-			String[] splitArray2 = splitArray[1].split("=");
-			
-			//Set GuestID
-			guestId = splitArray2[0];
-			setGuestIdValue = Integer.parseInt(guestId);
-			HTE = Integer.parseInt(splitArray2[1]);
-			
-			System.out.println("###TESTVALUE### HTE: "+HTE);
-			
-			System.out.println("Guest ID for fitness: " + setGuestIdValue);
-			
-			sendGuestToFitness(setGuestIdValue);
-		}
-//		else if (tempEvent == "NEED_FOOD")
-//		{
-//			int guestId;
-//			String[] splitArray = hashmapContent.split("=");
-//			
-//			if (splitArray[1].contains("}"))
-//			{
-//				String[] splitArray2 = splitArray[1].split("}");
-//				guestId = Integer.parseInt(splitArray2[0]);
-//			}
-//			
-//			else 
-//			{
-//				guestId = Integer.parseInt(splitArray[1]);
-//			}
-//
-//			System.out.println("I'm sending a guest to the restaurant, selected guest is: " + guestId);
-//			assignRoom("Restaurant", guestId);
-//		}
-//		
-//		else if (tempEvent == "GOTO_CINEMA")
-//		{
-//			int guestId;
-//			String[] splitArray = hashmapContent.split("=");
-//			
-//			if (splitArray[1].contains("}"))
-//			{
-//				String[] splitArray2 = splitArray[1].split("}");
-//				guestId = Integer.parseInt(splitArray2[0]);
-//			}
-//			
-//			else 
-//			{
-//				guestId = Integer.parseInt(splitArray[1]);
-//			}
-//			assignRoom("Cinema", guestId);
-//			System.out.println("I'm sending a guest to the cinema, selected guest is: " + guestId);
-//		}
-//		
-		else if (tempEvent == "CLEANING_EMERGENCY")
-		{
-			int guestId;
-			int availableCleanerId;
-			int emergencyRoomId;
-			
-			String[] splitArray = hashmapContent.split("=");
-			
-			if (splitArray[1].contains("}"))
-			{
-				String[] splitArray2 = splitArray[1].split("}");
-				guestId = Integer.parseInt(splitArray2[0]);
-			}
-			
-			else 
-			{
-				guestId = Integer.parseInt(splitArray[1]);
-			}
-			
-			emergencyRoomId = getRoomOfGuest(guestId);
-			availableCleanerId = getAvailableCleaner("EMERGENCY");
-			
-			if (availableCleanerId == 0)
-			{
-				System.out.println("All cleaners in emergency cleaning status already");
-			}
-			
-			else if (availableCleanerId != 0)
-			{
-				for(int i = 0; i < cleaners.size(); i++)
-				{
-					Cleaner c = (Cleaner) cleaners.get(i);
-					
-					if (c.getId() == availableCleanerId)
-					{
-						c.clearRoute();
-						c.getRoute(roomToClean(emergencyRoomId));
-						
-						System.out.println("EMERGENCY called received, sending a cleaner right away!");
-						System.out.println("The room of guest ID: "+guestId+" must be cleaned!");
-						System.out.println("His Room ID is: "+emergencyRoomId);
-					}
-				}
-			}
-		}
-		
-//		else if (tempEvent == "EVACUATE")
-//		{
-//			System.out.println("I'm sending all persons to evacuate");
-//		}
-//		else if (tempEvent == "GODZILLA")
-//		{
-//			System.out.println("Godzilla event, message: " + hashmapContent);
-//		}
-	}
 	
 
 }

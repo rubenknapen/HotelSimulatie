@@ -2,9 +2,11 @@ package Areas;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import Managers.GridBuilder;
+import Persons.Person;
 import Scenes.SimulationScene;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -19,8 +21,7 @@ import javafx.scene.paint.Color;
 public class Fitness extends Area {
 
 	//Variables
-	
-	
+	    
 	//Constructor
 	public Fitness(int id, int dimensionW, int dimensionH, int x, int y)
 	{
@@ -33,6 +34,7 @@ public class Fitness extends Area {
         distance = Integer.MAX_VALUE;
         latest = null;
         this.id = id;
+        
 		
 		// Get the right image depending on dimensions
 		try {
