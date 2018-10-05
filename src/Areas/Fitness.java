@@ -21,9 +21,7 @@ import javafx.scene.paint.Color;
 public class Fitness extends Area {
 
 	//Variables
-	
-    public static ArrayList<Person> guestsInFitness;
-    
+	    
 	//Constructor
 	public Fitness(int id, int dimensionW, int dimensionH, int x, int y)
 	{

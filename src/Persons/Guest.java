@@ -97,6 +97,7 @@ public class Guest extends Person{
 		return null;
 	}
 	
+	@Override
 	public void performAction() {
 		if(status.equals("GOTO_FITNESS") && currentRoute.isEmpty() ) {
 			setStatus("INSIDE_FITNESS");
@@ -105,10 +106,12 @@ public class Guest extends Person{
 			if(fitnessTickAmount == 0) {
 				setStatus("GO_BACK_TO_ROOM");
 			} else {
+				setInvisible();
 				fitnessTickAmount--;
 			}
 		}
 		if(status.equals("GO_BACK_TO_ROOM")) {
+			setVisible();
 			setStatus("WALKING_BACK_TO_ROOM");
 			getRoute(HotelManager.getRoomNode(roomId));
 		}
