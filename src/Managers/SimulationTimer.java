@@ -13,7 +13,7 @@ public class SimulationTimer extends Observable{
 	//Variables
 	private int delay = 1;
 	private int tickRate = 1;
-	private int interval = tickRate*1000;  // iterate every sec.
+	private int interval = tickRate*200;  // iterate every sec.
 	private int currentTick = 0;
 	
 	//Constructor

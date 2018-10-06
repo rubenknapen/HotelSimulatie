@@ -14,6 +14,7 @@ public abstract class Person{
 	public ArrayList<Area> currentRoute = new ArrayList<Area>();
 	public static ArrayList<Area> roomCleaningList = new ArrayList<Area>();
 	private int id;
+	public int roomId;
 	private int fitnessTickAmount;
 	String path = "";
 	String status = "";
@@ -81,6 +82,10 @@ public abstract class Person{
 	public void setSelectedRoom(int roomNumber)
 	{
 
+	}
+	
+	public void setRoomId(int roomId) {
+	
 	}
 	
 	public int getSelectedRoom()
