@@ -51,11 +51,11 @@ public class Lobby extends Area {
 		lobbyBackground.setMinHeight(48 * 2);
 		lobbyBackground.setBackground(new Background(new BackgroundFill(Color.web("#fff"), CornerRadii.EMPTY, Insets.EMPTY)));	
 		
-		
 		lobbyBackground.setOnMouseClicked(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent mouseEvent) {
 		        System.out.println("mouse click detected! " + mouseEvent.getSource());
+		        
 		        //MainMenuScene.eventManager.pause();
 		        /*
 				try {
@@ -64,16 +64,13 @@ public class Lobby extends Area {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				*/
-				
+				*/				
 		        
 		        HotelOverviewScene overviewScene = new HotelOverviewScene();
 				overviewScene.buildScene();
 				
 		    }
 		});
-		
-		
 		
 		Label label = new Label(Integer.toString(id));
 		
@@ -86,8 +83,5 @@ public class Lobby extends Area {
         roomImageView.setFitHeight(96);
         roomImageView.setFitWidth(480);
 	}
-	
 	//Functions
-	
-	
 }

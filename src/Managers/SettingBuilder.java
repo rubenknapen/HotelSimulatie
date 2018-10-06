@@ -23,7 +23,6 @@ public class SettingBuilder {
 	}
 	
 	//Functions
-	/*
 	public void getSettings(){					
 		String pathBase = System.getProperty("user.dir");
 		String pathFile = "\\src\\settings\\settings.txt";
@@ -47,7 +46,6 @@ public class SettingBuilder {
 		    settingList.add(input.nextLine());
 		}
 	}
-	*/
 	
 	
 	public void showSettings(){
@@ -89,12 +87,12 @@ public class SettingBuilder {
 	public static void setStairTime(int StairTime) {
 		stairTime = StairTime;
 	}
-
+	
 	public static int getCleaningTime() {
 		return cleaningTime;
 	}
-
-	public static int getStairTime() {
+	
+ 	public static int getStairTime() {
 		return stairTime;
 	}
 	

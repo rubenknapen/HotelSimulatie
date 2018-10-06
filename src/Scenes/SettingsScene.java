@@ -125,7 +125,7 @@ public class SettingsScene {
 				}
 				else if (setting1IntValue > 2000)
 				{
-					JOptionPane.showMessageDialog(parent, "Value can't higher then 2000");
+					JOptionPane.showMessageDialog(parent, "Value can't be higher then 2000");
 					settingComplete = false;
 				}
 				
@@ -165,8 +165,7 @@ public class SettingsScene {
 					SettingBuilder.tickSpeed = setting1IntValue;
 					JOptionPane.showMessageDialog(parent, "The settings are saved!");
 				}
-				else if(!settingComplete)
-				{
+				else if(!settingComplete) {
 					JOptionPane.showMessageDialog(parent, "The settings are not saved!");
 					settingComplete = true;
 				}

@@ -11,8 +11,9 @@ import Scenes.MainMenuScene;
 public class SimulationTimer extends Observable{
 
 	//Variables
-	private int interval = 500;
 	private double delay = 1;
+	private int tickrate = 1;
+	private int interval = 500;
 	private int currentTick = 0;
 	
 	public static Timer timer;
@@ -20,7 +21,7 @@ public class SimulationTimer extends Observable{
 	//Constructor
 	public SimulationTimer()
 	{
-		
+
 	}
 	
 	public void setInterval(int newInterval)
@@ -45,7 +46,10 @@ public class SimulationTimer extends Observable{
 		        	  notifyObservers();
 		              System.out.println("tick: "+currentTick);
 		              currentTick++;
+		              
+
+
 		          }
-		      }, (long) delay, interval);
+		  }, (long) delay, interval);
 	}
 }

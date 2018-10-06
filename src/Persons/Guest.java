@@ -31,20 +31,19 @@ public class Guest extends Person{
 	private int x = 10; // x coordinate
 	private int y = 9; // y coordinate
 	private ImageView guestImageView;
-	private int roomId;
+	public int roomId;
 	private int id;
 	private int translateXVal;
 	private int translateYVal;
 	private int fitnessTickAmount;
 	
 	//Constructor
-	public Guest(String status, int id, boolean visibility, int roomId, int x, int y)
+	public Guest(String status, int id, boolean visibility, int x, int y)
 	{
 		this.id = id;
 		this.setStatus(status);
 		this.setVisibility(visibility);
-		this.setVisible();
-		this.setSelectedRoom(roomId);		
+		this.setVisible();	
 		this.setX(x);
 		this.setY(y);
 
@@ -117,6 +116,9 @@ public class Guest extends Person{
 	
 	@Override
 	public void performAction() {
+		if(status.equals("CHECK_IN") ) {
+//			
+		}
 		if(status.equals("CHECK_IN") && currentRoute.isEmpty() ) {
 			setInvisible();
 		}
@@ -129,6 +131,7 @@ public class Guest extends Person{
 		if(status.equals("INSIDE_FITNESS")) {
 			if(fitnessTickAmount == 0) {
 				getRoute(HotelManager.getRoomNode(roomId));
+				System.out.println("Next room = " + getNextArea().id);
 				setStatus("GO_BACK_TO_ROOM");
 				setVisible();
 			} else {
@@ -150,6 +153,10 @@ public class Guest extends Person{
 			setInvisible();
 			//System.out.println("Ik moet nu verwijderd worden ------------------------------");
 		}	
+		if(status.equals("NEED_FOOD")) {
+			setVisible();
+//			System.out.println("Ik ga naar een restaurant ------------------------------");
+		}
 	}
 	
 //	public int getGuestIndex(int guestId) {
@@ -167,6 +174,9 @@ public class Guest extends Person{
 		if(getLastArea() == null) {
 //			System.out.println("Reached end of route");
 		} 
+		else if( ((getLastArea().getX() - x == 0) && getLastArea().getRealY() == y ) && getNextArea().getXEnd() - x == -1) {
+			currentRoute.remove(getLastArea());
+		}
 		else if((getLastArea().getX() - x == 1) && getLastArea().getRealY() == y ) {
 			
 			// Right movement
@@ -176,18 +186,27 @@ public class Guest extends Person{
 			guestImageView.setTranslateX(translateXVal);
 			if(getLastArea().dimensionW > 1) {
 				
+				if(currentRoute.size() == 1) {
+					currentRoute.remove(getLastArea());
+				}
 			} else {
 				currentRoute.remove(getLastArea());
 			}
+			
+			System.out.println("rechts 1");
 		} 
 		else if((getLastArea().getXEnd() - x == 1) && getLastArea().getRealY() == y ) {
 			
 			// Right movement
 			
+			
 			x = getLastArea().getXEnd();
 			translateXVal += GridBuilder.colSize;
 			guestImageView.setTranslateX(translateXVal);
 			currentRoute.remove(getLastArea());
+			
+			System.out.println("rechts 2");
+			
 		} else if((getLastArea().getXEnd() - x == -1) && getLastArea().getRealY() == y ) {
 			
 			// Left movement
@@ -213,7 +232,7 @@ public class Guest extends Person{
 
 		}
 		else if(((getLastArea().getXEnd() - x == 0) && getLastArea().getRealY() == y ) && x > getLastArea().getX()) {
-			//System.out.println("Ik loop naar rechts 3");
+			System.out.println("rechts 3");
 			currentRoute.remove(getLastArea());
 		}
 		else if(getLastArea().getY() != y ) {
@@ -221,13 +240,11 @@ public class Guest extends Person{
 			// Up and down movement
 			
 			if(getLastArea().getY() - y == -1) {
-				//System.out.println("Ik loop naar boven");
 				y = getLastArea().getY();
 				translateYVal -= GridBuilder.rowSize;
 				guestImageView.setTranslateY(translateYVal);
 				currentRoute.remove(getLastArea());
 			} else {
-				//System.out.println("Ik loop naar beneden");
 				y = getLastArea().getY();
 				translateYVal += GridBuilder.rowSize;
 				guestImageView.setTranslateY(translateYVal);
@@ -248,7 +265,14 @@ public class Guest extends Person{
 		}else {
 			return currentRoute.get(currentRoute.size() - 1) ;
 		}
-	}	
+	}
+	public Area getNextArea() {
+		if(currentRoute.size() == 0) {
+			return null;
+		}else {
+			return currentRoute.get(currentRoute.size() - 2) ;
+		}
+	}
 	
 	public void getLobbyRoute(){
 		getRoute(Area.getAreaList().get(39));
@@ -263,10 +287,9 @@ public class Guest extends Person{
 	{
 		this.id = guestId;
 	}
-		
-	public void setSelectedRoom(int roomNumber)
-	{
-		this.roomId = roomNumber;
+			
+	public void setRoomId(int roomId) {
+		this.roomId = roomId;
 	}
 	
 	public int getSelectedRoom()

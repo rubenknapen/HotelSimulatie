@@ -63,23 +63,20 @@ public class HotelEventManager extends Observable implements Runnable {
         fireEventFactor = 1.0;
         counterHTE = 0;
 
-        //EVENTS
+        
+        
+        
         events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 2, new HashMap<String, String>() {{
             put("Guest: 1", "1 stars");
         }}));
-
-        
-        events.add(new HotelEvent(HotelEventType.NEED_FOOD, "", 3, new HashMap<String, String>() {{
-            put("Guest", "1");
-        }}));      
-        events.add(new HotelEvent(HotelEventType.CLEANING_EMERGENCY, "", 4, new HashMap<String, String>() {{
+        events.add(new HotelEvent(HotelEventType.CLEANING_EMERGENCY, "", 20, new HashMap<String, String>() {{
             put("Guest", "1");
         }}));
 
         events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 2, new HashMap<String, String>() {{
             put("Guest: 2", "2 stars");
         }}));
-        events.add(new HotelEvent(HotelEventType.CHECK_OUT, "", 6, new HashMap<String, String>() {{
+        events.add(new HotelEvent(HotelEventType.CHECK_OUT, "", 30, new HashMap<String, String>() {{
             put("Guest", "2");
         }}));
 
@@ -96,19 +93,13 @@ public class HotelEventManager extends Observable implements Runnable {
         events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 5, new HashMap<String, String>() {{
             put("Guest: 4", "2 stars");
         }}));
-        events.add(new HotelEvent(HotelEventType.GOTO_FITNESS, "", 9, new HashMap<String, String>() {{
+        events.add(new HotelEvent(HotelEventType.GOTO_FITNESS, "", 25, new HashMap<String, String>() {{
             put("Guest: 4", "10 HTE");
         }}));
 
         events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 5, new HashMap<String, String>() {{
             put("Guest: 5", "2 stars");
         }}));
-        
-        events.add(new HotelEvent(HotelEventType.GOTO_FITNESS, "", 20, new HashMap<String, String>() {{
-            put("Guest: 5", "25 HTE");
-        }}));
-
-        
         events.add(new HotelEvent(HotelEventType.CLEANING_EMERGENCY, "", 26, new HashMap<String, String>() {{
             put("Guest", "5");
         }}));
@@ -178,9 +169,9 @@ public class HotelEventManager extends Observable implements Runnable {
         events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 20, new HashMap<String, String>() {{
             put("Guest: 14", "4 stars");
         }}));
-//        events.add(new HotelEvent(HotelEventType.GOTO_FITNESS, "", 25, new HashMap<String, String>() {{
-//            put("Guest: 14", "15 HTE");
-//        }}));
+        events.add(new HotelEvent(HotelEventType.GOTO_FITNESS, "", 25, new HashMap<String, String>() {{
+            put("Guest: 14", "15 HTE");
+        }}));
 
         events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 20, new HashMap<String, String>() {{
             put("Guest: 15", "4 stars");
@@ -346,11 +337,11 @@ public class HotelEventManager extends Observable implements Runnable {
                     //check the difference between start and current time
                     //if the difference is more than the fireEventTimer, a new event is fired
                     if (currenttTime >= startTime + (fireEventTimer * fireEventFactor)) {
-                    	//							1000*0.5 = 500
-                        //cont = false;
+//						1000*0.5 = 500
+                    	//cont = false;
                         counterHTE++;
 
-                        System.out.println("Event fired at time: " + counterHTE);
+                       System.out.println("Event fired at time: " + counterHTE);
 
                         notifyObservers();
                         cont = fireEvent();
@@ -376,7 +367,7 @@ public class HotelEventManager extends Observable implements Runnable {
 
         //check if that event is suppose to be fired at that moment
         if (event.Time == counterHTE) {
-            System.out.println(event.toString());
+           System.out.println(event.toString());
 
             //notify all listeners of event
             for (HotelEventListener listener : listeners
