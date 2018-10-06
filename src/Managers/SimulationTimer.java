@@ -13,7 +13,7 @@ public class SimulationTimer extends Observable{
 	//Variables
 	private int delay = 1;
 	private int tickRate = 1;
-	private int interval = tickRate*200;  // iterate every sec.
+	private int interval = tickRate*100;  // iterate every sec.
 	private int currentTick = 0;
 	
 	//Constructor
@@ -39,10 +39,8 @@ public class SimulationTimer extends Observable{
 		        	  notifyObservers();
 		              System.out.println("tick: "+currentTick);
 		              currentTick++;
-		              
-			      		HotelManager.moveCharacters();
-			      		HotelManager.personsPerformActions();
-
+		              //HotelManager.moveCharacters();
+		      		  //HotelManager.personsPerformActions();
 		          }
 		      }, delay, interval);
 	}

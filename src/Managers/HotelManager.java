@@ -2,6 +2,8 @@ package Managers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import Areas.Area;
 import Areas.Cinema;
@@ -20,7 +22,7 @@ import javafx.scene.Node;
 import EventLib.HotelEvent;
 import EventLib.HotelEventManager;
 
-public class HotelManager implements EventLib.HotelEventListener{
+public class HotelManager implements EventLib.HotelEventListener, Observer{
 
 	//Variables
 	int guestCounter = 0;
@@ -66,9 +68,10 @@ public class HotelManager implements EventLib.HotelEventListener{
 //			}
 //		}
 		
-		
 		SimulationTimer timer = new SimulationTimer();
-		timer.activateTimer();		
+		timer.addObserver(this);
+		timer.activateTimer();
+			
 						
 				
 	}
@@ -101,7 +104,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 		}
 	}
 	
-	public Area roomToClean(int roomId){	
+	public Area roomToClean(int roomId){
 		for (Area a : Area.getAreaList()) {
 			if(a.id == roomId) {
 				System.out.println("Sending housekeeping to object ID: "+ a.id);
@@ -331,26 +334,26 @@ public class HotelManager implements EventLib.HotelEventListener{
 			sendGuestToFitness(setGuestIdValue, HTE);
 
 		}
-//		else if (tempEvent == "NEED_FOOD")
-//		{
-//			int guestId;
-//			String[] splitArray = hashmapContent.split("=");
-//			
-//			if (splitArray[1].contains("}"))
-//			{
-//				String[] splitArray2 = splitArray[1].split("}");
-//				guestId = Integer.parseInt(splitArray2[0]);
-//			}
-//			
-//			else 
-//			{
-//				guestId = Integer.parseInt(splitArray[1]);
-//			}
-//			
-//			sendGuestToRestaurant(guestId);
-//
-//
-//		}
+		else if (tempEvent == "NEED_FOOD")
+		{
+			int guestId;
+			String[] splitArray = hashmapContent.split("=");
+			
+			if (splitArray[1].contains("}"))
+			{
+				String[] splitArray2 = splitArray[1].split("}");
+				guestId = Integer.parseInt(splitArray2[0]);
+			}
+			
+			else 
+			{
+				guestId = Integer.parseInt(splitArray[1]);
+			}
+			
+			sendGuestToRestaurant(guestId);
+
+
+		}
 //		
 //		else if (tempEvent == "GOTO_CINEMA")
 //		{
@@ -405,6 +408,9 @@ public class HotelManager implements EventLib.HotelEventListener{
 //			System.out.println("Godzilla event, message: " + hashmapContent);
 //		}
 	}
-	
-
+	@Override
+	public void update(Observable o, Object arg) {
+		moveCharacters();
+		personsPerformActions();
+	}
 }

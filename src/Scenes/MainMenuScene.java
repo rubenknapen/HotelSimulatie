@@ -7,6 +7,7 @@ import Areas.Area;
 import Factories.PersonFactory;
 import Managers.GridBuilder;
 import Managers.HotelManager;
+import Managers.SimulationTimer;
 import Persons.Person;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -157,13 +158,11 @@ public class MainMenuScene {
 	
 	public void startSimulation()
 	{
-	    HotelManager hotelManager = new HotelManager();
-	    new SimulationScene();
 	    EventLib.HotelEventManager eventManager = new EventLib.HotelEventManager();
+	    HotelManager hotelManager = new HotelManager();
 	    eventManager.register(hotelManager);
 	    eventManager.start();
-
-
-
+	    new SimulationScene();
+	    
 	}
 }
