@@ -6,10 +6,12 @@ import java.util.HashMap;
 
 import Managers.GridBuilder;
 import Scenes.SimulationScene;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -43,6 +45,15 @@ public class Lobby extends Area {
 		HBox lobbyBackground = new HBox();
 		lobbyBackground.setMinHeight(48 * 2);
 		lobbyBackground.setBackground(new Background(new BackgroundFill(Color.web("#fff"), CornerRadii.EMPTY, Insets.EMPTY)));	
+		
+		
+		lobbyBackground.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		    @Override
+		    public void handle(MouseEvent mouseEvent) {
+		        System.out.println("mouse click detected! " + mouseEvent.getSource());
+		    }
+		});
+		
 		
 		Label label = new Label(Integer.toString(id));
 		

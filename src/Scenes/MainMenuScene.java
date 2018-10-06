@@ -174,10 +174,10 @@ public class MainMenuScene {
 	    
 	    int defaultTick = SettingBuilder.defaultTickSpeed;
 	    int enteredTick = SettingBuilder.tickSpeed;
-	    double factor = (Double.valueOf(defaultTick)/Double.valueOf(enteredTick));
+	    double factor = (Double.valueOf(enteredTick) / Double.valueOf(defaultTick));
 	    
-	    eventManager.changeSpeed(0.5);
-	    //timer.setInterval(enteredTick);
+	    eventManager.changeSpeed(factor);
+	    timer.setInterval(enteredTick);
 	    
 	    System.out.println("defaultTick is: " + defaultTick);
 	    System.out.println("enteredTick is: " + enteredTick);
