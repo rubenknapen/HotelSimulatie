@@ -59,7 +59,7 @@ public class HotelEventManager extends Observable implements Runnable {
         threadName = "hotelEventManager";
         System.out.println(threadName + " has created its thread");
 
-        fireEventTimer = 200.0;
+        fireEventTimer = 1000.0;
         fireEventFactor = 1.0;
         counterHTE = 0;
 
@@ -337,10 +337,11 @@ public class HotelEventManager extends Observable implements Runnable {
                     //check the difference between start and current time
                     //if the difference is more than the fireEventTimer, a new event is fired
                     if (currenttTime >= startTime + (fireEventTimer * fireEventFactor)) {
-                        //cont = false;
+//						1000*0.5 = 500
+                    	//cont = false;
                         counterHTE++;
 
-//                        System.out.println("Event fired at time: " + counterHTE);
+                       System.out.println("Event fired at time: " + counterHTE);
 
                         notifyObservers();
                         cont = fireEvent();
@@ -366,7 +367,7 @@ public class HotelEventManager extends Observable implements Runnable {
 
         //check if that event is suppose to be fired at that moment
         if (event.Time == counterHTE) {
-//            System.out.println(event.toString());
+           System.out.println(event.toString());
 
             //notify all listeners of event
             for (HotelEventListener listener : listeners

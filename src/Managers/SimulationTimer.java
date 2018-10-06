@@ -11,15 +11,20 @@ import Scenes.MainMenuScene;
 public class SimulationTimer extends Observable{
 
 	//Variables
-	private int delay = 1;
-	private int tickRate = 1;
-	private int interval = tickRate*200;  // iterate every sec.
+	private double delay = 1;
+	private int tickrate = 1;
+	private int interval = 500;
 	private int currentTick = 0;
 	
 	//Constructor
 	public SimulationTimer()
 	{
-		//ShortestPath test = new ShortestPath();
+
+	}
+	
+	public void setInterval(int newInterval)
+	{
+		interval = newInterval;
 	}
 	
 	//Functions
@@ -40,10 +45,9 @@ public class SimulationTimer extends Observable{
 		              System.out.println("tick: "+currentTick);
 		              currentTick++;
 		              
-			      		HotelManager.moveCharacters();
-			      		HotelManager.personsPerformActions();
+
 
 		          }
-		      }, delay, interval);
+		  }, (long) delay, interval);
 	}
 }

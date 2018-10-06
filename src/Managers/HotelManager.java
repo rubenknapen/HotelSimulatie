@@ -2,6 +2,8 @@ package Managers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import Areas.Area;
 import Areas.Cinema;
@@ -20,7 +22,7 @@ import javafx.scene.Node;
 import EventLib.HotelEvent;
 import EventLib.HotelEventManager;
 
-public class HotelManager implements EventLib.HotelEventListener{
+public class HotelManager implements EventLib.HotelEventListener, Observer{
 
 	//Variables
 	int guestCounter = 0;
@@ -67,8 +69,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 //		}
 		
 		
-		SimulationTimer timer = new SimulationTimer();
-		timer.activateTimer();		
+
 						
 				
 	}
@@ -313,24 +314,24 @@ public class HotelManager implements EventLib.HotelEventListener{
 			addRoomToClean(guestId);
 			removeGuest(guestId, tempEvent);
 		}
-		else if (tempEvent == "GOTO_FITNESS"){
-
-			String guestId;
-			int setGuestIdValue;
-			int HTE;
-			String prefStars;
-			
-			String[] splitArray = hashmapContent.split("\\s");
-			String[] splitArray2 = splitArray[1].split("=");
-			
-			//Set GuestID
-			guestId = splitArray2[0];
-			setGuestIdValue = Integer.parseInt(guestId);
-			HTE = Integer.parseInt(splitArray2[1]);
-			
-			sendGuestToFitness(setGuestIdValue, HTE);
-
-		}
+//		else if (tempEvent == "GOTO_FITNESS"){
+//
+//			String guestId;
+//			int setGuestIdValue;
+//			int HTE;
+//			String prefStars;
+//			
+//			String[] splitArray = hashmapContent.split("\\s");
+//			String[] splitArray2 = splitArray[1].split("=");
+//			
+//			//Set GuestID
+//			guestId = splitArray2[0];
+//			setGuestIdValue = Integer.parseInt(guestId);
+//			HTE = Integer.parseInt(splitArray2[1]);
+//			
+//			sendGuestToFitness(setGuestIdValue, HTE);
+//
+//		}
 //		else if (tempEvent == "NEED_FOOD")
 //		{
 //			int guestId;
@@ -371,31 +372,31 @@ public class HotelManager implements EventLib.HotelEventListener{
 //			System.out.println("I'm sending a guest to the cinema, selected guest is: " + guestId);
 //		}
 //		
-		else if (tempEvent == "CLEANING_EMERGENCY")
-		{
-			int guestId;
-			int availableCleanerId;
-			int emergencyRoomId;
-			
-			String[] splitArray = hashmapContent.split("=");
-			
-			if (splitArray[1].contains("}"))
-			{
-				String[] splitArray2 = splitArray[1].split("}");
-				guestId = Integer.parseInt(splitArray2[0]);
-			}
-			
-			else 
-			{
-				guestId = Integer.parseInt(splitArray[1]);
-			}
-			
-			addEmergencyRoomToClean(guestId);
-
-			System.out.println("Emergency voor guest: " + guestId);
-			
-		}
-		
+//		else if (tempEvent == "CLEANING_EMERGENCY")
+//		{
+//			int guestId;
+//			int availableCleanerId;
+//			int emergencyRoomId;
+//			
+//			String[] splitArray = hashmapContent.split("=");
+//			
+//			if (splitArray[1].contains("}"))
+//			{
+//				String[] splitArray2 = splitArray[1].split("}");
+//				guestId = Integer.parseInt(splitArray2[0]);
+//			}
+//			
+//			else 
+//			{
+//				guestId = Integer.parseInt(splitArray[1]);
+//			}
+//			
+//			addEmergencyRoomToClean(guestId);
+//
+//			System.out.println("Emergency voor guest: " + guestId);
+//			
+//		}
+//		
 //		else if (tempEvent == "EVACUATE")
 //		{
 //			System.out.println("I'm sending all persons to evacuate");
@@ -406,5 +407,9 @@ public class HotelManager implements EventLib.HotelEventListener{
 //		}
 	}
 	
-
+	public void update(Observable arg0, Object arg1) {
+		moveCharacters();
+  		personsPerformActions();
+		
+	}
 }
