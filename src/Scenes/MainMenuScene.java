@@ -7,6 +7,8 @@ import Areas.Area;
 import Factories.PersonFactory;
 import Managers.GridBuilder;
 import Managers.HotelManager;
+import Managers.SettingBuilder;
+import Managers.SimulationTimer;
 import Persons.Person;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -157,13 +159,31 @@ public class MainMenuScene {
 	
 	public void startSimulation()
 	{
+	    System.out.println("tickspeed: "+SettingBuilder.tickSpeed);
 	    HotelManager hotelManager = new HotelManager();
+	    SimulationTimer timer = new SimulationTimer();
 	    new SimulationScene();
+	    
 	    EventLib.HotelEventManager eventManager = new EventLib.HotelEventManager();
 	    eventManager.register(hotelManager);
+	    
+	    //add observer to Timer Observable
+	    timer.addObserver(hotelManager);	       
+	    
+	    //get settings and insert them into required objects
+	    
+	    int defaultTick = SettingBuilder.defaultTickSpeed;
+	    int enteredTick = SettingBuilder.tickSpeed;
+	    double factor = (Double.valueOf(defaultTick)/Double.valueOf(enteredTick));
+	    
+	    eventManager.changeSpeed(0.5);
+	    //timer.setInterval(enteredTick);
+	    
+	    System.out.println("defaultTick is: " + defaultTick);
+	    System.out.println("enteredTick is: " + enteredTick);
+	    System.out.println("factor is: " + factor);
+	    
 	    eventManager.start();
-
-
-
+		timer.activateTimer();
 	}
 }

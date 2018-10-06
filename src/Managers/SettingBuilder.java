@@ -9,18 +9,21 @@ public class SettingBuilder {
 
 	//Variables
 	ArrayList<String> settingList;
-	public static int tickSpeed = 1;
-	public static int dieInLineTime = 1;
-	public static int movieTime = 1;
-	public static int stairTime = 1;
+	public static int defaultTickSpeed = 1000;
+	public static int tickSpeed = 1000; //In miliseconds
+	public static int cleaningTime = 3;
+	public static int dieInLineTime = 5;
+	public static int movieTime = 20;
+	public static int stairTime = 2;
 	
 	//Constructor
 	public SettingBuilder(){
-		getSettings();
-		showSettings();
+		//getSettings();
+		//showSettings();
 	}
 	
 	//Functions
+	/*
 	public void getSettings(){					
 		String pathBase = System.getProperty("user.dir");
 		String pathFile = "\\src\\settings\\settings.txt";
@@ -44,6 +47,7 @@ public class SettingBuilder {
 		    settingList.add(input.nextLine());
 		}
 	}
+	*/
 	
 	
 	public void showSettings(){
@@ -58,15 +62,15 @@ public class SettingBuilder {
 		return tickSpeed;
 	}
 
-	public void setTickSpeed(int TickSpeed) {
+	public static void setTickSpeed(int TickSpeed) {
 		tickSpeed = TickSpeed;
 	}
 
-	public int getDieInLineTime() {
+	public static int getDieInLineTime() {
 		return dieInLineTime;
 	}
 
-	public void setDieInLineTime(int DieInLineTime) {
+	public static void setDieInLineTime(int DieInLineTime) {
 		dieInLineTime = DieInLineTime;
 	}
 
@@ -74,7 +78,7 @@ public class SettingBuilder {
 		return movieTime;
 	}
 
-	public void setMovieTime(int MovieTime) {
+	public static void setMovieTime(int MovieTime) {
 		movieTime = MovieTime;
 	}
 	
@@ -82,8 +86,16 @@ public class SettingBuilder {
 		return stairTime;
 	}
 
-	public void setStairTime(int StairTime) {
+	public static void setStairTime(int StairTime) {
 		stairTime = StairTime;
+	}
+
+	public static int getCleaningTime() {
+		return cleaningTime;
+	}
+
+	public static int getStairTime() {
+		return stairTime;
 	}
 	
 }

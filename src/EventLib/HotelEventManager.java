@@ -346,10 +346,11 @@ public class HotelEventManager extends Observable implements Runnable {
                     //check the difference between start and current time
                     //if the difference is more than the fireEventTimer, a new event is fired
                     if (currenttTime >= startTime + (fireEventTimer * fireEventFactor)) {
+                    	//							1000*0.5 = 500
                         //cont = false;
                         counterHTE++;
 
-//                        System.out.println("Event fired at time: " + counterHTE);
+                        System.out.println("Event fired at time: " + counterHTE);
 
                         notifyObservers();
                         cont = fireEvent();
@@ -375,7 +376,7 @@ public class HotelEventManager extends Observable implements Runnable {
 
         //check if that event is suppose to be fired at that moment
         if (event.Time == counterHTE) {
-//            System.out.println(event.toString());
+            System.out.println(event.toString());
 
             //notify all listeners of event
             for (HotelEventListener listener : listeners

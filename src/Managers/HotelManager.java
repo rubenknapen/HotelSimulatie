@@ -2,6 +2,8 @@ package Managers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import Areas.Area;
 import Areas.Cinema;
@@ -20,7 +22,7 @@ import javafx.scene.Node;
 import EventLib.HotelEvent;
 import EventLib.HotelEventManager;
 
-public class HotelManager implements EventLib.HotelEventListener{
+public class HotelManager implements EventLib.HotelEventListener, Observer{
 
 	//Variables
 	int guestCounter = 0;
@@ -67,8 +69,7 @@ public class HotelManager implements EventLib.HotelEventListener{
 //		}
 		
 		
-		SimulationTimer timer = new SimulationTimer();
-		timer.activateTimer();		
+			
 						
 				
 	}
@@ -424,6 +425,12 @@ public class HotelManager implements EventLib.HotelEventListener{
 //		{
 //			System.out.println("Godzilla event, message: " + hashmapContent);
 //		}
+	}
+	
+	public void update(Observable arg0, Object arg1) {
+		moveCharacters();
+  		personsPerformActions();
+		
 	}
 	
 
