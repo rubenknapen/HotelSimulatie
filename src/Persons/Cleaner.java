@@ -2,6 +2,7 @@ package Persons;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -29,6 +30,9 @@ public class Cleaner extends Person{
 	private ImageView cleanerImageView;
 	private int translateXVal;
 	private int translateYVal;
+	private Area currentRoomToClean;
+	public static ArrayList<Area> roomCleaningList = new ArrayList<Area>();
+	public static ArrayList<Area> EmergencyRoomCleaningList = new ArrayList<Area>();
 	
 	//Constructor
 	public Cleaner(String status, boolean visibility, int x, int y){
@@ -79,6 +83,8 @@ public class Cleaner extends Person{
 			if(object.getX() == x && object.getRealY() == y) {
 				return object;
 			} else if(object.getXEnd() == x && object.getRealY() == y) {
+				translateXVal -= GridBuilder.colSize;
+				x = object.getX();
 				return object;
 			}
 		}
@@ -172,63 +178,73 @@ public class Cleaner extends Person{
 		}
 	}
 	
+	private void checkCleaningList() {
+		if (!EmergencyRoomCleaningList.isEmpty()){
+			assignEmergencyRoomToClean(EmergencyRoomCleaningList.get(0));
+		}
+		else if(roomCleaningList.isEmpty()) {
+			//System.out.println("er zit niks in de cleaning list");
+		} else {
+			assignRoomToClean(roomCleaningList.get(0));
+		}
+	}
+	
+	private void assignEmergencyRoomToClean(Area roomToClean) {
+		currentRoomToClean = roomToClean;
+		status = "GOTODIRTYTOOM";
+		getRoute(roomToClean);
+		EmergencyRoomCleaningList.remove(0);
+		//System.out.println("minus emergency = " + Cleaner.getEmergencyRoomCleaningList());
+	}
+	
+	private void assignRoomToClean(Area roomToClean) {
+		currentRoomToClean = roomToClean;
+		status = "GOTODIRTYTOOM";
+		getRoute(roomToClean);
+		roomCleaningList.remove(0);
+		//System.out.println("minus normaal = " + Cleaner.getRoomCleaningList());
+	}
+	
 	@Override
 	public void performAction()
 	{
-		if(status.equals("CLEANING") && currentRoute.isEmpty())
+		if(status.equals("INACTIVE")){
+			checkCleaningList();
+		} if(status.equals("INACTIVE") && currentRoute.isEmpty())
 		{
-			cleanRoom();
+			checkCleaningList();
 		}
-		else if(status.equals("EMERGENCY") && currentRoute.isEmpty())
-		{
+		else if(status.equals("GOTODIRTYTOOM") && currentRoute.isEmpty()){
 			cleanRoom();
 		}
 		
-		else if (status.equals("Inactive") && currentRoute.isEmpty())
-		{
-			System.out.println("I have no task and I will go to the lobby!");
-			getLobbyRoute();
-		}
-		
-		else if (status.equals("Go To Lobby") && currentRoute.isEmpty())
-		{
-			setStatus("Inactive");
-		}
 	}
 
 	//Functions
-	public void cleanRoom()
-	{
-		if(visibility)
-		{
-			if (waitInFrontOfDoor == 0)
-			{
+	public void cleanRoom(){
+		if(visibility){
+			if (waitInFrontOfDoor == 0){
 				waitInFrontOfDoor++;
 			}
-			else if (waitInFrontOfDoor == 1)
-			{
+			else if (waitInFrontOfDoor == 1){
 				setInvisible();
 				cleaningTimeRemaining = cleaningTime;
 			}
 		}
-		else if (!visibility)
-		{
-			if(cleaningTimeRemaining == 0)
-			{
+		else if (!visibility){
+			if(cleaningTimeRemaining == 0){
+				currentRoomToClean.setAvailability(true);
 				setVisible();
 				getLobbyRoute();
 			}
-			else
-			{
+			else {
 				cleaningTimeRemaining -= 1;
-				System.out.println("I'm still cleaning, time left: " + cleaningTimeRemaining);
+				//System.out.println("I'm still cleaning, time left: " + cleaningTimeRemaining);
 			}
 		}
-		
 	}
 	
-	public void setVisible()
-	{
+	public void setVisible(){
 		Platform.runLater(
 				  () -> {
 						cleanerImageView.setVisible(true);
@@ -236,8 +252,7 @@ public class Cleaner extends Person{
 				  });
 	}
 	
-	public void setInvisible()
-	{
+	public void setInvisible(){
 		Platform.runLater(
 				  () -> {
 					cleanerImageView.setVisible(false);
@@ -245,10 +260,9 @@ public class Cleaner extends Person{
 				  });
 	}
 
-	public void getLobbyRoute()
-	{
+	public void getLobbyRoute(){
 		getRoute(Area.getAreaList().get(39));
-		setStatus("Go To Lobby");
+		setStatus("INACTIVE");
 	}
 	
 	@Override
@@ -298,4 +312,23 @@ public class Cleaner extends Person{
 	public void setY(int y) {
 		this.y = y;
 	}
+	
+	public static ArrayList<Area> getRoomCleaningList() {
+		return roomCleaningList;
+	}
+
+	public void setRoomCleaningList(ArrayList<Area> roomCleaningList) {
+		this.roomCleaningList = roomCleaningList;
+	}
+
+	public static ArrayList<Area> getEmergencyRoomCleaningList() {
+		return EmergencyRoomCleaningList;
+	}
+
+	public static void setEmergencyRoomCleaningList(ArrayList<Area> roomEmergencyCleaningList) {
+		Cleaner.EmergencyRoomCleaningList = roomEmergencyCleaningList;
+	}
+	
+	
+	
 }

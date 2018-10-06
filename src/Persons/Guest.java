@@ -14,9 +14,14 @@ import Managers.HotelManager;
 import Scenes.SimulationScene;
 import javafx.application.Platform;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 
 public class Guest extends Person{
 
@@ -73,9 +78,10 @@ public class Guest extends Person{
 	//Functions
 	
 	public void getRoute(Area destinationArea){	
+		currentRoute.clear();
 		ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 		getCurrentPosition().distance = 0;	
-	    currentRoute = _ds.Dijkstra(getCurrentPosition(), destinationArea);
+	    currentRoute = _ds.Dijkstra(getCurrentPosition(), destinationArea);    
 	    clearDistances();		
 	}
 	
@@ -99,7 +105,10 @@ public class Guest extends Person{
 		for (Area object: Area.getAreaList()) {
 			if(object.getX() == x && object.getRealY() == y) {
 				return object;
-			} else if(object.getXEnd() == x && object.getRealY() == y) {
+			} 
+			else if(object.getXEnd() == x && object.getRealY() == y) {
+				translateXVal -= GridBuilder.colSize;
+				x = object.getX();
 				return object;
 			}
 		}
@@ -108,26 +117,51 @@ public class Guest extends Person{
 	
 	@Override
 	public void performAction() {
-		if(status.equals("GOTO_FITNESS") && currentRoute.isEmpty() ) {
-			setStatus("INSIDE_FITNESS");
+		if(status.equals("CHECK_IN") && currentRoute.isEmpty() ) {
+			setInvisible();
+		}
+		if(status.equals("GOTO_FITNESS")) {
+			setVisible();
+			if(currentRoute.isEmpty()) {
+				setStatus("INSIDE_FITNESS");
+			}
 		}
 		if(status.equals("INSIDE_FITNESS")) {
 			if(fitnessTickAmount == 0) {
+				getRoute(HotelManager.getRoomNode(roomId));
 				setStatus("GO_BACK_TO_ROOM");
+				setVisible();
 			} else {
 				setInvisible();
 				fitnessTickAmount--;
 			}
 		}
-		if(status.equals("GO_BACK_TO_ROOM")) {
+		if(status.equals("GO_BACK_TO_ROOM") && currentRoute.isEmpty()) {
+			setInvisible();
+		} 
+		if(status.equals("CHECK_OUT") ) {		
 			setVisible();
-			setStatus("WALKING_BACK_TO_ROOM");
-			getRoute(HotelManager.getRoomNode(roomId));
-		}if(status.equals("GO_BACK_TO_ROOM")) {
-			
-		}
+			//System.out.println("Ik ga naar de exit ++++++++++++++++++++++++++++++++");
+			getLobbyRoute();
+			setStatus("LEAVE_HOTEL");
+		}			
+		if(status.equals("LEAVE_HOTEL") && currentRoute.isEmpty()) {
+			setStatus("LEFT_HOTEL");
+			setInvisible();
+			//System.out.println("Ik moet nu verwijderd worden ------------------------------");
+		}	
 	}
 	
+//	public int getGuestIndex(int guestId) {
+//
+//		for (int i = 0; i <  HotelManager.guests.size(); i++) {
+//			if (HotelManager.guests.get(i).getId() == guestId ) {
+//				return i;
+//			}
+//		}
+//		return 0;
+//	}
+//	
 	public void moveToArea(){
 
 		if(getLastArea() == null) {
@@ -215,6 +249,10 @@ public class Guest extends Person{
 			return currentRoute.get(currentRoute.size() - 1) ;
 		}
 	}	
+	
+	public void getLobbyRoute(){
+		getRoute(Area.getAreaList().get(39));
+	}
 	
 	public int getId()
 	{
