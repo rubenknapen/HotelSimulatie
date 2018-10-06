@@ -164,7 +164,7 @@ public class MainMenuScene {
 	{
 		System.out.println("tickspeed: "+SettingBuilder.tickSpeed);
 	    HotelManager hotelManager = new HotelManager();
-	    timer = new SimulationTimer();
+	    //timer = new SimulationTimer();
 	    
 	    new SimulationScene();
 	    
@@ -172,7 +172,7 @@ public class MainMenuScene {
 	    eventManager.register(hotelManager);
 	    
 	    //add observer to Timer Observable
-	    timer.addObserver(hotelManager);	       
+	    //timer.addObserver(hotelManager);	       
 	    
 	    //get settings and insert them into required objects
 	    
@@ -181,7 +181,7 @@ public class MainMenuScene {
 	    double factor = (Double.valueOf(enteredTick) / Double.valueOf(defaultTick));
 	    
 	    eventManager.changeSpeed(factor);
-	    timer.setInterval(enteredTick);
+	    //timer.setInterval(enteredTick);
 	    //timer.setInterval(enteredTick);
 	    
 	    System.out.println("defaultTick is: " + defaultTick);
@@ -189,7 +189,7 @@ public class MainMenuScene {
 	    System.out.println("factor is: " + factor);
 	    
 	    eventManager.start();
-	    timer.activateTimer();
+	    //timer.activateTimer();
 
 
 	}

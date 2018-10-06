@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.Semaphore;
 
 import Areas.Area;
 import Areas.Cinema;
@@ -21,6 +22,7 @@ import javafx.application.Platform;
 import javafx.scene.Node;
 import EventLib.HotelEvent;
 import EventLib.HotelEventManager;
+import java.util.concurrent.Semaphore;
 
 public class HotelManager implements EventLib.HotelEventListener, Observer{
 
@@ -29,8 +31,10 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	int selectedRoomId;
 
 	public static ArrayList<Person> guests;
+	public static ArrayList<Person> guestsCopy;
 	public static ArrayList<Person> cleaners;
 	ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
+	static Semaphore mutex = new Semaphore(1);
 	
 	
 	//Constructor
@@ -73,22 +77,45 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 						
 				
 	}
+	public static void copyArrayList()
+	{
+		guestsCopy = guests;
+	}
+	
 	public static void personsPerformActions(){
-		for(Person guest : guests) {
-			guest.performAction();
-		}
-		for(Person cleaner : cleaners) {
-			cleaner.performAction();
+		try {
+			mutex.acquire();
+		
+			for(Person guest : guests) {
+				guest.performAction();
+			}
+			
+			for(Person cleaner : cleaners) {
+				cleaner.performAction();
+			}
+			mutex.release();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
 	public static void moveCharacters() {
-  		for(Person guest : guests) {
-			guest.moveToArea();
-  		}  		
-  		for(Person cleaner : cleaners) {
-  			cleaner.moveToArea();
-  		}
+		try {
+			mutex.acquire();
+		
+	  		for(Person guest : guests) {
+				guest.moveToArea();
+	  		}
+	  		
+	  		for(Person cleaner : cleaners) {
+	  			cleaner.moveToArea();
+	  		}
+	  		mutex.release();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void addCleaners(int amount){
@@ -181,13 +208,20 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	
 	public void sendGuestToRestaurant(int guestId) {
 		String status = "NEED_FOOD";
-		for(Person guest : guests) {
-			if(guest.getId() == guestId) {
-				guest.currentRoute.clear();
-				guest.setStatus(status);
-				guest.getRoute(findClosestRestaurant(guest));
+			try {
+				mutex.acquire();
+				for(Person guest : guests) {
+					if(guest.getId() == guestId) {
+						guest.currentRoute.clear();
+						guest.setStatus(status);
+						guest.getRoute(findClosestRestaurant(guest));
+					}
+		  		}
+				mutex.release();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-  		}
 	}	
 		
 	private Area findClosestRestaurant(Person guest) {
@@ -216,29 +250,54 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		
 	
 	public void removeGuest(int guestId, String tempEvent) {
-		for(Person guest : guests) {
-			if(guestId == guest.getId()) {
-				guest.setStatus(tempEvent);
-			}
-		}	
+		try {
+			mutex.acquire();
+
+			for(Person guest : guests) {
+				if(guestId == guest.getId()) {
+					guest.setStatus(tempEvent);
+				}
+			}	
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		mutex.release();
 	}	
 	
 	public void addRoomToClean(int guestId) {
-		for(Person guest : guests) {
-			if(guestId == guest.getId()) {
-				Cleaner.getRoomCleaningList().add(getRoomNodeAfterCheckIn(guest.getSelectedRoom()));
-				//System.out.println("Aangevuld normaal = " + Cleaner.getRoomCleaningList());
-			}
-		}		
+		try {
+			mutex.acquire();
+		
+			for(Person guest : guests) 
+			{
+				if(guestId == guest.getId()) {
+					Cleaner.getRoomCleaningList().add(getRoomNodeAfterCheckIn(guest.getSelectedRoom()));
+					//System.out.println("Aangevuld normaal = " + Cleaner.getRoomCleaningList());
+				}
+			}	
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		mutex.release();
 	}
 	
 	public void addEmergencyRoomToClean(int guestId) {
-		for(Person guest : guests) {
-			if(guestId == guest.getId()) {
-				Cleaner.getEmergencyRoomCleaningList().add(getRoomNodeAfterCheckIn(guest.getSelectedRoom()));
-				//System.out.println("Aangevuld emergency = " + Cleaner.getEmergencyRoomCleaningList());
+		try {
+			mutex.acquire();
+		
+			for(Person guest : guests) {
+				if(guestId == guest.getId()) {
+					Cleaner.getEmergencyRoomCleaningList().add(getRoomNodeAfterCheckIn(guest.getSelectedRoom()));
+					//System.out.println("Aangevuld emergency = " + Cleaner.getEmergencyRoomCleaningList());
+				}
 			}
-		}		
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		mutex.release();
 	}
 	
 	
@@ -280,14 +339,22 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 						  
 						  if (selectedRoomId != 0)
 						  {
-							  //System.out.println("gekozen room ID: "+selectedRoomId);
-							  Person xx = PersonFactory.createPerson("Guest",tempEvent, setGuestIdValue,true,10,3);
-							  xx.setRoomId(selectedRoomId);
-							  guests.add(xx);
-							  xx.getRoute(getRoomNodeAfterCheckIn(selectedRoomId));
-//							  System.out.println("Mijn kamer =========== " + getRoomNodeAfterCheckIn(selectedRoomId).id);
-//							  System.out.println("room node : " + getRoomNode(selectedRoomId).id);
-//							  System.out.println(" ****************************** Guest array = " + guests);
+							  try {
+								mutex.acquire();
+							
+								  //System.out.println("gekozen room ID: "+selectedRoomId);
+								  Person xx = PersonFactory.createPerson("Guest",tempEvent, setGuestIdValue,true,10,3);
+								  xx.setRoomId(selectedRoomId);
+								  guests.add(xx);
+								  xx.getRoute(getRoomNodeAfterCheckIn(selectedRoomId));
+	//							  System.out.println("Mijn kamer =========== " + getRoomNodeAfterCheckIn(selectedRoomId).id);
+	//							  System.out.println("room node : " + getRoomNode(selectedRoomId).id);
+	//							  System.out.println(" ****************************** Guest array = " + guests);
+								  mutex.release();
+							  } catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+							  }
 						  }
 						  else
 						  {
@@ -314,44 +381,42 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 			addRoomToClean(guestId);
 			removeGuest(guestId, tempEvent);
 		}
-//		else if (tempEvent == "GOTO_FITNESS"){
-//
-//			String guestId;
-//			int setGuestIdValue;
-//			int HTE;
-//			String prefStars;
-//			
-//			String[] splitArray = hashmapContent.split("\\s");
-//			String[] splitArray2 = splitArray[1].split("=");
-//			
-//			//Set GuestID
-//			guestId = splitArray2[0];
-//			setGuestIdValue = Integer.parseInt(guestId);
-//			HTE = Integer.parseInt(splitArray2[1]);
-//			
-//			sendGuestToFitness(setGuestIdValue, HTE);
-//
-//		}
-//		else if (tempEvent == "NEED_FOOD")
-//		{
-//			int guestId;
-//			String[] splitArray = hashmapContent.split("=");
-//			
-//			if (splitArray[1].contains("}"))
-//			{
-//				String[] splitArray2 = splitArray[1].split("}");
-//				guestId = Integer.parseInt(splitArray2[0]);
-//			}
-//			
-//			else 
-//			{
-//				guestId = Integer.parseInt(splitArray[1]);
-//			}
-//			
-//			sendGuestToRestaurant(guestId);
-//
-//
-//		}
+		else if (tempEvent == "GOTO_FITNESS"){
+
+			String guestId;
+			int setGuestIdValue;
+			int HTE;
+			String prefStars;
+			
+			String[] splitArray = hashmapContent.split("\\s");
+			String[] splitArray2 = splitArray[1].split("=");
+			
+			//Set GuestID
+			guestId = splitArray2[0];
+			setGuestIdValue = Integer.parseInt(guestId);
+			HTE = Integer.parseInt(splitArray2[1]);
+			
+			sendGuestToFitness(setGuestIdValue, HTE);
+
+		}
+		
+		else if (tempEvent == "NEED_FOOD")
+		{
+			int guestId;
+			String[] splitArray = hashmapContent.split("=");
+			
+			if (splitArray[1].contains("}"))
+			{
+				String[] splitArray2 = splitArray[1].split("}");
+				guestId = Integer.parseInt(splitArray2[0]);
+			}
+			
+			else 
+			{
+				guestId = Integer.parseInt(splitArray[1]);
+			}
+			sendGuestToRestaurant(guestId);
+		}
 //		
 //		else if (tempEvent == "GOTO_CINEMA")
 //		{
@@ -372,30 +437,36 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 //			System.out.println("I'm sending a guest to the cinema, selected guest is: " + guestId);
 //		}
 //		
-//		else if (tempEvent == "CLEANING_EMERGENCY")
-//		{
-//			int guestId;
-//			int availableCleanerId;
-//			int emergencyRoomId;
-//			
-//			String[] splitArray = hashmapContent.split("=");
-//			
-//			if (splitArray[1].contains("}"))
-//			{
-//				String[] splitArray2 = splitArray[1].split("}");
-//				guestId = Integer.parseInt(splitArray2[0]);
-//			}
-//			
-//			else 
-//			{
-//				guestId = Integer.parseInt(splitArray[1]);
-//			}
-//			
-//			addEmergencyRoomToClean(guestId);
-//
-//			System.out.println("Emergency voor guest: " + guestId);
-//			
-//		}
+		else if (tempEvent == "CLEANING_EMERGENCY")
+		{
+			int guestId;
+			int availableCleanerId;
+			int emergencyRoomId;
+			
+			String[] splitArray = hashmapContent.split("=");
+			
+			if (splitArray[1].contains("}"))
+			{
+				String[] splitArray2 = splitArray[1].split("}");
+				guestId = Integer.parseInt(splitArray2[0]);
+			}
+			
+			else 
+			{
+				guestId = Integer.parseInt(splitArray[1]);
+			}
+			
+			addEmergencyRoomToClean(guestId);
+
+			System.out.println("Emergency voor guest: " + guestId);
+			
+		}
+		
+		if (guests != null)
+		{
+			moveCharacters();
+	        personsPerformActions();
+		}
 //		
 //		else if (tempEvent == "EVACUATE")
 //		{
@@ -408,8 +479,6 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	}
 	
 	public void update(Observable arg0, Object arg1) {
-		moveCharacters();
-  		personsPerformActions();
-		
+		//
 	}
 }

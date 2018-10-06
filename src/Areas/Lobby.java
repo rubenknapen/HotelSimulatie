@@ -4,8 +4,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import Managers.GridBuilder;
-import Scenes.HotelOverviewScene;
 import Scenes.MainMenuScene;
 import Scenes.SettingsScene;
 import Scenes.SimulationScene;
@@ -28,6 +30,8 @@ public class Lobby extends Area {
 	//Constructor
 	public Lobby(int id, int dimensionW, int dimensionH, int x, int y)
 	{
+		JFrame parent = new JFrame();
+		
 		this.dimensionW = dimensionW;
 		this.dimensionH = dimensionH;
 		this.x = x;
@@ -56,6 +60,18 @@ public class Lobby extends Area {
 		    public void handle(MouseEvent mouseEvent) {
 		        System.out.println("mouse click detected! " + mouseEvent.getSource());
 		        
+		        JOptionPane.showMessageDialog(parent, 
+		        		"Guests:"+
+		        		"\nin hotel: 14"+
+		        		"\nin restaurant: 0"+
+		        		"\nin fitness: 0"+
+		        		"\nin cinema: 0"+
+		        		"\n"+
+		        		"\nCleaners:"+
+		        		"\nIn emergency: 0"+
+		        		"\nIn Checkout cleaning:"
+		        		);
+		        
 		        //MainMenuScene.eventManager.pause();
 		        /*
 				try {
@@ -64,11 +80,10 @@ public class Lobby extends Area {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				*/				
 		        
 		        HotelOverviewScene overviewScene = new HotelOverviewScene();
 				overviewScene.buildScene();
-				
+				*/
 		    }
 		});
 		

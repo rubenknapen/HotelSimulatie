@@ -35,6 +35,7 @@ public class SimulationTimer extends Observable{
 		
 	}
 	
+	/*
 	public void activateTimer()
 	{
 		  timer = new Timer();
@@ -46,10 +47,10 @@ public class SimulationTimer extends Observable{
 		        	  notifyObservers();
 		              System.out.println("tick: "+currentTick);
 		              currentTick++;
-		              
-
-
+		              //HotelManager.moveCharacters();
+		              //HotelManager.personsPerformActions();
 		          }
 		  }, (long) delay, interval);
 	}
+	*/
 }

@@ -37,6 +37,7 @@ public class Guest extends Person{
 	private int translateYVal;
 	private int fitnessTickAmount;
 	
+	
 	//Constructor
 	public Guest(String status, int id, boolean visibility, int x, int y)
 	{
@@ -174,9 +175,9 @@ public class Guest extends Person{
 		if(getLastArea() == null) {
 //			System.out.println("Reached end of route");
 		} 
-		else if( ((getLastArea().getX() - x == 0) && getLastArea().getRealY() == y ) && getNextArea().getXEnd() - x == -1) {
-			currentRoute.remove(getLastArea());
-		}
+//		else if( ((getLastArea().getX() - x == 0) && getLastArea().getRealY() == y ) && getNextArea().getXEnd() - x == -1) {
+//			currentRoute.remove(getLastArea());
+//		}
 		else if((getLastArea().getX() - x == 1) && getLastArea().getRealY() == y ) {
 			
 			// Right movement
