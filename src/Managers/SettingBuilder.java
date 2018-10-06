@@ -9,9 +9,9 @@ public class SettingBuilder {
 
 	//Variables
 	ArrayList<String> settingList;
-	public static int tickSpeed = 0;
-	public int dieInLineTime = 0;
-	public int movieTime = 0;
+	public static int tickSpeed = 1;
+	public static int dieInLineTime = 1;
+	public static int movieTime = 1;
 	public static int stairTime = 1;
 	
 	//Constructor
@@ -58,24 +58,32 @@ public class SettingBuilder {
 		return tickSpeed;
 	}
 
-	public void setTickSpeed(int tickSpeed) {
-		this.tickSpeed = tickSpeed;
+	public void setTickSpeed(int TickSpeed) {
+		tickSpeed = TickSpeed;
 	}
 
 	public int getDieInLineTime() {
 		return dieInLineTime;
 	}
 
-	public void setDieInLineTime(int dieInLineTime) {
-		this.dieInLineTime = dieInLineTime;
+	public void setDieInLineTime(int DieInLineTime) {
+		dieInLineTime = DieInLineTime;
 	}
 
-	public int getMovieTime() {
+	public static int getMovieTime() {
 		return movieTime;
 	}
 
-	public void setMovieTime(int movieTime) {
-		this.movieTime = movieTime;
+	public void setMovieTime(int MovieTime) {
+		movieTime = MovieTime;
+	}
+	
+	public static int getstairTime() {
+		return stairTime;
+	}
+
+	public void setStairTime(int StairTime) {
+		stairTime = StairTime;
 	}
 	
 }
