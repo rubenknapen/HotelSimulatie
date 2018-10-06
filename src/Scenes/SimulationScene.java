@@ -10,7 +10,7 @@ public class SimulationScene {
 
 	public static GridPane grid;
 	public BorderPane bPane;
-	public Scene simulationScene;
+	public static Scene simulationScene;
 	public Stage simulationStage;
 
 	

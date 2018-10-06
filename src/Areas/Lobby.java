@@ -5,11 +5,16 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 import Managers.GridBuilder;
+import Scenes.HotelOverviewScene;
+import Scenes.MainMenuScene;
+import Scenes.SettingsScene;
 import Scenes.SimulationScene;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -51,8 +56,23 @@ public class Lobby extends Area {
 		    @Override
 		    public void handle(MouseEvent mouseEvent) {
 		        System.out.println("mouse click detected! " + mouseEvent.getSource());
+		        //MainMenuScene.eventManager.pause();
+		        /*
+				try {
+					MainMenuScene.timer.wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				*/
+				
+		        
+		        HotelOverviewScene overviewScene = new HotelOverviewScene();
+				overviewScene.buildScene();
+				
 		    }
 		});
+		
 		
 		
 		Label label = new Label(Integer.toString(id));

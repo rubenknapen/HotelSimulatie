@@ -15,6 +15,8 @@ public class SimulationTimer extends Observable{
 	private double delay = 1;
 	private int currentTick = 0;
 	
+	public static Timer timer;
+	
 	//Constructor
 	public SimulationTimer()
 	{
@@ -34,7 +36,7 @@ public class SimulationTimer extends Observable{
 	
 	public void activateTimer()
 	{
-		  Timer timer = new Timer();
+		  timer = new Timer();
 		   
 		  timer.scheduleAtFixedRate(new TimerTask() {
 		          public void run() 

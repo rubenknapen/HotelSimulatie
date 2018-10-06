@@ -30,6 +30,9 @@ public class MainMenuScene {
 	private Button layoutSettingsButton;
 	ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 	
+	public static EventLib.HotelEventManager eventManager;
+	public static SimulationTimer timer;
+	
 	public static String baseFolder = System.getProperty("user.dir");
 	public static String fileLocation = "\\src\\layout\\hotel4.layout";
 	public static String selectedLayout = baseFolder+fileLocation;
@@ -161,10 +164,10 @@ public class MainMenuScene {
 	{
 	    System.out.println("tickspeed: "+SettingBuilder.tickSpeed);
 	    HotelManager hotelManager = new HotelManager();
-	    SimulationTimer timer = new SimulationTimer();
+	    timer = new SimulationTimer();
 	    new SimulationScene();
 	    
-	    EventLib.HotelEventManager eventManager = new EventLib.HotelEventManager();
+	    eventManager = new EventLib.HotelEventManager();
 	    eventManager.register(hotelManager);
 	    
 	    //add observer to Timer Observable
