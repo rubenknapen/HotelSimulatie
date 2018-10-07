@@ -7,6 +7,7 @@ import Areas.Area;
 import Factories.PersonFactory;
 import Managers.GridBuilder;
 import Managers.HotelManager;
+import Managers.SettingBuilder;
 import Managers.SimulationTimer;
 import Persons.Person;
 import javafx.application.Platform;
@@ -29,6 +30,7 @@ public class MainMenuScene {
 	private Button layoutSettingsButton;
 	ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 	
+	public static EventLib.HotelEventManager eventManager;
 	public static String baseFolder = System.getProperty("user.dir");
 	public static String fileLocation = "\\src\\layout\\hotel4.layout";
 	public static String selectedLayout = baseFolder+fileLocation;
@@ -158,9 +160,21 @@ public class MainMenuScene {
 	
 	public void startSimulation()
 	{
-	    EventLib.HotelEventManager eventManager = new EventLib.HotelEventManager();
+	    eventManager = new EventLib.HotelEventManager();
 	    HotelManager hotelManager = new HotelManager();
 	    eventManager.register(hotelManager);
+	    
+	    int defaultTick = SettingBuilder.defaultTickSpeed;
+	    int enteredTick = SettingBuilder.tickSpeed;
+	    double factor = (Double.valueOf(enteredTick) / Double.valueOf(defaultTick));
+	    
+	    eventManager.changeSpeed(factor);
+	    
+	    
+	    System.out.println("defaultTick is: " + defaultTick);
+	    System.out.println("enteredTick is: " + enteredTick);
+	    System.out.println("factor is: " + factor);
+	    
 	    eventManager.start();
 	    new SimulationScene();
 	    

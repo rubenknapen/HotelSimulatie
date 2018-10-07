@@ -28,6 +28,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	int guestCounter = 0;
 	int selectedRoomId;
 
+	public static SimulationTimer timer;
 	public static ArrayList<Person> guests;
 	public static ArrayList<Person> cleaners;
 	ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
@@ -68,8 +69,9 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 //			}
 //		}
 		
-		SimulationTimer timer = new SimulationTimer();
+		timer = new SimulationTimer();
 		timer.addObserver(this);
+		timer.setInterval(SettingBuilder.tickSpeed);
 		timer.activateTimer();
 			
 						

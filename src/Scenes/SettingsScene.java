@@ -42,18 +42,18 @@ public class SettingsScene {
 		
 		Label setting1Label = new Label("HTE speed: ");
 		TextField setting1EnterValueField = new TextField (Integer.toString(SettingBuilder.getTickSpeed()));
-		Label setting1InfoLabel = new Label(" (In seconds)");
+		Label setting1InfoLabel = new Label(" (In miliseconds)");
 		
 		Label setting2Label = new Label("Movie takes: ");
 		TextField setting2EnterValueField = new TextField (Integer.toString(SettingBuilder.getMovieTime()));
 		Label setting2InfoLabel = new Label(" (HTE)");
 		
 		Label setting3Label = new Label("Cleaning takes: ");
-		TextField setting3EnterValueField = new TextField (Integer.toString(SettingBuilder.getTickSpeed()));
+		TextField setting3EnterValueField = new TextField (Integer.toString(SettingBuilder.getCleaningTime()));
 		Label setting3InfoLabel = new Label(" (HTE)");
 		
 		Label setting4Label = new Label("Stairs takes: ");
-		TextField setting4EnterValueField = new TextField (Integer.toString(SettingBuilder.getTickSpeed()));
+		TextField setting4EnterValueField = new TextField (Integer.toString(SettingBuilder.getStairTime()));
 		Label setting4InfoLabel = new Label(" (HTE)");
 		
 		
@@ -113,31 +113,30 @@ public class SettingsScene {
 					setting4IntValue = Integer.parseInt(setting4Value);
 					
 			    } catch (NumberFormatException f) {
+			    	settingComplete = false;
 			    	JOptionPane.showMessageDialog(parent, "Only numbers allowed");;
 			    }
 				
-				if (setting1IntValue <= 0)
+				//HTE speed
+				if (setting1IntValue < 250)
 				{
-					JOptionPane.showMessageDialog(parent, "Value can't be 0 or lower");
+					JOptionPane.showMessageDialog(parent, "Value can't be lower then 250");
 					settingComplete = false;
 				}
-				else if (setting1IntValue >= 5)
+				else if (setting1IntValue > 2000)
 				{
-					JOptionPane.showMessageDialog(parent, "Value can't be 5 or higher");
+					JOptionPane.showMessageDialog(parent, "Value can't be higher then 2000");
 					settingComplete = false;
 				}
 				
+				//Movie
 				if (setting2IntValue <= 0)
 				{
 					JOptionPane.showMessageDialog(parent, "Value can't be 0 or lower");
 					settingComplete = false;
 				}
-				else if (setting2IntValue >= 5)
-				{
-					JOptionPane.showMessageDialog(parent, "Value can't be 5 or higher");
-					settingComplete = false;
-				}
 				
+				//Cleaning
 				if (setting3IntValue <= 0)
 				{
 					JOptionPane.showMessageDialog(parent, "Value can't be 0 or lower");
@@ -148,6 +147,8 @@ public class SettingsScene {
 					JOptionPane.showMessageDialog(parent, "Value can't be 5 or higher");
 					settingComplete = false;
 				}
+				
+				//Stairs
 				if (setting4IntValue <= 0)
 				{
 					JOptionPane.showMessageDialog(parent, "Value can't be 0 or lower");
@@ -161,7 +162,12 @@ public class SettingsScene {
 				
 				if (settingComplete)
 				{
+					SettingBuilder.tickSpeed = setting1IntValue;
 					JOptionPane.showMessageDialog(parent, "The settings are saved!");
+				}
+				else if(!settingComplete) {
+					JOptionPane.showMessageDialog(parent, "The settings are not saved!");
+					settingComplete = true;
 				}
 			}
 		});
