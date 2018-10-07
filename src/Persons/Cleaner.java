@@ -23,7 +23,7 @@ public class Cleaner extends Person{
 	private String status; // Status of the person "evacuate, check in, etc."
 	private boolean visibility = true; // Hide or shows the person visually
 	private boolean moveAllowed = true;
-	private int cleaningTime = 3;
+	private int cleaningTime = SettingBuilder.cleaningTime;
 	private int cleaningTimeRemaining;
 	private int waitInFrontOfDoor = 0;
 	private int x; // x coordinate
