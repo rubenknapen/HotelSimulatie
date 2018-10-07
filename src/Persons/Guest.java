@@ -151,7 +151,17 @@ public class Guest extends Person{
 			setInvisible();
 		}	
 		if(status.equals("NEED_FOOD")) {
-			setVisible();
+		setVisible();
+	//		System.out.println("Ik ga naar een restaurant ------------------------------");
+			if(status.equals("NEED_FOOD")  && currentRoute.isEmpty()) {
+				setStatus("CHECK_RESTAURANT_QUEUE");	
+			}
+		}
+		if(status.equals("CHECK_RESTAURANT_QUEUE")) {
+			checkRestaurantQueue();
+		}
+		if(status.equals("IN_RESTAURANT")) {
+			System.out.println("Ik zit in een restaurant!");
 		}
 		if(status.equals("GO_TO_CINEMA"))
 		{
@@ -159,6 +169,17 @@ public class Guest extends Person{
 		}
 	}
 	
+
+	private void checkRestaurantQueue() {
+		if(getCurrentPosition().capacity > 0) {
+			setStatus("IN_RESTAURANT");
+			getCurrentPosition().capacity--;
+		} else {
+			System.out.println("Help het restaurant is vol+++++++++++++++++++++++++++++++++++++++++++");
+		}
+	}
+	
+
 	public void moveAllowed()
 	{
 		if(moveAllowed)
@@ -181,6 +202,7 @@ public class Guest extends Person{
 			}
 		}
 	}
+
 
 	public void moveToArea()
 	{

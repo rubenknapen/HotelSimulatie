@@ -2,8 +2,11 @@ package Areas;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
+import Persons.Person;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,9 +23,10 @@ public abstract class Area {
     public HashMap<Area, Integer> neighbours;
     public int distance;
     public Area latest;
+    public long capacity;
     public int id;
-    public static ArrayList<Area> areaList = new ArrayList<Area>();
-    	
+    public static List<Area> areaList =  Collections.synchronizedList(new ArrayList<Area>());	
+    
 	// Variables
 	public int x = 0;
 	public int y = 0;
@@ -69,7 +73,7 @@ public abstract class Area {
 		}
 	}
 	
-    public static ArrayList<Area> getAreaList(){
+    public static List<Area> getAreaList(){
     	return areaList;
     }
     
