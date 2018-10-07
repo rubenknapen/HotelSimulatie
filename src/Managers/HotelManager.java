@@ -479,9 +479,11 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		
 	}
 	@Override
-	public void update(Observable o, Object arg) {
+
+	public void update(Observable o, Object arg) 
+	{
 		moveCharacters();
 		personsPerformActions();
-		setRealtimeStatistics();		
+		setRealtimeStatistics();
 	}
 }

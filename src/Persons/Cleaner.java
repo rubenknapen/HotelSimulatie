@@ -9,6 +9,7 @@ import java.util.Observer;
 import Areas.Area;
 import EventLib.HotelEvent;
 import Managers.GridBuilder;
+import Managers.SettingBuilder;
 import Scenes.SimulationScene;
 import javafx.application.Platform;
 import javafx.geometry.HPos;
@@ -21,6 +22,7 @@ public class Cleaner extends Person{
 	//Variables
 	private String status; // Status of the person "evacuate, check in, etc."
 	private boolean visibility = true; // Hide or shows the person visually
+	private boolean moveAllowed = true;
 	private int cleaningTime = 3;
 	private int cleaningTimeRemaining;
 	private int waitInFrontOfDoor = 0;
@@ -28,6 +30,7 @@ public class Cleaner extends Person{
 	private int y; // y coordinate
 	private int id;
 	private ImageView cleanerImageView;
+	private int stairsWaitTime = 0;
 	private int translateXVal;
 	private int translateYVal;
 	private Area currentRoomToClean;
@@ -41,6 +44,7 @@ public class Cleaner extends Person{
 		this.setVisibility(visibility);	
 		this.setX(x);
 		this.setY(y);
+		this.setCleaningTime();
 
 		// Get the right image depending on dimensions
 		try {
@@ -93,83 +97,115 @@ public class Cleaner extends Person{
 		return null;
 	}
 	
-	public void moveToArea(){
+	public void moveAllowed()
+	{
+		if(moveAllowed)
+		for (Area object: Area.getAreaList()) 
+		{
+			if(object.getX() == x && object.getRealY() == y) 
+			{
+				if(object.areaType == "Stairs")
+				{
+					moveAllowed = false;
+				}
+			}
+		}
+		else if(!moveAllowed)
+		{
+			if(stairsWaitTime == SettingBuilder.getStairTime()-1)
+			{
+				moveAllowed = true;
+				stairsWaitTime = 0;
+			}
+		}
+	}
 
-		if(getLastArea() == null) {
-			//Reached end of route
-		} 
-		else if((getLastArea().getX() - x == 1) && getLastArea().getRealY() == y ) {
-			
-			// Right movement
-						
-			x = getLastArea().getX();
-			translateXVal += GridBuilder.colSize;
-			cleanerImageView.setTranslateX(translateXVal);
-			if(getLastArea().dimensionW > 1) {
-				
-			} else {
-				currentRoute.remove(getLastArea());
-			}
-		} 
-		else if((getLastArea().getXEnd() - x == 1) && getLastArea().getRealY() == y ) {
-			
-			// Right movement
-			
-			x = getLastArea().getXEnd();
-			translateXVal += GridBuilder.colSize;
-			cleanerImageView.setTranslateX(translateXVal);
-			currentRoute.remove(getLastArea());
-		} else if((getLastArea().getXEnd() - x == -1) && getLastArea().getRealY() == y ) {
-			
-			// Left movement
-			
-			x = getLastArea().getXEnd();
-			translateXVal -= GridBuilder.colSize;
-			cleanerImageView.setTranslateX(translateXVal);
-			if(getLastArea().dimensionW > 1) {
-				
-			} else {
-				currentRoute.remove(getLastArea());
-			}
+	
+	public void moveToArea()
+	{
+		moveAllowed();
+		if(!moveAllowed)
+		{
+			stairsWaitTime++;
+		}
 		
-		} 
-		else if ((getLastArea().getX() - x == -1) && getLastArea().getRealY() == y ) {
-
-			// Left movement
-			
-			x = getLastArea().getX();
-			translateXVal -= GridBuilder.colSize;
-			cleanerImageView.setTranslateX(translateXVal);	
-			currentRoute.remove(getLastArea());
-
-		}
-		else if(((getLastArea().getXEnd() - x == 0) && getLastArea().getRealY() == y ) && x > getLastArea().getX()) {
-			//System.out.println("Ik loop naar rechts 3");
-			currentRoute.remove(getLastArea());
-		}
-		else if(getLastArea().getY() != y ) {
-			
-			// Up and down movement
-			
-			if(getLastArea().getY() - y == -1) {
-				//System.out.println("Ik loop naar boven");
-				y = getLastArea().getY();
-				translateYVal -= GridBuilder.rowSize;
-				cleanerImageView.setTranslateY(translateYVal);
+		else if (moveAllowed)
+		{
+			if(getLastArea() == null) {
+				//Reached end of route
+			} 
+			else if((getLastArea().getX() - x == 1) && getLastArea().getRealY() == y ) {
+				
+				// Right movement
+							
+				x = getLastArea().getX();
+				translateXVal += GridBuilder.colSize;
+				cleanerImageView.setTranslateX(translateXVal);
+				if(getLastArea().dimensionW > 1) {
+					
+				} else {
+					currentRoute.remove(getLastArea());
+				}
+			} 
+			else if((getLastArea().getXEnd() - x == 1) && getLastArea().getRealY() == y ) {
+				
+				// Right movement
+				
+				x = getLastArea().getXEnd();
+				translateXVal += GridBuilder.colSize;
+				cleanerImageView.setTranslateX(translateXVal);
 				currentRoute.remove(getLastArea());
-			} else {
-				//System.out.println("Ik loop naar beneden");
-				y = getLastArea().getY();
-				translateYVal += GridBuilder.rowSize;
-				cleanerImageView.setTranslateY(translateYVal);
-				currentRoute.remove(getLastArea());				
-			}
+			} else if((getLastArea().getXEnd() - x == -1) && getLastArea().getRealY() == y ) {
+				
+				// Left movement
+				
+				x = getLastArea().getXEnd();
+				translateXVal -= GridBuilder.colSize;
+				cleanerImageView.setTranslateX(translateXVal);
+				if(getLastArea().dimensionW > 1) {
+					
+				} else {
+					currentRoute.remove(getLastArea());
+				}
 			
+			} 
+			else if ((getLastArea().getX() - x == -1) && getLastArea().getRealY() == y ) {
+	
+				// Left movement
+				
+				x = getLastArea().getX();
+				translateXVal -= GridBuilder.colSize;
+				cleanerImageView.setTranslateX(translateXVal);	
+				currentRoute.remove(getLastArea());
+	
+			}
+			else if(((getLastArea().getXEnd() - x == 0) && getLastArea().getRealY() == y ) && x > getLastArea().getX()) {
+				//System.out.println("Ik loop naar rechts 3");
+				currentRoute.remove(getLastArea());
+			}
+			else if(getLastArea().getY() != y ) {
+				
+				// Up and down movement
+				
+				if(getLastArea().getY() - y == -1) {
+					//System.out.println("Ik loop naar boven");
+					y = getLastArea().getY();
+					translateYVal -= GridBuilder.rowSize;
+					cleanerImageView.setTranslateY(translateYVal);
+					currentRoute.remove(getLastArea());
+				} else {
+					//System.out.println("Ik loop naar beneden");
+					y = getLastArea().getY();
+					translateYVal += GridBuilder.rowSize;
+					cleanerImageView.setTranslateY(translateYVal);
+					currentRoute.remove(getLastArea());				
+				}
+				
+			}
+			else {
+				currentRoute.remove(getLastArea());
+			}		
 		}
-		else {
-			currentRoute.remove(getLastArea());
-		}		
-		
 	}		
 	
 	public Area getLastArea() {
@@ -245,6 +281,7 @@ public class Cleaner extends Person{
 			}
 			else {
 				cleaningTimeRemaining -= 1;
+				System.out.println("Cleaning time remaining: "+cleaningTimeRemaining);
 			}
 		}
 	}
@@ -342,6 +379,9 @@ public class Cleaner extends Person{
 		Cleaner.EmergencyRoomCleaningList = roomEmergencyCleaningList;
 	}
 	
-	
+	private void setCleaningTime()
+	{
+		cleaningTime = SettingBuilder.getCleaningTime();
+	}
 	
 }

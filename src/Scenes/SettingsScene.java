@@ -163,6 +163,10 @@ public class SettingsScene {
 				if (settingComplete)
 				{
 					SettingBuilder.tickSpeed = setting1IntValue;
+					SettingBuilder.movieTime = setting2IntValue;
+					SettingBuilder.cleaningTime = setting3IntValue;
+					SettingBuilder.stairTime = setting4IntValue;
+					
 					JOptionPane.showMessageDialog(parent, "The settings are saved!");
 				}
 				else if(!settingComplete) {
