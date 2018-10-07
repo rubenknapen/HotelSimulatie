@@ -56,7 +56,7 @@ public class AreaFactory {
 	      
 	      else if(areaType.equalsIgnoreCase("Restaurant"))
 	      {
-	         return new Restaurant(id, dimensionW, dimensionH, x, y);
+	         return new Restaurant(id, dimensionW, dimensionH, capacity, x, y);
 	      }
 	      
 	      else if(areaType.equalsIgnoreCase("Stairway"))
