@@ -112,7 +112,7 @@ public class Cleaner extends Person{
 		}
 		else if(!moveAllowed)
 		{
-			if(stairsWaitTime == SettingBuilder.getStairTime()-1)
+			if(stairsWaitTime == SettingBuilder.getStairTime())
 			{
 				moveAllowed = true;
 				stairsWaitTime = 0;
@@ -303,7 +303,7 @@ public class Cleaner extends Person{
 	}
 
 	public void getLobbyRoute(){
-		getRoute(Area.getAreaList().get(39));
+		getRoute(Area.getAreaList().get(49));
 		setStatus("INACTIVE");
 	}
 	

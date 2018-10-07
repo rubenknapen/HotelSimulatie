@@ -312,7 +312,8 @@ public class GridBuilder {
 	
 	public void addLobby()
 	{
-		Area lobby = AreaFactory.createArea(roomNumber, "Lobby",10,2,0,0,(xOffset - 1),(getMaxY() + 1));
+		Area lobby = AreaFactory.createArea(roomNumber, "Lobby",9,1,0,0,2,10);
+		roomNumber++;
 		Area.getAreaList().add(lobby);
 	}
 	

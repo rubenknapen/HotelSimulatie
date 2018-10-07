@@ -86,7 +86,11 @@ public class Guest extends Person{
 		currentRoute.clear();
 		ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 		getCurrentPosition().distance = 0;	
-	    currentRoute = _ds.Dijkstra(getCurrentPosition(), destinationArea);    
+	    currentRoute = _ds.Dijkstra(getCurrentPosition(), destinationArea);  
+	    System.out.println("Route = ");
+	    for(Area a : currentRoute) {
+	    	System.out.println(a.id);
+	    }
 	    clearDistances();		
 	}
 	
@@ -108,16 +112,29 @@ public class Guest extends Person{
 	
 	public Area getCurrentPosition() {
 		for (Area object: Area.getAreaList()) {
-			if(object.getX() == x && object.getRealY() == y) {
+//			if(object.dimensionW > 8) {
+//				return object;
+//			}
+			if(x >= object.getX()
+					&& x <= object.getX() + object.dimensionW - 1
+					&& y >= object.getRealY()
+					&& y <= object.getRealY() + object.dimensionH - 1) {
+				System.out.println("New function works! guest: (" + x + "," + y + "), position: (" + object.getX() + ", " + object.getRealY() + "), dimension: (" + object.dimensionW + "," + object.dimensionH + ")");
 				return object;
-			} 
+			}
 			else if(object.getXEnd() == x && object.getRealY() == y) {
 				translateXVal -= GridBuilder.colSize;
 				x = object.getX();
 				return object;
-			}
+			} 
+		}
+		
+		System.out.println("guest: (" + x + "," + y + ")");
+		for (Area object: Area.getAreaList()) {
+			System.out.println("position: (" + object.getX() + ", " + object.getRealY() + "), dimension: (" + object.dimensionW + "," + object.dimensionH + ")");
 		}
 		return null;
+		//return Area.getAreaList().get(3);
 	}
 	
 	//Check the current status and based on the perform the corresponding action
@@ -173,7 +190,7 @@ public class Guest extends Person{
 		}			
 		if(status.equals("LEAVE_HOTEL") && currentRoute.isEmpty()) {
 			setStatus("LEFT_HOTEL");
-			setInvisible();
+			//setInvisible();
 		}	
 		if(status.equals("NEED_FOOD")) {
 		setVisible();
@@ -232,7 +249,7 @@ public class Guest extends Person{
 		}
 		else if(!moveAllowed)
 		{
-			if(stairsWaitTime == SettingBuilder.getStairTime()-1)
+			if(stairsWaitTime == SettingBuilder.getStairTime())
 			{
 				moveAllowed = true;
 				stairsWaitTime = 0;
@@ -255,9 +272,27 @@ public class Guest extends Person{
 			{
 				//Reached end of route
 			} 
-//			else if( ((getLastArea().getX() - x == 0) && getLastArea().getRealY() == y ) && getNextArea().getXEnd() - x == -1) {
-//				currentRoute.remove(getLastArea());
-//			}
+			else if(getLastArea().dimensionW > 6) {
+				
+				if(status.equals("CHECK_OUT")) {
+					x--;
+					translateXVal -= GridBuilder.colSize;
+					guestImageView.setTranslateX(translateXVal);
+				} else {
+					x++;
+					translateXVal += GridBuilder.colSize;
+					guestImageView.setTranslateX(translateXVal);
+				}
+
+				if(getLastArea().getXEnd() == x) {
+//					x = getLastArea().getXEnd();
+					currentRoute.remove(getLastArea());
+				}
+				
+			}
+			else if( ((getLastArea().getX() - x == 0) && getLastArea().getRealY() == y ) && getNextArea().getXEnd() - x == -1) {
+				currentRoute.remove(getLastArea());
+			}
 			else if((getLastArea().getX() - x == 1) && getLastArea().getRealY() == y ) {
 				
 				// Right movement
@@ -347,13 +382,24 @@ public class Guest extends Person{
 			return currentRoute.get(currentRoute.size() - 1) ;
 		}
 	}
+	
 	public Area getNextArea() {
-		if(currentRoute.size() == 0) {
-			return null;
-		}else {
-			return currentRoute.get(currentRoute.size() - 2) ;
-		}
-	}
+        if(currentRoute == null){
+            return null;
+        }
+        if(currentRoute.size() == 0) {
+            return null;
+        }else {
+            int minusFactor = 2;
+            int currentSize = currentRoute.size();
+
+            if (currentSize == 1)
+            {
+                minusFactor = 1;
+            }
+            return currentRoute.get(currentRoute.size() - minusFactor);
+        }
+    }
 	
 	public void getLobbyRoute(){
 		getRoute(Area.getAreaList().get(39));

@@ -69,222 +69,227 @@ public class HotelEventManager extends Observable implements Runnable {
         events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 2, new HashMap<String, String>() {{
             put("Guest: 1", "1 stars");
         }}));
-        events.add(new HotelEvent(HotelEventType.CLEANING_EMERGENCY, "", 20, new HashMap<String, String>() {{
-            put("Guest", "1");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 2, new HashMap<String, String>() {{
-            put("Guest: 2", "2 stars");
-        }}));
-        //TEST EVENT
-        events.add(new HotelEvent(HotelEventType.GOTO_CINEMA, "", 6, new HashMap<String, String>() {{
-            put("Guest", "2");
-        }}));
-        events.add(new HotelEvent(HotelEventType.CHECK_OUT, "", 30, new HashMap<String, String>() {{
-            put("Guest", "2");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 4, new HashMap<String, String>() {{
-            put("Guest: 3", "2 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.CLEANING_EMERGENCY, "", 25, new HashMap<String, String>() {{
-            put("Guest", "3");
-        }}));
-        events.add(new HotelEvent(HotelEventType.CHECK_OUT, "", 50, new HashMap<String, String>() {{
-            put("Guest", "3");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 5, new HashMap<String, String>() {{
-            put("Guest: 4", "2 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.GOTO_FITNESS, "", 25, new HashMap<String, String>() {{
-            put("Guest: 4", "10 HTE");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 5, new HashMap<String, String>() {{
-            put("Guest: 5", "2 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.CLEANING_EMERGENCY, "", 26, new HashMap<String, String>() {{
-            put("Guest", "5");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 8, new HashMap<String, String>() {{
-            put("Guest: 6", "3 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.CLEANING_EMERGENCY, "", 28, new HashMap<String, String>() {{
-            put("Guest", "6");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 8, new HashMap<String, String>() {{
-            put("Guest: 7", "2 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.CHECK_OUT, "", 45, new HashMap<String, String>() {{
-            put("Guest", "7");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 10, new HashMap<String, String>() {{
-            put("Guest: 8", "3 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.NEED_FOOD, "", 25, new HashMap<String, String>() {{
-            put("Guest", "8");
-        }}));
-        events.add(new HotelEvent(HotelEventType.CHECK_OUT, "", 45, new HashMap<String, String>() {{
-            put("Guest", "8");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 12, new HashMap<String, String>() {{
-            put("Guest: 9", "2 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.CLEANING_EMERGENCY, "", 35, new HashMap<String, String>() {{
-            put("Guest", "9");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 13, new HashMap<String, String>() {{
-            put("Guest: 10", "2 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.NEED_FOOD, "", 30, new HashMap<String, String>() {{
-            put("Guest", "10");
-        }}));
-        events.add(new HotelEvent(HotelEventType.CHECK_OUT, "", 70, new HashMap<String, String>() {{
-            put("Guest", "10");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 14, new HashMap<String, String>() {{
-            put("Guest: 11", "5 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.GOTO_FITNESS, "", 30, new HashMap<String, String>() {{
-            put("Guest: 11", "20 HTE");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 14, new HashMap<String, String>() {{
-            put("Guest: 12", "4 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.CHECK_OUT, "", 65, new HashMap<String, String>() {{
-            put("Guest", "12");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 14, new HashMap<String, String>() {{
-            put("Guest: 13", "5 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.CLEANING_EMERGENCY, "", 35, new HashMap<String, String>() {{
-            put("Guest", "13");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 20, new HashMap<String, String>() {{
-            put("Guest: 14", "4 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.GOTO_FITNESS, "", 25, new HashMap<String, String>() {{
-            put("Guest: 14", "15 HTE");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 20, new HashMap<String, String>() {{
-            put("Guest: 15", "4 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.NEED_FOOD, "", 35, new HashMap<String, String>() {{
-            put("Guest", "15");
-        }}));
-        events.add(new HotelEvent(HotelEventType.CHECK_OUT, "", 55, new HashMap<String, String>() {{
-            put("Guest", "15");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 22, new HashMap<String, String>() {{
-            put("Guest: 16", "4 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.CHECK_OUT, "", 90, new HashMap<String, String>() {{
-            put("Guest", "16");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 22, new HashMap<String, String>() {{
-            put("Guest: 17", "3 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.NEED_FOOD, "", 50, new HashMap<String, String>() {{
-            put("Guest", "17");
-        }}));
-        events.add(new HotelEvent(HotelEventType.CHECK_OUT, "", 55, new HashMap<String, String>() {{
-            put("Guest", "17");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 24, new HashMap<String, String>() {{
-            put("Guest: 18", "1 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.NEED_FOOD, "", 50, new HashMap<String, String>() {{
-            put("Guest", "18");
-        }}));
-        events.add(new HotelEvent(HotelEventType.CHECK_OUT, "", 90, new HashMap<String, String>() {{
-            put("Guest", "18");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 26, new HashMap<String, String>() {{
-            put("Guest: 19", "1 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.GOTO_FITNESS, "", 70, new HashMap<String, String>() {{
-            put("Guest: 19", "25 HTE");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 28, new HashMap<String, String>() {{
-            put("Guest: 20", "1 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.GOTO_CINEMA, "", 80, new HashMap<String, String>() {{
-            put("Guest", "9");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 28, new HashMap<String, String>() {{
-            put("Guest: 21", "1 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.GOTO_CINEMA, "", 75, new HashMap<String, String>() {{
-            put("Guest", "21");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 28, new HashMap<String, String>() {{
-            put("Guest: 22", "1 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.GOTO_CINEMA, "", 55, new HashMap<String, String>() {{
-            put("Guest", "22");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 28, new HashMap<String, String>() {{
-            put("Guest: 23", "1 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.GOTO_CINEMA, "", 50, new HashMap<String, String>() {{
-            put("Guest", "23");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 28, new HashMap<String, String>() {{
-            put("Guest: 24", "1 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.NEED_FOOD, "", 65, new HashMap<String, String>() {{
-            put("Guest", "24");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 28, new HashMap<String, String>() {{
-            put("Guest: 25", "1 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.NEED_FOOD, "", 58, new HashMap<String, String>() {{
-            put("Guest", "25");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 50, new HashMap<String, String>() {{
-            put("Guest: 26", "1 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.NEED_FOOD, "", 65, new HashMap<String, String>() {{
-            put("Guest", "26");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 55, new HashMap<String, String>() {{
-            put("Guest: 27", "1 stars");
-        }}));
-        events.add(new HotelEvent(HotelEventType.GOTO_CINEMA, "", 65, new HashMap<String, String>() {{
-            put("Guest", "27");
-        }}));
-
-
-        events.add(new HotelEvent(HotelEventType.START_CINEMA, "", 80, new HashMap<String, String>() {{
-            put("ID", "1");
-        }}));
-
-        events.add(new HotelEvent(HotelEventType.EVACUATE, "Fire panic everyone out", 100, new HashMap<String, String>() {{
-            put("FIRE EVERYWHERE", "GET YO ASS OUT OF HERE");
-        }}));
+        
+        
+      events.add(new HotelEvent(HotelEventType.CHECK_OUT, "", 20, new HashMap<String, String>() {{
+      put("Guest", "1");
+  }}));
+        
+        
+//        events.add(new HotelEvent(HotelEventType.CLEANING_EMERGENCY, "", 20, new HashMap<String, String>() {{
+//            put("Guest", "1");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 2, new HashMap<String, String>() {{
+//            put("Guest: 2", "2 stars");
+//        }}));
+//        //TEST EVENT
+//;
+//        events.add(new HotelEvent(HotelEventType.CHECK_OUT, "", 30, new HashMap<String, String>() {{
+//            put("Guest", "2");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 4, new HashMap<String, String>() {{
+//            put("Guest: 3", "2 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.CLEANING_EMERGENCY, "", 25, new HashMap<String, String>() {{
+//            put("Guest", "3");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.CHECK_OUT, "", 50, new HashMap<String, String>() {{
+//            put("Guest", "3");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 5, new HashMap<String, String>() {{
+//            put("Guest: 4", "2 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.GOTO_FITNESS, "", 25, new HashMap<String, String>() {{
+//            put("Guest: 4", "10 HTE");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 5, new HashMap<String, String>() {{
+//            put("Guest: 5", "2 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.CLEANING_EMERGENCY, "", 26, new HashMap<String, String>() {{
+//            put("Guest", "5");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 8, new HashMap<String, String>() {{
+//            put("Guest: 6", "3 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.CLEANING_EMERGENCY, "", 28, new HashMap<String, String>() {{
+//            put("Guest", "6");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 8, new HashMap<String, String>() {{
+//            put("Guest: 7", "2 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.CHECK_OUT, "", 45, new HashMap<String, String>() {{
+//            put("Guest", "7");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 10, new HashMap<String, String>() {{
+//            put("Guest: 8", "3 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.NEED_FOOD, "", 25, new HashMap<String, String>() {{
+//            put("Guest", "8");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.CHECK_OUT, "", 45, new HashMap<String, String>() {{
+//            put("Guest", "8");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 12, new HashMap<String, String>() {{
+//            put("Guest: 9", "2 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.CLEANING_EMERGENCY, "", 35, new HashMap<String, String>() {{
+//            put("Guest", "9");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 13, new HashMap<String, String>() {{
+//            put("Guest: 10", "2 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.NEED_FOOD, "", 30, new HashMap<String, String>() {{
+//            put("Guest", "10");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.CHECK_OUT, "", 70, new HashMap<String, String>() {{
+//            put("Guest", "10");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 14, new HashMap<String, String>() {{
+//            put("Guest: 11", "5 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.GOTO_FITNESS, "", 30, new HashMap<String, String>() {{
+//            put("Guest: 11", "20 HTE");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 14, new HashMap<String, String>() {{
+//            put("Guest: 12", "4 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.CHECK_OUT, "", 65, new HashMap<String, String>() {{
+//            put("Guest", "12");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 14, new HashMap<String, String>() {{
+//            put("Guest: 13", "5 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.CLEANING_EMERGENCY, "", 35, new HashMap<String, String>() {{
+//            put("Guest", "13");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 20, new HashMap<String, String>() {{
+//            put("Guest: 14", "4 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.GOTO_FITNESS, "", 25, new HashMap<String, String>() {{
+//            put("Guest: 14", "15 HTE");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 20, new HashMap<String, String>() {{
+//            put("Guest: 15", "4 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.NEED_FOOD, "", 35, new HashMap<String, String>() {{
+//            put("Guest", "15");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.CHECK_OUT, "", 55, new HashMap<String, String>() {{
+//            put("Guest", "15");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 22, new HashMap<String, String>() {{
+//            put("Guest: 16", "4 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.CHECK_OUT, "", 90, new HashMap<String, String>() {{
+//            put("Guest", "16");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 22, new HashMap<String, String>() {{
+//            put("Guest: 17", "3 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.NEED_FOOD, "", 50, new HashMap<String, String>() {{
+//            put("Guest", "17");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.CHECK_OUT, "", 55, new HashMap<String, String>() {{
+//            put("Guest", "17");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 24, new HashMap<String, String>() {{
+//            put("Guest: 18", "1 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.NEED_FOOD, "", 50, new HashMap<String, String>() {{
+//            put("Guest", "18");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.CHECK_OUT, "", 90, new HashMap<String, String>() {{
+//            put("Guest", "18");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 26, new HashMap<String, String>() {{
+//            put("Guest: 19", "1 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.GOTO_FITNESS, "", 70, new HashMap<String, String>() {{
+//            put("Guest: 19", "25 HTE");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 28, new HashMap<String, String>() {{
+//            put("Guest: 20", "1 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.GOTO_CINEMA, "", 80, new HashMap<String, String>() {{
+//            put("Guest", "9");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 28, new HashMap<String, String>() {{
+//            put("Guest: 21", "1 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.GOTO_CINEMA, "", 75, new HashMap<String, String>() {{
+//            put("Guest", "21");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 28, new HashMap<String, String>() {{
+//            put("Guest: 22", "1 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.GOTO_CINEMA, "", 55, new HashMap<String, String>() {{
+//            put("Guest", "22");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 28, new HashMap<String, String>() {{
+//            put("Guest: 23", "1 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.GOTO_CINEMA, "", 50, new HashMap<String, String>() {{
+//            put("Guest", "23");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 28, new HashMap<String, String>() {{
+//            put("Guest: 24", "1 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.NEED_FOOD, "", 65, new HashMap<String, String>() {{
+//            put("Guest", "24");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 28, new HashMap<String, String>() {{
+//            put("Guest: 25", "1 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.NEED_FOOD, "", 58, new HashMap<String, String>() {{
+//            put("Guest", "25");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 50, new HashMap<String, String>() {{
+//            put("Guest: 26", "1 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.NEED_FOOD, "", 65, new HashMap<String, String>() {{
+//            put("Guest", "26");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.CHECK_IN, "", 55, new HashMap<String, String>() {{
+//            put("Guest: 27", "1 stars");
+//        }}));
+//        events.add(new HotelEvent(HotelEventType.GOTO_CINEMA, "", 65, new HashMap<String, String>() {{
+//            put("Guest", "27");
+//        }}));
+//
+//
+//        events.add(new HotelEvent(HotelEventType.START_CINEMA, "", 80, new HashMap<String, String>() {{
+//            put("ID", "1");
+//        }}));
+//
+//        events.add(new HotelEvent(HotelEventType.EVACUATE, "Fire panic everyone out", 100, new HashMap<String, String>() {{
+//            put("FIRE EVERYWHERE", "GET YO ASS OUT OF HERE");
+//        }}));
 
         events.add(new HotelEvent(HotelEventType.GODZILLA, "", 142, new HashMap<String, String>() {{
             put("BOW DOWN TO YOUR GOD", "WHAT YOU GONNA DO?");

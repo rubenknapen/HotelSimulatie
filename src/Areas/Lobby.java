@@ -53,7 +53,7 @@ public class Lobby extends Area {
         }
 		
 		HBox lobbyBackground = new HBox();
-		lobbyBackground.setMinHeight(48 * 2);
+		lobbyBackground.setMinHeight(48);
 		lobbyBackground.setBackground(new Background(new BackgroundFill(Color.web("#fff"), CornerRadii.EMPTY, Insets.EMPTY)));	
 		
 		lobbyBackground.setOnMouseClicked(new EventHandler<MouseEvent>() {

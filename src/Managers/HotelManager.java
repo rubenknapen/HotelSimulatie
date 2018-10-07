@@ -434,7 +434,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 						  
 						  if (selectedRoomId != 0)
 						  {
-							  Person xx = PersonFactory.createPerson("Guest","GO_BACK_TO_ROOM", setGuestIdValue,true,4,9);
+							  Person xx = PersonFactory.createPerson("Guest","GO_BACK_TO_ROOM", setGuestIdValue,true,2,10);
 							  xx.setRoomId(selectedRoomId);
 							  guests.add(xx);
 							  xx.getRoute(getRoomNodeAfterCheckIn(selectedRoomId));
@@ -507,8 +507,8 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 
 			sendGuestToRestaurant(guestId);
 		}
-	
-		//Send person to the Cinema
+//	
+//		//Send person to the Cinema
 		else if (tempEvent == "GOTO_CINEMA")
 		{
 			int guestId;
@@ -527,7 +527,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 			sendGuestToCinema(guestId);
 			System.out.println("I'm sending a guest to the cinema, selected guest is: " + guestId);
 		}
-		
+//		
 		else if (tempEvent == "START_CINEMA")
 		{
 			int cinemaId;
