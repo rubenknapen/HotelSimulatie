@@ -398,25 +398,26 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 
 		}
 	
-//		else if (tempEvent == "GOTO_CINEMA")
-//		{
-//			int guestId;
-//			String[] splitArray = hashmapContent.split("=");
-//			
-//			if (splitArray[1].contains("}"))
-//			{
-//				String[] splitArray2 = splitArray[1].split("}");
-//				guestId = Integer.parseInt(splitArray2[0]);
-//			}
-//			
-//			else 
-//			{
-//				guestId = Integer.parseInt(splitArray[1]);
-//			}
-//			assignRoom("Cinema", guestId);
-//			System.out.println("I'm sending a guest to the cinema, selected guest is: " + guestId);
-//		}
-//		
+		//Send person to the Cinema
+		else if (tempEvent == "GOTO_CINEMA")
+		{
+			int guestId;
+			String[] splitArray = hashmapContent.split("=");
+			
+			if (splitArray[1].contains("}"))
+			{
+				String[] splitArray2 = splitArray[1].split("}");
+				guestId = Integer.parseInt(splitArray2[0]);
+			}
+			
+			else 
+			{
+				guestId = Integer.parseInt(splitArray[1]);
+			}
+			//assignRoom("Cinema", guestId);
+			System.out.println("I'm sending a guest to the cinema, selected guest is: " + guestId);
+		}
+		
 		//Add room to clean to the queue.
 		else if (tempEvent == "CLEANING_EMERGENCY")
 		{
