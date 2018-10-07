@@ -27,10 +27,13 @@ import EventLib.HotelEventManager;
 public class HotelManager implements EventLib.HotelEventListener, Observer{
 
 	//Variables
-	int guestCounter = 0;
+	public static int guestCounter = 0;
 	int selectedRoomId;
 	
+	public boolean evacuateGuestMode = false;
+	public static boolean evacuateCleanerMode = false;
 	public static boolean moviePlaying = false;
+	public boolean reimportPeople = false;
 	public static int movieTime = SettingBuilder.movieTime;
 	public static int movieTimeRemaining = SettingBuilder.movieTime;
 	
@@ -154,21 +157,48 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		}		
 	}
 	
+	public void evacuatePeople()
+	{
+		evacuateGuestMode = true;
+		evacuateCleanerMode = true;
+		synchronized (guests) {
+	  		for(Person guest : guests) 
+	  		{
+	  			if(guest.getAvailability())
+	  			{
+	  				guest.setVisible();
+					guest.setStatus("GO_OUTSIDE");
+					guest.clearRoute();
+					guest.getLobbyRoute();
+	  			}
+	  			else
+	  			{
+	  				
+	  			}
+	  		}  			
+		}
+		
+		synchronized (cleaners) {
+			for(Person cleaner : cleaners) {
+				cleaner.setStatus("GO_OUTSIDE");
+				cleaner.clearRoute();
+				cleaner.getLobbyRoute();
+			} 			
+		}
+	}
+	
 	public void checkMovie()
 	{
-		System.out.println("Ik check of ik een cinema kan vinden");
 		for (Area object: Area.getAreaList()) 
 		{
 			if(object instanceof Cinema) 
 			{
-				System.out.println("Ik heb een cinema gevonden");
 				if(moviePlaying)
 				{
 					System.out.println("The movie is currently playing, the time remaining is: "+movieTimeRemaining);
 					if(movieTimeRemaining > 0)
 					{
 						movieTimeRemaining--;
-						System.out.println("Time remaining on movie: "+movieTimeRemaining);
 					}
 				
 					else
@@ -178,8 +208,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 				}
 				else if (!moviePlaying)
 				{
-					System.out.println("de boolean waarde is op dit moment: "+moviePlaying);
-					System.out.println("The movie is currently NOT playing, the time remaining is: "+movieTimeRemaining);
+					//
 				}
 			}
 		}
@@ -348,20 +377,44 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		return closestRestaurant;		
 	}
 	
-//	public void addRestaurantsToCheck(Person guest) {
-//		for (Area object: Area.getAreaList()) {
-//			if(object instanceof Restaurant) {
-//				guest.restaurantsToCheck.add(object);
-//			}
-//		}	
-//	}
+	public void getPeopleBackInTheBuilding()
+	{
+		if (reimportPeople)
+		{
+			synchronized (guests) {
+		  		for(Person guest : guests) 
+		  		{
+					guest.setVisible();
+					guest.setStatus("REENTERED");
+		  		}  			
+			}
+			
+			synchronized (cleaners) {
+		  		for(Person cleaner : cleaners) 
+		  		{
+		  			cleaner.setVisible();
+		  			cleaner.setStatus("INACTIVE");
+		  		}  			
+			}
+		}
+		reimportPeople = false;
+	}
+		
+	public void addRestaurantsToCheck(Person guest) {
+		for (Area object: Area.getAreaList()) {
+			if(object instanceof Restaurant) {
+				guest.restaurantsToCheck.add(object);
+			}
+		}	
+	}
 	
-	
-	public void removeGuest(int guestId, String tempEvent) {
+	public void removeGuest(int guestId, String tempEvent) 
+	{
 		synchronized (guests) {
 			for(Person guest : guests) {
 				if(guestId == guest.getId()) {
 					guest.setStatus(tempEvent);
+					guest.setAvailability(false);
 				}
 			}	
 		}
@@ -525,7 +578,6 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 				guestId = Integer.parseInt(splitArray[1]);
 			}
 			sendGuestToCinema(guestId);
-			System.out.println("I'm sending a guest to the cinema, selected guest is: " + guestId);
 		}
 //		
 		else if (tempEvent == "START_CINEMA")
@@ -551,7 +603,6 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 					if (object.id == cinemaId)
 					{
 						object.startMovie();
-						System.out.println("Movie Started!");
 					}
 				}
 			}
@@ -583,10 +634,14 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 			
 		}
 		
-//		else if (tempEvent == "EVACUATE")
-//		{
-//			System.out.println("I'm sending all persons to evacuate");
-//		}
+		else if (tempEvent == "EVACUATE")
+		{
+			System.out.println("I'm sending all persons to evacuate");
+			evacuatePeople();
+			reimportPeople = true;
+		}
+		
+		
 //		else if (tempEvent == "GODZILLA")
 //		{
 //			System.out.println("Godzilla event, message: " + hashmapContent);
@@ -601,5 +656,46 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		personsPerformActions();
 		setRealtimeStatistics();
 		checkMovie();
+		if(evacuateGuestMode)
+		{
+			synchronized (guests) {
+		  		for(Person guest : guests) 
+		  		{
+		  			System.out.println("guest status is: "+guest.getStatus());
+					if (guest.getStatus() == "GO_OUTSIDE")
+					{
+						System.out.println("Not all guests are evacuated!");
+						evacuateGuestMode = true;
+						break;
+						//we are still evacuateMode
+					}
+					System.out.println("All guests are evacuated!");
+					evacuateGuestMode = false;
+		  		}  			
+			}
+		}
+		if(evacuateCleanerMode)
+		{
+			synchronized (cleaners) {
+				for(Person cleaner : cleaners) 
+				{
+					System.out.println(cleaner.getStatus());
+					if (cleaner.getStatus() == "GO_OUTSIDE")
+					{
+						System.out.println("Not all cleaners are evacuated!");
+						evacuateCleanerMode = true;
+						break;
+						//we are still evacuateMode
+					}
+					System.out.println("All cleaners are evacuated!");
+					evacuateCleanerMode = false;
+				} 			
+			}
+		}
+		if(!evacuateCleanerMode && !evacuateGuestMode)
+		{
+			System.out.println("Getting everyone back now!");
+			getPeopleBackInTheBuilding();
+		}
 	}
 }

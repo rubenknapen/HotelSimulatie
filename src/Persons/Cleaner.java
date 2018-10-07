@@ -9,6 +9,7 @@ import java.util.Observer;
 import Areas.Area;
 import EventLib.HotelEvent;
 import Managers.GridBuilder;
+import Managers.HotelManager;
 import Managers.SettingBuilder;
 import Scenes.SimulationScene;
 import javafx.application.Platform;
@@ -235,31 +236,50 @@ public class Cleaner extends Person{
 		EmergencyRoomCleaningList.remove(0);
 	}
 	
-	private void assignRoomToClean(Area roomToClean) {
-		currentRoomToClean = roomToClean;
-		status = "GOTODIRTYROOM";
-		getRoute(roomToClean);
-		roomCleaningList.remove(0);
-		//System.out.println("minus normaal = " + Cleaner.getRoomCleaningList());
+	private void assignRoomToClean(Area roomToClean) 
+	{
+		if(!HotelManager.evacuateCleanerMode)
+		{
+			currentRoomToClean = roomToClean;
+			status = "GOTODIRTYROOM";
+			getRoute(roomToClean);
+			roomCleaningList.remove(0);
+			//System.out.println("minus normaal = " + Cleaner.getRoomCleaningList());
+		}
 	}
 	
 	//Check the status and based on that perform the corresponding action
 	@Override
 	public void performAction()
 	{
+		if(status.equals("EVACUATED"))
+		{
+			setInvisible();
+		}
+		
+		if(status.equals("GO_OUTSIDE"))
+			//
+			if(currentRoute.isEmpty()) 
+			{
+				setStatus("EVACUATED");
+			}
+		
 		if(status.equals("INACTIVE")){
 			checkCleaningList();
-		} if(status.equals("INACTIVE") && currentRoute.isEmpty())
+		} 
+		
+		if(status.equals("INACTIVE") && currentRoute.isEmpty())
 		{
 			checkCleaningList();
 		}
+		
 		else if(status.equals("GOTODIRTYROOM") && currentRoute.isEmpty()){
 			cleanRoom();
 		}
+		
 		else if(status.equals("EMERGENCY") && currentRoute.isEmpty()){
 			cleanRoom();
 		}
-		
 	}
 
 	//Functions
@@ -303,8 +323,14 @@ public class Cleaner extends Person{
 	}
 
 	public void getLobbyRoute(){
+
 		getRoute(Area.getAreaList().get(49));
-		setStatus("INACTIVE");
+		System.out.println("HotelManager.evacuateCleanerMode value is: "+HotelManager.evacuateCleanerMode);
+		if (!HotelManager.evacuateCleanerMode)
+		{
+			setStatus("INACTIVE");
+		}
+
 	}
 	
 	@Override
