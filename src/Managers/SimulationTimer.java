@@ -6,6 +6,7 @@ import java.util.TimerTask;
 
 import Persons.Person;
 import Scenes.MainMenuScene;
+import javafx.application.Platform;
 
 
 public class SimulationTimer extends Observable{
@@ -51,11 +52,15 @@ public class SimulationTimer extends Observable{
 		          {
 		        	  if(!pause)
 		        	  {
-		        		  //This is where the observable let's the observers know that something has changed
-			        	  setChanged();
-			        	  notifyObservers(); // Let the observer (hotelmanager) know that the status has changed
-			              System.out.println("tick: "+currentTick);
-			              currentTick++;
+		        		  Platform.runLater(
+		    					  () -> 
+		    					  {
+					        		  //This is where the observable let's the observers know that something has changed
+						        	  setChanged();
+						        	  notifyObservers(); // Let the observer (hotelmanager) know that the status has changed
+						              System.out.println("tick: "+currentTick);
+						              currentTick++;
+		    					  });
 		        	  }
 		          }
 		      }, delay, interval);

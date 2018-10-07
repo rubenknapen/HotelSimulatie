@@ -194,14 +194,14 @@ public class Cleaner extends Person{
 	
 	private void assignEmergencyRoomToClean(Area roomToClean) {
 		currentRoomToClean = roomToClean;
-		status = "GOTODIRTYTOOM";
+		status = "EMERGENCY";
 		getRoute(roomToClean);
 		EmergencyRoomCleaningList.remove(0);
 	}
 	
 	private void assignRoomToClean(Area roomToClean) {
 		currentRoomToClean = roomToClean;
-		status = "GOTODIRTYTOOM";
+		status = "GOTODIRTYROOM";
 		getRoute(roomToClean);
 		roomCleaningList.remove(0);
 		//System.out.println("minus normaal = " + Cleaner.getRoomCleaningList());
@@ -217,7 +217,10 @@ public class Cleaner extends Person{
 		{
 			checkCleaningList();
 		}
-		else if(status.equals("GOTODIRTYTOOM") && currentRoute.isEmpty()){
+		else if(status.equals("GOTODIRTYROOM") && currentRoute.isEmpty()){
+			cleanRoom();
+		}
+		else if(status.equals("EMERGENCY") && currentRoute.isEmpty()){
 			cleanRoom();
 		}
 		
@@ -242,7 +245,6 @@ public class Cleaner extends Person{
 			}
 			else {
 				cleaningTimeRemaining -= 1;
-				//System.out.println("I'm still cleaning, time left: " + cleaningTimeRemaining);
 			}
 		}
 	}
@@ -300,35 +302,43 @@ public class Cleaner extends Person{
 		return id;
 	}
 
-	public int getX() {
+	public int getX() 
+	{
 		return x;
 	}
 
-	public void setX(int x) {
+	public void setX(int x) 
+	{
 		this.x = x;
 	}
 
-	public int getY() {
+	public int getY() 
+	{
 		return y;
 	}
 
-	public void setY(int y) {
+	public void setY(int y) 
+	{
 		this.y = y;
 	}
 	
-	public static ArrayList<Area> getRoomCleaningList() {
+	public static ArrayList<Area> getRoomCleaningList() 
+	{
 		return roomCleaningList;
 	}
 
-	public void setRoomCleaningList(ArrayList<Area> roomCleaningList) {
+	public void setRoomCleaningList(ArrayList<Area> roomCleaningList) 
+	{
 		this.roomCleaningList = roomCleaningList;
 	}
 
-	public static ArrayList<Area> getEmergencyRoomCleaningList() {
+	public static ArrayList<Area> getEmergencyRoomCleaningList() 
+	{
 		return EmergencyRoomCleaningList;
 	}
 
-	public static void setEmergencyRoomCleaningList(ArrayList<Area> roomEmergencyCleaningList) {
+	public static void setEmergencyRoomCleaningList(ArrayList<Area> roomEmergencyCleaningList) 
+	{
 		Cleaner.EmergencyRoomCleaningList = roomEmergencyCleaningList;
 	}
 	

@@ -27,6 +27,16 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	//Variables
 	int guestCounter = 0;
 	int selectedRoomId;
+	
+	public static int currentGuestAmount = 0;
+	public static int currentGuestAmountInRoom = 0;
+	public static int currentGuestAmountInFitness = 0;
+	public static int currentGuestAmountInRestaurant = 0;
+	public static int currentGuestAmountInCinema = 0;
+	
+	public static int currentCleanerAmount = 0;
+	public static int currentCleanerAmountInCleaning = 0;
+	public static int currentCleanerAmountInEmergencyCleaning = 0;
 
 	public static SimulationTimer timer;
 	public static ArrayList<Person> guests;
@@ -54,6 +64,55 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 			
 						
 				
+	}
+	
+	public void setRealtimeStatistics()
+	{
+		currentGuestAmount = guests.size();
+		currentGuestAmountInRoom = 0;
+		currentGuestAmountInFitness = 0;
+		currentGuestAmountInRestaurant = 0;
+		currentGuestAmountInCinema = 0;
+		
+		currentCleanerAmountInEmergencyCleaning = 0;
+		currentCleanerAmountInCleaning = 0;
+		
+		for(Person guest : guests) 
+		{
+			if(guest.getStatus().equals("GO_BACK_TO_ROOM") && guest.currentRoute.isEmpty())
+			{
+				currentGuestAmountInRoom++;
+			}
+			
+			else if(guest.getStatus().equals("INSIDE_FITNESS"))
+			{
+				currentGuestAmountInFitness++;
+			}
+			
+			else if(guest.getStatus().equals("NEED_FOOD") && guest.currentRoute.isEmpty())
+			{
+				currentGuestAmountInRestaurant++;
+			}
+			else if(guest.getStatus().equals("GO_TO_CINEMA") && guest.currentRoute.isEmpty())
+			{
+				currentGuestAmountInCinema++;
+			}
+		}
+		
+		currentCleanerAmount = cleaners.size();
+		
+		for(Person cleaner : cleaners) 
+		{
+			if(cleaner.getStatus().equals("EMERGENCY"))
+			{
+				currentCleanerAmountInEmergencyCleaning++;
+			}
+			
+			else if(cleaner.getStatus().equals("GOTODIRTYROOM"))
+			{
+				currentCleanerAmountInCleaning++;
+			}
+		}
 	}
 	
 	//call performAction for every object in arraylist guests
@@ -265,7 +324,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 						  
 						  if (selectedRoomId != 0)
 						  {
-							  Person xx = PersonFactory.createPerson("Guest",tempEvent, setGuestIdValue,true,10,3);
+							  Person xx = PersonFactory.createPerson("Guest","GO_BACK_TO_ROOM", setGuestIdValue,true,10,3);
 							  xx.setRoomId(selectedRoomId);
 							  guests.add(xx);
 							  xx.getRoute(getRoomNodeAfterCheckIn(selectedRoomId));
@@ -396,7 +455,12 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	}
 	@Override
 	public void update(Observable o, Object arg) {
-		moveCharacters();
-		personsPerformActions();
+		Platform.runLater(
+				  () -> 
+				  {
+						moveCharacters();
+						personsPerformActions();
+						setRealtimeStatistics();
+				  });
 	}
 }

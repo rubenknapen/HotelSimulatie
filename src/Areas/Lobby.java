@@ -65,14 +65,16 @@ public class Lobby extends Area {
 		        
 		        JOptionPane.showMessageDialog(parent, 
 		        		"Guests:"+
-		        		"\nin hotel: 14"+
-		        		"\nin restaurant: 0"+
-		        		"\nin fitness: 0"+
-		        		"\nin cinema: 0"+
+		        		"\nin hotel: "+HotelManager.currentGuestAmount+
+		        		"\nin own room: "+HotelManager.currentGuestAmountInRoom+
+		        		"\nin restaurant: "+HotelManager.currentGuestAmountInRestaurant+
+		        		"\nin fitness: "+HotelManager.currentGuestAmountInFitness+
+		        		"\nin cinema: "+HotelManager.currentGuestAmountInCinema+
 		        		"\n"+
 		        		"\nCleaners:"+
-		        		"\nIn emergency: 0"+
-		        		"\nIn Checkout cleaning:"
+		        		"\nin hotel: "+HotelManager.currentCleanerAmount+
+		        		"\nIn emergency: "+HotelManager.currentCleanerAmountInEmergencyCleaning+
+		        		"\nIn Checkout cleaning: "+HotelManager.currentCleanerAmountInCleaning
 		        		);
 		        
 		        MainMenuScene.eventManager.pause();

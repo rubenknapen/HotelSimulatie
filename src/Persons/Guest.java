@@ -116,14 +116,8 @@ public class Guest extends Person{
 	
 	//Check the current status and based on the perform the corresponding action
 	@Override
-	public void performAction() {
-		if(status.equals("CHECK_IN") ) 
-		{
-			//I have a route, not doing anything special now
-		}
-		if(status.equals("CHECK_IN") && currentRoute.isEmpty() ) {
-			setInvisible();
-		}
+	public void performAction() 
+	{
 		if(status.equals("GOTO_FITNESS")) {
 			setVisible();
 			if(currentRoute.isEmpty()) {
@@ -154,6 +148,10 @@ public class Guest extends Person{
 			setInvisible();
 		}	
 		if(status.equals("NEED_FOOD")) {
+			setVisible();
+		}
+		if(status.equals("GO_TO_CINEMA"))
+		{
 			setVisible();
 		}
 	}
