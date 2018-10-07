@@ -41,6 +41,7 @@ public abstract class Area {
 	public Image roomImage;
 	
 	String imageLocation;
+	public String areaType;
 	public HBox roomBg = new HBox();
 
 		

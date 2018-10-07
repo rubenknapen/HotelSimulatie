@@ -25,6 +25,8 @@ public class Stairway extends Area {
 		this.x = x;
 		this.y = y;
 		
+		areaType = "Stairs";
+		
         neighbours = new HashMap<>();
         distance = Integer.MAX_VALUE;
         latest = null;

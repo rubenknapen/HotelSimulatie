@@ -454,13 +454,10 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		
 	}
 	@Override
-	public void update(Observable o, Object arg) {
-		Platform.runLater(
-				  () -> 
-				  {
-						moveCharacters();
-						personsPerformActions();
-						setRealtimeStatistics();
-				  });
+	public void update(Observable o, Object arg) 
+	{
+		moveCharacters();
+		personsPerformActions();
+		setRealtimeStatistics();
 	}
 }
