@@ -7,7 +7,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 import Areas.Area;
+import Areas.Cinema;
 import Areas.Fitness;
+import Areas.Lobby;
 import Areas.Stairway;
 import EventLib.HotelEvent;
 import Managers.GridBuilder;
@@ -32,6 +34,7 @@ public class Guest extends Person{
 	private boolean visibility = true; // Hide or shows the person visually 
 	private boolean moveAllowed = true;
 	private boolean available = true;
+	private int exitCounter = 0;
 	private int x = 10; // x coordinate
 	private int y = 9; // y coordinate
 	private ImageView guestImageView;
@@ -165,7 +168,6 @@ public class Guest extends Person{
 		{
 			if(HotelManager.movieTimeRemaining == 0)
 			{
-				System.out.println("De film is voorbij, ik ga terug naar m'n kamer");
 				getRoute(HotelManager.getRoomNode(roomId));
 				setStatus("GO_BACK_TO_ROOM");
 				setVisible();
@@ -181,7 +183,6 @@ public class Guest extends Person{
 		if(status.equals("INSIDE_FITNESS")) {
 			if(fitnessTickAmount == 0) {
 				getRoute(HotelManager.getRoomNode(roomId));
-				System.out.println("Next room = " + getNextArea().id);
 				setStatus("GO_BACK_TO_ROOM");
 				setVisible();
 			} else {
@@ -207,11 +208,10 @@ public class Guest extends Person{
 		}			
 		if(status.equals("LEAVE_HOTEL") && currentRoute.isEmpty()) {
 			setStatus("LEFT_HOTEL");
-			//setInvisible();
+			setInvisible();
 		}	
 		if(status.equals("NEED_FOOD")) {
 		setVisible();
-		System.out.println("Array's zijn: " + restaurantsToCheck);
 			if(status.equals("NEED_FOOD")  && currentRoute.isEmpty()) {
 				setStatus("CHECK_RESTAURANT_QUEUE");	
 			}
@@ -219,11 +219,11 @@ public class Guest extends Person{
 		if(status.equals("CHECK_RESTAURANT_QUEUE")) {
 			checkRestaurantQueue();
 		}
-		if(status.equals("IN_RESTAURANT")) {
-			//System.out.println("Ik zit in een restaurant!");
+		if(status.equals("IN_RESTAURANT")) 
+		{
+			//
 		}
 		if(status.equals("IN_QUEUE")) {
-			System.out.println("Ik kan het restaurant niet in!!!!!!!!!!!!!!!!!!!");
 			checkRestaurantQueue();
 			queueTime--;
 			if(queueTime < 0) {
@@ -291,27 +291,54 @@ public class Guest extends Person{
 				//Reached end of route
 			} 
 			else if(getLastArea().dimensionW > 6) {
-				
-				if(status.equals("CHECK_OUT")) {
+				if((status.equals("LEAVE_HOTEL") || status.equals("GO_OUTSIDE")))
+				{
+					if (x > 2)
+					{
 					x--;
 					translateXVal -= GridBuilder.colSize;
 					guestImageView.setTranslateX(translateXVal);
-				} else {
+					
+					exitCounter++;
+					
+					System.out.println("counter: "+exitCounter);
+					}
+					else if (x <= 2 && status.equals("LEAVE_HOTEL"))
+					{
+						currentRoute.remove(getLastArea());
+					}
+				} 
+				
+				else {
 					x++;
 					translateXVal += GridBuilder.colSize;
 					guestImageView.setTranslateX(translateXVal);
 				}
 
 				if(getLastArea().getXEnd() == x) {
-//					x = getLastArea().getXEnd();
-					currentRoute.remove(getLastArea());
+					//x = getLastArea().getXEnd();
+					if(status.equals("LEAVE_HOTEL"))
+						{
+							//Do nothing
+						}
+					else
+					{
+						currentRoute.remove(getLastArea());
+					}
 				}
-				
 			}
 			else if( ((getLastArea().getX() - x == 0) && getLastArea().getRealY() == y ) && getNextArea().getXEnd() - x == -1) {
-				currentRoute.remove(getLastArea());
+				if(status.equals("LEAVE_HOTEL") || status.equals("GO_OUTSIDE"))
+				{
+					//Do nothing
+				}
+				else
+				{
+					currentRoute.remove(getLastArea());
+				}
 			}
 			else if((getLastArea().getX() - x == 1) && getLastArea().getRealY() == y ) {
+				
 				
 				// Right movement
 							
@@ -390,6 +417,16 @@ public class Guest extends Person{
 				//System.out.println("Ik voer deze uit");
 				currentRoute.remove(getLastArea());
 			}
+			
+			if(exitCounter == 9)
+			{
+				currentRoute.clear();
+				if((status.equals("LEAVE_HOTEL")) || status.equals("GO_OUTSIDE"))
+						{
+							System.out.println("Ik heb geen route meer!");
+							//moveAllowed = false;
+						}
+			}
 		}
 	}	
 	
@@ -421,7 +458,14 @@ public class Guest extends Person{
 	}
 	
 	public void getLobbyRoute(){
-		getRoute(Area.getAreaList().get(39));
+		for (Area object: Area.getAreaList()) 
+		{
+			if(object instanceof Lobby) 
+			{
+				//System.out.println("lobby id is: "+object.id);
+			}
+		getRoute(Area.getAreaList().get(object.id-1));
+		}
 	}
 	
 	public int getId()
