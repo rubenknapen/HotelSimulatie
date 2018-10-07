@@ -124,6 +124,28 @@ public class Guest extends Person{
 	@Override
 	public void performAction() 
 	{
+		if(status.equals("GOTO_CINEMA"))
+		{
+			setVisible();
+			if(currentRoute.isEmpty()) 
+			{
+				
+				setStatus("INSIDE_CINEMA");
+				setInvisible();
+			}
+		}
+		
+		if(status.equals("INSIDE_CINEMA"))
+		{
+			if(HotelManager.movieTimeRemaining == 0)
+			{
+				System.out.println("De film is voorbij, ik ga terug naar m'n kamer");
+				getRoute(HotelManager.getRoomNode(roomId));
+				setStatus("GO_BACK_TO_ROOM");
+				setVisible();
+			}
+		}
+		
 		if(status.equals("GOTO_FITNESS")) {
 			setVisible();
 			if(currentRoute.isEmpty()) {
@@ -164,7 +186,7 @@ public class Guest extends Person{
 			checkRestaurantQueue();
 		}
 		if(status.equals("IN_RESTAURANT")) {
-			System.out.println("Ik zit in een restaurant!");
+			//System.out.println("Ik zit in een restaurant!");
 		}
 		if(status.equals("IN_QUEUE")) {
 			System.out.println("Ik kan het restaurant niet in!!!!!!!!!!!!!!!!!!!");

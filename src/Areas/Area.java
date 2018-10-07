@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import Managers.SettingBuilder;
 import Persons.Person;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
@@ -73,38 +74,54 @@ public abstract class Area {
 		}
 	}
 	
-    public static List<Area> getAreaList(){
+    public static List<Area> getAreaList()
+    {
     	return areaList;
     }
     
-	public int getDistance() {
+	public int getDistance() 
+	{
 		return dimensionW;
 	}	   
     
-	public int getX() {
+	public int getX() 
+	{
 		return x;
 	}
 
-	public int getXEnd() {
+	public int getXEnd() 
+	{
 		return x + dimensionW -1;
 	}
 	
-	public int getRealY() {
+	public int getRealY() 
+	{
 		return (y - 1) + dimensionH;
 	}
 
-	public int getY() {
+	public int getY() 
+	{
 		return y;
 	}
 
-	public void setAvailability(boolean b) {
+	public void setAvailability(boolean b) 
+	{
 		this.available = b;
 		
 	}
 	
-	public void makeRoomDirty(){
+	public void makeRoomDirty()
+	{
 		
 	}
 
-	
+	public void stopMovie() 
+	{
+		//
+	}
+
+	public void startMovie() 
+	{
+		//
+	}
 }

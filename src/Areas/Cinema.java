@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 import Managers.GridBuilder;
+import Managers.HotelManager;
+import Managers.SettingBuilder;
 import Scenes.SimulationScene;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -68,6 +70,12 @@ public class Cinema extends Area {
 	//Functions
 	public void startMovie()
 	{
-		
+		HotelManager.moviePlaying = true;
+	}
+	
+	public void stopMovie()
+	{
+		HotelManager.moviePlaying = false;
+		HotelManager.movieTimeRemaining = SettingBuilder.movieTime;
 	}
 }

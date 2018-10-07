@@ -30,6 +30,10 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	int guestCounter = 0;
 	int selectedRoomId;
 	
+	public static boolean moviePlaying = false;
+	public static int movieTime = SettingBuilder.movieTime;
+	public static int movieTimeRemaining = SettingBuilder.movieTime;
+	
 	public static int currentGuestAmount = 0;
 	public static int currentGuestAmountInRoom = 0;
 	public static int currentGuestAmountInFitness = 0;
@@ -150,6 +154,37 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		}		
 	}
 	
+	public void checkMovie()
+	{
+		System.out.println("Ik check of ik een cinema kan vinden");
+		for (Area object: Area.getAreaList()) 
+		{
+			if(object instanceof Cinema) 
+			{
+				System.out.println("Ik heb een cinema gevonden");
+				if(moviePlaying)
+				{
+					System.out.println("The movie is currently playing, the time remaining is: "+movieTimeRemaining);
+					if(movieTimeRemaining > 0)
+					{
+						movieTimeRemaining--;
+						System.out.println("Time remaining on movie: "+movieTimeRemaining);
+					}
+				
+					else
+					{
+						object.stopMovie();
+					}
+				}
+				else if (!moviePlaying)
+				{
+					System.out.println("de boolean waarde is op dit moment: "+moviePlaying);
+					System.out.println("The movie is currently NOT playing, the time remaining is: "+movieTimeRemaining);
+				}
+			}
+		}
+	}
+	
 	//Add a cleaner
 	public void addCleaners(int amount){
 		for(int i = 1; i <= amount; i++)
@@ -220,6 +255,31 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		}
 		return null;
 	}
+	
+	public void sendGuestToCinema(int guestID)
+	{
+		String status = "GOTO_CINEMA";
+		synchronized (guests) {
+			for(Person guest : guests) {
+				if(guest.getId() == guestID) {
+					guest.currentRoute.clear();
+					guest.setStatus(status);
+					guest.getRoute(getCinemaObject());
+				}
+	  		}
+		}
+	}
+	
+	//Return area of the room (input roomnumber)
+		public Area getCinemaObject() {
+			for (Area object: Area.getAreaList()) {
+				if(object instanceof Cinema) 
+				{				
+					return object;
+				}
+			}
+			return null;
+		}
 
 	//
 	public void sendGuestToFitness(int guestId, int hte) {
@@ -446,29 +506,57 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 			}
 
 			sendGuestToRestaurant(guestId);
-
-
 		}
 	
-//		else if (tempEvent == "GOTO_CINEMA")
-//		{
-//			int guestId;
-//			String[] splitArray = hashmapContent.split("=");
-//			
-//			if (splitArray[1].contains("}"))
-//			{
-//				String[] splitArray2 = splitArray[1].split("}");
-//				guestId = Integer.parseInt(splitArray2[0]);
-//			}
-//			
-//			else 
-//			{
-//				guestId = Integer.parseInt(splitArray[1]);
-//			}
-//			assignRoom("Cinema", guestId);
-//			System.out.println("I'm sending a guest to the cinema, selected guest is: " + guestId);
-//		}
-//		
+		//Send person to the Cinema
+		else if (tempEvent == "GOTO_CINEMA")
+		{
+			int guestId;
+			String[] splitArray = hashmapContent.split("=");
+			
+			if (splitArray[1].contains("}"))
+			{
+				String[] splitArray2 = splitArray[1].split("}");
+				guestId = Integer.parseInt(splitArray2[0]);
+			}
+			
+			else 
+			{
+				guestId = Integer.parseInt(splitArray[1]);
+			}
+			sendGuestToCinema(guestId);
+			System.out.println("I'm sending a guest to the cinema, selected guest is: " + guestId);
+		}
+		
+		else if (tempEvent == "START_CINEMA")
+		{
+			int cinemaId;
+			String[] splitArray = hashmapContent.split("=");
+			
+			if (splitArray[1].contains("}"))
+			{
+				String[] splitArray2 = splitArray[1].split("}");
+				cinemaId = Integer.parseInt(splitArray2[0]);
+			}
+			
+			else 
+			{
+				cinemaId = Integer.parseInt(splitArray[1]);
+			}
+			
+			for (Area object: Area.getAreaList()) 
+			{
+				if(object instanceof Cinema) 
+				{
+					if (object.id == cinemaId)
+					{
+						object.startMovie();
+						System.out.println("Movie Started!");
+					}
+				}
+			}
+		}
+		
 		//Add room to clean to the queue.
 		else if (tempEvent == "CLEANING_EMERGENCY")
 		{
@@ -512,5 +600,6 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		moveCharacters();
 		personsPerformActions();
 		setRealtimeStatistics();
+		checkMovie();
 	}
 }
