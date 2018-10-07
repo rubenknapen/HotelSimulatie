@@ -114,10 +114,12 @@ public class Guest extends Person{
 		return null;
 	}
 	
+	//Check the current status and based on the perform the corresponding action
 	@Override
 	public void performAction() {
-		if(status.equals("CHECK_IN") ) {
-//			
+		if(status.equals("CHECK_IN") ) 
+		{
+			//I have a route, not doing anything special now
 		}
 		if(status.equals("CHECK_IN") && currentRoute.isEmpty() ) {
 			setInvisible();
@@ -144,35 +146,24 @@ public class Guest extends Person{
 		} 
 		if(status.equals("CHECK_OUT") ) {		
 			setVisible();
-			//System.out.println("Ik ga naar de exit ++++++++++++++++++++++++++++++++");
 			getLobbyRoute();
 			setStatus("LEAVE_HOTEL");
 		}			
 		if(status.equals("LEAVE_HOTEL") && currentRoute.isEmpty()) {
 			setStatus("LEFT_HOTEL");
 			setInvisible();
-			//System.out.println("Ik moet nu verwijderd worden ------------------------------");
 		}	
 		if(status.equals("NEED_FOOD")) {
 			setVisible();
-//			System.out.println("Ik ga naar een restaurant ------------------------------");
 		}
 	}
 	
-//	public int getGuestIndex(int guestId) {
-//
-//		for (int i = 0; i <  HotelManager.guests.size(); i++) {
-//			if (HotelManager.guests.get(i).getId() == guestId ) {
-//				return i;
-//			}
-//		}
-//		return 0;
-//	}
-//	
+
 	public void moveToArea(){
 
-		if(getLastArea() == null) {
-//			System.out.println("Reached end of route");
+		if(getLastArea() == null) 
+		{
+			//Reached end of route
 		} 
 		else if( ((getLastArea().getX() - x == 0) && getLastArea().getRealY() == y ) && getNextArea().getXEnd() - x == -1) {
 			currentRoute.remove(getLastArea());

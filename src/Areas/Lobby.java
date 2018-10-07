@@ -74,6 +74,7 @@ public class Lobby extends Area {
 		        		"\nIn emergency: 0"+
 		        		"\nIn Checkout cleaning:"
 		        		);
+		        
 		        MainMenuScene.eventManager.pause();
 		        HotelManager.timer.pause();
 		        

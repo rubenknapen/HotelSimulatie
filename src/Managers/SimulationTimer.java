@@ -51,12 +51,11 @@ public class SimulationTimer extends Observable{
 		          {
 		        	  if(!pause)
 		        	  {
+		        		  //This is where the observable let's the observers know that something has changed
 			        	  setChanged();
-			        	  notifyObservers();
+			        	  notifyObservers(); // Let the observer (hotelmanager) know that the status has changed
 			              System.out.println("tick: "+currentTick);
 			              currentTick++;
-			              //HotelManager.moveCharacters();
-			      		  //HotelManager.personsPerformActions();
 		        	  }
 		          }
 		      }, delay, interval);

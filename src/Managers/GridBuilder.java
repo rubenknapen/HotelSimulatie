@@ -105,8 +105,6 @@ public class GridBuilder {
 		
 	public void createRooms(){
 
-
-		//		EXPERIMENTAL JSON PARSER IMPLEMENTATION
 			
 		try {
 		
@@ -118,7 +116,6 @@ public class GridBuilder {
 			JSONArray jsonArr = (JSONArray) jsonParser.parse(reader);
 			
 			
-			// Get max Y coordinate first !! CODE NEEDS CLEANING UP THOUGH !!
 						
 			for (Object o: jsonArr){
 				int x = 0;
@@ -196,15 +193,7 @@ public class GridBuilder {
 					capacity = (long) obj.get("Capacity");
 				}
 				
-				//Debug logging - parsing in console:
-				/*
-				System.out.println("type: "+areaType);
-				System.out.println("x: "+x);
-				System.out.println("y: "+y);
-				System.out.println("stars: "+stars);
-				System.out.println("capacity: "+capacity);
-				System.out.println("");
-				*/
+				
 				
 				//Create room based on parameters in object
 				if(isOcupied[x][y] == 1)

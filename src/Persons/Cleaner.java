@@ -64,6 +64,7 @@ public class Cleaner extends Person{
         cleanerImageView.setImage(cleanerImage);
     }
 	
+	//Get route to inserted Area
 	public void getRoute(Area destinationArea){	
 		ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 		getCurrentPosition().distance = 0;	
@@ -78,6 +79,7 @@ public class Cleaner extends Person{
 		}		
 	}
 	
+	//return area object of current position
 	public Area getCurrentPosition() {
 		for (Area object: Area.getAreaList()) {
 			if(object.getX() == x && object.getRealY() == y) {
@@ -94,7 +96,7 @@ public class Cleaner extends Person{
 	public void moveToArea(){
 
 		if(getLastArea() == null) {
-//			System.out.println("Reached end of route");
+			//Reached end of route
 		} 
 		else if((getLastArea().getX() - x == 1) && getLastArea().getRealY() == y ) {
 			
@@ -178,6 +180,7 @@ public class Cleaner extends Person{
 		}
 	}
 	
+	//Check if there is an emergency call open, otherwise check normal cleaning
 	private void checkCleaningList() {
 		if (!EmergencyRoomCleaningList.isEmpty()){
 			assignEmergencyRoomToClean(EmergencyRoomCleaningList.get(0));
@@ -194,7 +197,6 @@ public class Cleaner extends Person{
 		status = "GOTODIRTYTOOM";
 		getRoute(roomToClean);
 		EmergencyRoomCleaningList.remove(0);
-		//System.out.println("minus emergency = " + Cleaner.getEmergencyRoomCleaningList());
 	}
 	
 	private void assignRoomToClean(Area roomToClean) {
@@ -205,6 +207,7 @@ public class Cleaner extends Person{
 		//System.out.println("minus normaal = " + Cleaner.getRoomCleaningList());
 	}
 	
+	//Check the status and based on that perform the corresponding action
 	@Override
 	public void performAction()
 	{

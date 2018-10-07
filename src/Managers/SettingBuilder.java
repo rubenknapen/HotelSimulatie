@@ -18,8 +18,6 @@ public class SettingBuilder {
 	
 	//Constructor
 	public SettingBuilder(){
-		//getSettings();
-		//showSettings();
 	}
 	
 	//Functions
