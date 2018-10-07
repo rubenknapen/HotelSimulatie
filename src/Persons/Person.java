@@ -59,7 +59,8 @@ public abstract class Person{
 		
 	}
 	
-	public void setInvisible() {
+	public void setInvisible() 
+	{
 		
 	}
 
@@ -95,6 +96,27 @@ public abstract class Person{
 	
 	public int getX() {
 		return 0;
+	}
+
+	public void getLobbyRoute() 
+	{
+		//
+	}
+
+	public boolean getAvailability() 
+	{
+		//
+		return false;
+	}
+
+	public void setAvailability(boolean b) 
+	{
+		// 
+	}
+
+	public void setVisible() 
+	{
+		//
 	}
 	
 }

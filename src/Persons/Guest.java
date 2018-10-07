@@ -30,6 +30,7 @@ public class Guest extends Person{
 	private String status; // Status of the person "evacuate, check in, etc."
 	private boolean visibility = true; // Hide or shows the person visually 
 	private boolean moveAllowed = true;
+	private boolean available = true;
 	private int x = 10; // x coordinate
 	private int y = 9; // y coordinate
 	private ImageView guestImageView;
@@ -121,6 +122,14 @@ public class Guest extends Person{
 	@Override
 	public void performAction() 
 	{
+		if(status.equals("GO_OUTSIDE"))
+			//
+			if(currentRoute.isEmpty()) 
+			{
+				setInvisible();
+				setStatus("EVACUATED");
+			}
+		
 		if(status.equals("GOTO_CINEMA"))
 		{
 			setVisible();
@@ -160,6 +169,13 @@ public class Guest extends Person{
 				fitnessTickAmount--;
 			}
 		}
+		
+		if (status.equals("REENTERED") && currentRoute.isEmpty()) 
+		{
+			getRoute(HotelManager.getRoomNode(roomId));
+			setStatus("GO_BACK_TO_ROOM");
+		}
+		
 		if(status.equals("GO_BACK_TO_ROOM") && currentRoute.isEmpty()) {
 			setInvisible();
 		} 
@@ -167,6 +183,7 @@ public class Guest extends Person{
 			setVisible();
 			getLobbyRoute();
 			setStatus("LEAVE_HOTEL");
+			HotelManager.guestCounter--;
 		}			
 		if(status.equals("LEAVE_HOTEL") && currentRoute.isEmpty()) {
 			setStatus("LEFT_HOTEL");
@@ -217,7 +234,7 @@ public class Guest extends Person{
 		}
 		else if(!moveAllowed)
 		{
-			if(stairsWaitTime == SettingBuilder.getStairTime()-1)
+			if(stairsWaitTime == SettingBuilder.getStairTime())
 			{
 				moveAllowed = true;
 				stairsWaitTime = 0;
@@ -229,6 +246,7 @@ public class Guest extends Person{
 	public void moveToArea()
 	{
 		moveAllowed();
+		
 		if(!moveAllowed)
 		{
 			stairsWaitTime++;
@@ -333,10 +351,20 @@ public class Guest extends Person{
 		}
 	}
 	public Area getNextArea() {
+		if(currentRoute == null){
+			return null;
+		}
 		if(currentRoute.size() == 0) {
 			return null;
 		}else {
-			return currentRoute.get(currentRoute.size() - 2) ;
+			int minusFactor = 2;
+			int currentSize = currentRoute.size();
+			
+			if (currentSize == 1)
+			{
+				minusFactor = 1;
+			}
+			return currentRoute.get(currentRoute.size() - minusFactor);
 		}
 	}
 	
@@ -398,6 +426,7 @@ public class Guest extends Person{
 		this.status = status;
 	}
 	
+	@Override
 	public void setVisible()
 	{
 		Platform.runLater(
@@ -407,6 +436,7 @@ public class Guest extends Person{
 				  });
 	}
 	
+	@Override
 	public void setInvisible()
 	{
 		Platform.runLater(
@@ -435,7 +465,19 @@ public class Guest extends Person{
 	public int getY() {
 		return y;
 	}
+	
+	@Override
+	public void setAvailability(boolean available)
+	{
+		this.available = available;
+	}
 
+	@Override
+	public boolean getAvailability()
+	{
+		return available;
+	}
+	
 	public void setY(int y) {
 		this.y = y;
 	}
