@@ -6,6 +6,7 @@ import java.util.Observer;
 
 import Areas.Area;
 import EventLib.HotelEvent;
+import Managers.GridBuilder;
 
 
 public abstract class Person{	
@@ -13,6 +14,7 @@ public abstract class Person{
 	ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 	public ArrayList<Area> currentRoute = new ArrayList<Area>();
 	public static ArrayList<Area> roomCleaningList = new ArrayList<Area>();
+	public ArrayList<Area> restaurantsToCheck = new ArrayList<Area>();
 	private int id;
 	public int roomId;
 	private int fitnessTickAmount;
@@ -44,6 +46,11 @@ public abstract class Person{
 	
 	public int getId(){
 		return id;
+	}
+	
+	public Area getCurrentPosition() {
+		return null;
+
 	}
 	
 	public void clearRoute()

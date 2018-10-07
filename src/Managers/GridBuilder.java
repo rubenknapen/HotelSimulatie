@@ -371,8 +371,8 @@ public class GridBuilder {
 		createHotelBackground();
 		createRooms();
 		addElevator();
-		createStairway();
 		addLobby();
+		createStairway();
 		createEdges();		
 	}
 	

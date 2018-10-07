@@ -2,6 +2,7 @@ package Persons;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -39,6 +40,8 @@ public class Guest extends Person{
 	private int translateXVal;
 	private int translateYVal;
 	private int fitnessTickAmount;
+	private int queueTime = 10;
+	public ArrayList<Area> restaurantsToCheck = new ArrayList<Area>();
 	
 	//Constructor
 	public Guest(String status, int id, boolean visibility, int x, int y)
@@ -152,7 +155,7 @@ public class Guest extends Person{
 		}	
 		if(status.equals("NEED_FOOD")) {
 		setVisible();
-	//		System.out.println("Ik ga naar een restaurant ------------------------------");
+		System.out.println("Array's zijn: " + restaurantsToCheck);
 			if(status.equals("NEED_FOOD")  && currentRoute.isEmpty()) {
 				setStatus("CHECK_RESTAURANT_QUEUE");	
 			}
@@ -163,19 +166,31 @@ public class Guest extends Person{
 		if(status.equals("IN_RESTAURANT")) {
 			System.out.println("Ik zit in een restaurant!");
 		}
+		if(status.equals("IN_QUEUE")) {
+			System.out.println("Ik kan het restaurant niet in!!!!!!!!!!!!!!!!!!!");
+			checkRestaurantQueue();
+			queueTime--;
+			if(queueTime < 0) {
+				goToOtherRestaurant();
+			}
+		}		
 		if(status.equals("GO_TO_CINEMA"))
 		{
 			setVisible();
 		}
 	}
 	
+	
+	private void goToOtherRestaurant() {
+		
+	}
 
 	private void checkRestaurantQueue() {
 		if(getCurrentPosition().capacity > 0) {
 			setStatus("IN_RESTAURANT");
 			getCurrentPosition().capacity--;
 		} else {
-			System.out.println("Help het restaurant is vol+++++++++++++++++++++++++++++++++++++++++++");
+			setStatus("IN_QUEUE");
 		}
 	}
 	
@@ -218,9 +233,9 @@ public class Guest extends Person{
 			{
 				//Reached end of route
 			} 
-			else if( ((getLastArea().getX() - x == 0) && getLastArea().getRealY() == y ) && getNextArea().getXEnd() - x == -1) {
-				currentRoute.remove(getLastArea());
-			}
+//			else if( ((getLastArea().getX() - x == 0) && getLastArea().getRealY() == y ) && getNextArea().getXEnd() - x == -1) {
+//				currentRoute.remove(getLastArea());
+//			}
 			else if((getLastArea().getX() - x == 1) && getLastArea().getRealY() == y ) {
 				
 				// Right movement

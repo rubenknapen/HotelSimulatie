@@ -266,7 +266,13 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		
 		for (Area object: Area.getAreaList()) {
 			if(object instanceof Restaurant) {
-
+				guest.restaurantsToCheck.add(object);
+			}
+		}	
+		
+		for (Area object: Area.getAreaList()) {
+			if(object instanceof Restaurant) {
+				
 				if(currentGuest.checkDistanceRestaurant(object) < closestDistance) {
 					closestRestaurant = object;
 					closestDistance = currentGuest.checkDistanceRestaurant(object);
@@ -281,7 +287,15 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		
 		return closestRestaurant;		
 	}
-		
+	
+//	public void addRestaurantsToCheck(Person guest) {
+//		for (Area object: Area.getAreaList()) {
+//			if(object instanceof Restaurant) {
+//				guest.restaurantsToCheck.add(object);
+//			}
+//		}	
+//	}
+	
 	
 	public void removeGuest(int guestId, String tempEvent) {
 		synchronized (guests) {
@@ -316,6 +330,17 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		}
 	}
 	
+	public void checkIfInRestaurant(int guestId){
+		synchronized (guests) {
+			for(Person guest : guests) {
+				if(guestId == guest.getId()) {
+					if(guest.getStatus() == "IN_RESTAURANT") {
+						guest.getCurrentPosition().capacity++;
+					}
+				}
+			}	
+		}	
+	}
 	
 	//This is where we receive the event from the HotelEventManager and decides based on the event type what to do
 	@Override
@@ -349,7 +374,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 						  
 						  if (selectedRoomId != 0)
 						  {
-							  Person xx = PersonFactory.createPerson("Guest","GO_BACK_TO_ROOM", setGuestIdValue,true,10,3);
+							  Person xx = PersonFactory.createPerson("Guest","GO_BACK_TO_ROOM", setGuestIdValue,true,4,9);
 							  xx.setRoomId(selectedRoomId);
 							  guests.add(xx);
 							  xx.getRoute(getRoomNodeAfterCheckIn(selectedRoomId));
@@ -377,6 +402,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 			else {
 				guestId = Integer.parseInt(splitArray[1]);
 			}
+			checkIfInRestaurant(guestId);
 			addRoomToClean(guestId);
 			removeGuest(guestId, tempEvent);
 		}
@@ -397,6 +423,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 			setGuestIdValue = Integer.parseInt(guestId);
 			HTE = Integer.parseInt(splitArray2[1]);
 			
+			checkIfInRestaurant(setGuestIdValue);
 			sendGuestToFitness(setGuestIdValue, HTE);
 
 		}
@@ -417,7 +444,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 			{
 				guestId = Integer.parseInt(splitArray[1]);
 			}
-			
+
 			sendGuestToRestaurant(guestId);
 
 
