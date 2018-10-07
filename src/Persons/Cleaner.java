@@ -181,7 +181,6 @@ public class Cleaner extends Person{
 	
 			}
 			else if(((getLastArea().getXEnd() - x == 0) && getLastArea().getRealY() == y ) && x > getLastArea().getX()) {
-				//System.out.println("Ik loop naar rechts 3");
 				currentRoute.remove(getLastArea());
 			}
 			else if(getLastArea().getY() != y ) {
@@ -189,13 +188,11 @@ public class Cleaner extends Person{
 				// Up and down movement
 				
 				if(getLastArea().getY() - y == -1) {
-					//System.out.println("Ik loop naar boven");
 					y = getLastArea().getY();
 					translateYVal -= GridBuilder.rowSize;
 					cleanerImageView.setTranslateY(translateYVal);
 					currentRoute.remove(getLastArea());
 				} else {
-					//System.out.println("Ik loop naar beneden");
 					y = getLastArea().getY();
 					translateYVal += GridBuilder.rowSize;
 					cleanerImageView.setTranslateY(translateYVal);
@@ -223,8 +220,8 @@ public class Cleaner extends Person{
 			assignEmergencyRoomToClean(EmergencyRoomCleaningList.get(0));
 		}
 		else if(roomCleaningList.isEmpty()) {
-			//System.out.println("er zit niks in de cleaning list");
-		} else {
+			//	
+			} else {
 			assignRoomToClean(roomCleaningList.get(0));
 		}
 	}
@@ -244,8 +241,7 @@ public class Cleaner extends Person{
 			status = "GOTODIRTYROOM";
 			getRoute(roomToClean);
 			roomCleaningList.remove(0);
-			//System.out.println("minus normaal = " + Cleaner.getRoomCleaningList());
-		}
+			}
 	}
 	
 	//Check the status and based on that perform the corresponding action
@@ -301,7 +297,6 @@ public class Cleaner extends Person{
 			}
 			else {
 				cleaningTimeRemaining -= 1;
-				System.out.println("Cleaning time remaining: "+cleaningTimeRemaining);
 			}
 		}
 	}
@@ -325,7 +320,6 @@ public class Cleaner extends Person{
 	public void getLobbyRoute(){
 
 		getRoute(Area.getAreaList().get(49));
-		System.out.println("HotelManager.evacuateCleanerMode value is: "+HotelManager.evacuateCleanerMode);
 		if (!HotelManager.evacuateCleanerMode)
 		{
 			setStatus("INACTIVE");

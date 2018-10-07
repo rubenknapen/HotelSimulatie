@@ -195,7 +195,6 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 			{
 				if(moviePlaying)
 				{
-					System.out.println("The movie is currently playing, the time remaining is: "+movieTimeRemaining);
 					if(movieTimeRemaining > 0)
 					{
 						movieTimeRemaining--;
@@ -222,15 +221,13 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 			Cleaner c = (Cleaner) xx;
 			c.setId(i);
 			cleaners.add(xx);
-			System.out.println("Cleaner: " + c.getId() + " added!");
-		}
+			}
 	}
 	
 	//Get Area object of roomToClean (input is roomnumber)
 	public Area roomToClean(int roomId){
 		for (Area a : Area.getAreaList()) {
 			if(a.id == roomId) {
-				System.out.println("Sending housekeeping to object ID: "+ a.id);
 				return a;
 			}
 		}
@@ -365,14 +362,10 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 				if(currentGuest.checkDistanceRestaurant(object) < closestDistance) {
 					closestRestaurant = object;
 					closestDistance = currentGuest.checkDistanceRestaurant(object);
-					System.out.println("ClosestDistance is now: " + closestDistance + "    with id: " + object.id);
-				}
+					}
 				
 			}
 		}
-		
-		System.out.println("Destination id =    " + closestRestaurant.id);
-		System.out.println("I'm sending a guest to the restaurant, selected guest is: " + guest.getId() + "     to restaurant: " + closestRestaurant.id);
 		
 		return closestRestaurant;		
 	}
@@ -437,8 +430,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 			for(Person guest : guests) {
 				if(guestId == guest.getId()) {
 					Cleaner.getEmergencyRoomCleaningList().add(getRoomNodeAfterCheckIn(guest.getSelectedRoom()));
-					//System.out.println("Aangevuld emergency = " + Cleaner.getEmergencyRoomCleaningList());
-				}
+					}
 			}	
 		}
 	}
@@ -494,7 +486,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 						  }
 						  else
 						  {
-							  System.out.println("No room available, guest will leave the hotel!");
+							 //
 						  }
 					   }
 					);
@@ -629,23 +621,20 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 			}
 			
 			addEmergencyRoomToClean(guestId);
-
-			System.out.println("Emergency voor guest: " + guestId);
 			
 		}
 		
 		else if (tempEvent == "EVACUATE")
 		{
-			System.out.println("I'm sending all persons to evacuate");
 			evacuatePeople();
 			reimportPeople = true;
 		}
 		
 		
-//		else if (tempEvent == "GODZILLA")
-//		{
-//			System.out.println("Godzilla event, message: " + hashmapContent);
-//		}
+		else if (tempEvent == "GODZILLA")
+		{
+			System.out.println("Godzilla event, message: " + hashmapContent);
+		}
 		
 	}
 	@Override
@@ -661,15 +650,12 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 			synchronized (guests) {
 		  		for(Person guest : guests) 
 		  		{
-		  			System.out.println("guest status is: "+guest.getStatus());
 					if (guest.getStatus() == "GO_OUTSIDE")
 					{
-						System.out.println("Not all guests are evacuated!");
 						evacuateGuestMode = true;
 						break;
 						//we are still evacuateMode
 					}
-					System.out.println("All guests are evacuated!");
 					evacuateGuestMode = false;
 		  		}  			
 			}
@@ -679,22 +665,18 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 			synchronized (cleaners) {
 				for(Person cleaner : cleaners) 
 				{
-					System.out.println(cleaner.getStatus());
 					if (cleaner.getStatus() == "GO_OUTSIDE")
 					{
-						System.out.println("Not all cleaners are evacuated!");
 						evacuateCleanerMode = true;
 						break;
 						//we are still evacuateMode
 					}
-					System.out.println("All cleaners are evacuated!");
 					evacuateCleanerMode = false;
 				} 			
 			}
 		}
 		if(!evacuateCleanerMode && !evacuateGuestMode)
 		{
-			System.out.println("Getting everyone back now!");
 			getPeopleBackInTheBuilding();
 		}
 	}

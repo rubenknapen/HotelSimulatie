@@ -90,10 +90,10 @@ public class Guest extends Person{
 		currentRoute.clear();
 		ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 		getCurrentPosition().distance = 0;	
-	    currentRoute = _ds.Dijkstra(getCurrentPosition(), destinationArea);  
-	    System.out.println("Route = ");
-	    for(Area a : currentRoute) {
-	    	System.out.println(a.id);
+	    currentRoute = _ds.Dijkstra(getCurrentPosition(), destinationArea);
+	    for(Area a : currentRoute) 
+	    {
+	    	//
 	    }
 	    clearDistances();		
 	}
@@ -123,7 +123,6 @@ public class Guest extends Person{
 					&& x <= object.getX() + object.dimensionW - 1
 					&& y >= object.getRealY()
 					&& y <= object.getRealY() + object.dimensionH - 1) {
-				System.out.println("New function works! guest: (" + x + "," + y + "), position: (" + object.getX() + ", " + object.getRealY() + "), dimension: (" + object.dimensionW + "," + object.dimensionH + ")");
 				return object;
 			}
 			else if(object.getXEnd() == x && object.getRealY() == y) {
@@ -133,9 +132,9 @@ public class Guest extends Person{
 			} 
 		}
 		
-		System.out.println("guest: (" + x + "," + y + ")");
-		for (Area object: Area.getAreaList()) {
-			System.out.println("position: (" + object.getX() + ", " + object.getRealY() + "), dimension: (" + object.dimensionW + "," + object.dimensionH + ")");
+		for (Area object: Area.getAreaList()) 
+		{
+			//
 		}
 		return null;
 		//return Area.getAreaList().get(3);
@@ -301,7 +300,6 @@ public class Guest extends Person{
 					
 					exitCounter++;
 					
-					System.out.println("counter: "+exitCounter);
 					}
 					else if (x <= 2 && status.equals("LEAVE_HOTEL"))
 					{
@@ -354,7 +352,6 @@ public class Guest extends Person{
 					currentRoute.remove(getLastArea());
 				}
 				
-				System.out.println("rechts 1");
 			} 
 			else if((getLastArea().getXEnd() - x == 1) && getLastArea().getRealY() == y ) {
 				
@@ -366,7 +363,6 @@ public class Guest extends Person{
 				guestImageView.setTranslateX(translateXVal);
 				currentRoute.remove(getLastArea());
 				
-				System.out.println("rechts 2");
 				
 			} else if((getLastArea().getXEnd() - x == -1) && getLastArea().getRealY() == y ) {
 				
@@ -393,7 +389,6 @@ public class Guest extends Person{
 	
 			}
 			else if(((getLastArea().getXEnd() - x == 0) && getLastArea().getRealY() == y ) && x > getLastArea().getX()) {
-				System.out.println("rechts 3");
 				currentRoute.remove(getLastArea());
 			}
 			else if(getLastArea().getY() != y ) {
@@ -414,7 +409,6 @@ public class Guest extends Person{
 				
 			}
 			else {
-				//System.out.println("Ik voer deze uit");
 				currentRoute.remove(getLastArea());
 			}
 			
@@ -423,7 +417,6 @@ public class Guest extends Person{
 				currentRoute.clear();
 				if((status.equals("LEAVE_HOTEL")) || status.equals("GO_OUTSIDE"))
 						{
-							System.out.println("Ik heb geen route meer!");
 							//moveAllowed = false;
 						}
 			}
@@ -462,7 +455,7 @@ public class Guest extends Person{
 		{
 			if(object instanceof Lobby) 
 			{
-				//System.out.println("lobby id is: "+object.id);
+				//
 			}
 		getRoute(Area.getAreaList().get(object.id-1));
 		}
