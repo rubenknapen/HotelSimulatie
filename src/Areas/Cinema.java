@@ -25,11 +25,12 @@ public class Cinema extends Area {
 	public boolean moviePlaying = false;
 	
 	//Constructor
-	public Cinema(int id, int dimensionW, int dimensionH, int x, int y) {
+	public Cinema(int id, int dimensionW, int dimensionH, int x, int y, String areaType) {
 		this.dimensionW = dimensionW;
 		this.dimensionH = dimensionH;
 		this.x = x;
 		this.y = y;
+		this.areaType = areaType;
 		
         neighbours = new HashMap<>();
         distance = Integer.MAX_VALUE;

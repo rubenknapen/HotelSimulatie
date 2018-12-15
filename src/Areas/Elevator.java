@@ -20,11 +20,13 @@ public class Elevator extends Area {
 	private ImageView elevatorCabinImageView;
 	
 	//Constructor
-	public Elevator(int id, int dimensionW, int dimensionH, int x, int y){
+	public Elevator(int id, int dimensionW, int dimensionH, int x, int y, String areaType)
+	{
 		this.dimensionW = dimensionW;
 		this.dimensionH = dimensionH;
 		this.x = x;
 		this.y = y;
+		this.areaType = areaType;
 		
         neighbours = new HashMap<>();
         distance = Integer.MAX_VALUE;
@@ -46,9 +48,11 @@ public class Elevator extends Area {
 		GridBuilder.grid.setHalignment(roomImageView, HPos.LEFT);
 		GridBuilder.grid.setValignment(roomImageView, VPos.BOTTOM);
 		roomImageView.setTranslateX(13);
+		
 	}
 	
-	public void createSprite(FileInputStream sprite){
+	public void createSprite(FileInputStream sprite)
+	{
 		Image roomImage = new Image(sprite);
         roomImageView = new ImageView();
         roomImageView.setFitWidth(24);
@@ -56,4 +60,10 @@ public class Elevator extends Area {
         roomImageView.setImage(roomImage);
 	}
 	
+	
+	//Functions
+	public void goToFloor()
+	{
+		
+	}
 }

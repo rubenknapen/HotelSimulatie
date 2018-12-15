@@ -14,8 +14,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 
-public abstract class Person{	
-	
+public abstract class Person
+{	
 	ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 	public ArrayList<Area> currentRoute = new ArrayList<Area>();
 	public static ArrayList<Area> roomCleaningList = new ArrayList<Area>();
@@ -62,6 +62,10 @@ public abstract class Person{
 			a.distance = Integer.MAX_VALUE;;
 			a.latest = null;
 		}		
+	}
+	
+	public int checkDistanceRestaurant(Area destinationArea){
+		return 0;
 	}
 	
 	public Area getCurrentPosition() {
