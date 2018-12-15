@@ -15,11 +15,7 @@ public class SettingBuilder {
 	public static int dieInLineTime = 5;
 	public static int movieTime = 20;
 	public static int stairTime = 2;
-	
-	//Constructor
-	public SettingBuilder(){
-	}
-	
+
 	//Functions
 	public void getSettings(){					
 		String pathBase = System.getProperty("user.dir");
@@ -45,7 +41,6 @@ public class SettingBuilder {
 		}
 	}
 	
-	
 	public void showSettings(){
 		for(int i = 0; i < settingList.size(); i++)
 		{
@@ -60,14 +55,6 @@ public class SettingBuilder {
 
 	public static void setTickSpeed(int TickSpeed) {
 		tickSpeed = TickSpeed;
-	}
-
-	public static int getDieInLineTime() {
-		return dieInLineTime;
-	}
-
-	public static void setDieInLineTime(int DieInLineTime) {
-		dieInLineTime = DieInLineTime;
 	}
 
 	public static int getMovieTime() {

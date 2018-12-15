@@ -277,11 +277,7 @@ public abstract class Person{
 				stairsWaitTime = 0;
 			}
 		}
-	}
-	
-	public int checkDistanceRestaurant(Area destinationArea){	
-		return 0;
-	}		
+	}	
 	
 	public int getId(){
 		return id;
@@ -335,7 +331,6 @@ public abstract class Person{
 		this.visibility = visibility;
 	}
 	
-	
 	public void performAction() {
 		
 	}
@@ -348,7 +343,6 @@ public abstract class Person{
 		return 0;
 	}
 	
-
 	public void getLobbyRoute() {
 		//
 	}

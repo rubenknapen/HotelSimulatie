@@ -364,9 +364,9 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		for (Area object: Area.getAreaList()) {
 			if(object instanceof Restaurant) {
 				
-				if(currentGuest.checkDistanceRestaurant(object) < closestDistance) {
+				if(((Guest) currentGuest).checkDistanceRestaurant(object) < closestDistance) {
 					closestRestaurant = object;
-					closestDistance = currentGuest.checkDistanceRestaurant(object);
+					closestDistance = ((Guest) currentGuest).checkDistanceRestaurant(object);
 					}
 				
 			}
@@ -504,7 +504,6 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		else if (tempEvent == "CHECK_OUT"){
 			int guestId;
 			String[] splitArray = hashmapContent.split("=");
-			
 			if (splitArray[1].contains("}")) {
 				String[] splitArray2 = splitArray[1].split("}");
 				guestId = Integer.parseInt(splitArray2[0]);
@@ -535,7 +534,6 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 			
 			checkIfInRestaurant(setGuestIdValue);
 			sendGuestToFitness(setGuestIdValue, HTE);
-
 		}
 		
 		//Send guest to restaurant
@@ -557,7 +555,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 
 			sendGuestToRestaurant(guestId);
 		}
-//	
+	
 //		//Send person to the Cinema
 		else if (tempEvent == "GOTO_CINEMA")
 		{

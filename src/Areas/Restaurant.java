@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 
 public class Restaurant extends Area {
 
+	
 	//Constructor
 	public Restaurant(int id, int dimensionW, int dimensionH, long capacity, int x, int y){
 		this.dimensionW = dimensionW;
