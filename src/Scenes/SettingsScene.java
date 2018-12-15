@@ -75,15 +75,13 @@ public class SettingsScene {
 		settingsGrid.add(setting4EnterValueField, 4, 7, 1, 1);
 		settingsGrid.add(setting4InfoLabel, 5, 7, 1, 1);
 		
-		
-		
+				
 		Button cancelButton = new Button("Back");
 		settingsGrid.add(cancelButton, 3, 9, 1, 1);
 		
 		Button saveButton = new Button("Save");
 		settingsGrid.add(saveButton, 4, 9, 1, 1);
-		
-		
+			
 		cancelButton.setOnAction(new EventHandler<ActionEvent>() 
 		{
 			public void handle(ActionEvent e) {

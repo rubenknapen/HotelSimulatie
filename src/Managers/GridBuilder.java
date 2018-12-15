@@ -43,22 +43,13 @@ public class GridBuilder {
     int objectNumber = 1;
     ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
     
-    
-	//Constructor
-	public GridBuilder(){
-		
-	}
 	
-	public void createGrid(){
-		
+	public void createGrid(){	
 		grid = new GridPane();
 		grid.setGridLinesVisible(true);
-		grid.setMaxSize(500, 500);
-		
-		
+		grid.setMaxSize(500, 500);		
 		int cols = 14;
 		int rows = 11;
-
 		
 		for (int i = 0; i < cols; i++) {
 		      ColumnConstraints colConst = new ColumnConstraints();
@@ -78,14 +69,12 @@ public class GridBuilder {
 		elevatorRopeImageView.setFitHeight(48);
 		elevatorRopeImageView.setTranslateX(13);
 		grid.add(elevatorRopeImageView, xOffset - 1, 1, 1, 1);	
-				
-			
+							
 		// Create elevator background image
 		Image elevatorImage = new Image("file:src/Images/elevator_top.png");
 		ImageView elevatorImageImageView = new ImageView(elevatorImage);
 		elevatorImageImageView.setFitWidth(96);
-		elevatorImageImageView.setFitHeight(48);
-		
+		elevatorImageImageView.setFitHeight(48);		
 		
 		// Create Hbox to contain background images of elevator
 		HBox elevatorBackground = new HBox();
@@ -99,32 +88,22 @@ public class GridBuilder {
 			
 		// Add the elevator background to the grid
 		grid.add(elevatorBackground, xOffset - 1,1,1,8);
-		grid.setBackground(new Background(new BackgroundFill(Color.web("#102860"), CornerRadii.EMPTY, Insets.EMPTY)));	
-		
+		grid.setBackground(new Background(new BackgroundFill(Color.web("#102860"), CornerRadii.EMPTY, Insets.EMPTY)));			
 	}
 		
 	public void createRooms(){
 
 			
 		try {
-		
 			FileReader reader = new FileReader(MainMenuScene.selectedLayout);
-	
-	
 			JSONParser jsonParser = new JSONParser();
-			
 			JSONArray jsonArr = (JSONArray) jsonParser.parse(reader);
-			
-			
-						
+				
 			for (Object o: jsonArr){
 				int x = 0;
 				int y = 0;
-	
-				
 				int dimensionW = 0;
-				int dimensionH = 0;
-				
+				int dimensionH = 0;				
 				JSONObject obj = (JSONObject)o;
 				String dimension = (String) obj.get("Dimension");
 				
@@ -163,7 +142,6 @@ public class GridBuilder {
 				
 				JSONObject obj = (JSONObject)o;
 				String areaType = (String) obj.get("AreaType");
-				
 				String dimension = (String) obj.get("Dimension");
 				
 				//Spliting dimension and putting it in ints
@@ -177,37 +155,29 @@ public class GridBuilder {
 				parts = position.split(",");
 				x = Integer.parseInt(parts[0]);
 				partsAfterSpace = parts[1].split("\\s+");
-				y = Integer.parseInt(partsAfterSpace[1]);
-				
+				y = Integer.parseInt(partsAfterSpace[1]);	
 					
 				//Check if classification is available
-				if(obj.containsKey("Classification"))
-				{
+				if(obj.containsKey("Classification")){
 					String classification = (String) obj.get("Classification");
 					stars = Integer.parseInt(classification.charAt(0) + "");
 				}
 				
 				//Check if capacity is available
-				if(obj.containsKey("Capacity"))
-				{
+				if(obj.containsKey("Capacity")){
 					capacity = (long) obj.get("Capacity");
 				}
-				
-				
-				
+						
 				//Create room based on parameters in object
-				if(isOcupied[x][y] == 1)
-				{
+				if(isOcupied[x][y] == 1){
 					System.out.println("x: "+x+" y: "+y);
 					System.out.println("Hier staat al iets, deze sla ik over");
 					System.out.println("object: "+objectNumber);
 					System.out.println("");
 					objectNumber += 1;
 				}
-				else if(isOcupied[x][y] != 1)
-				{
-
-					
+				else if(isOcupied[x][y] != 1){
+				
 					if (dimensionH > 1) {
 						y += 1;
 					}
@@ -219,10 +189,8 @@ public class GridBuilder {
 					Area tempRoom = AreaFactory.createArea(id, areaType,dimensionW,dimensionH,stars,capacity, x + xOffset, (getMaxY() - y + 1));
 				    Area.getAreaList().add(tempRoom);
 												
-					for (int xOcupied = x ; xOcupied < x+dimensionW ; xOcupied++) 
-					{
-			            for (int yOcupied = y ; yOcupied > y-dimensionH ; yOcupied--) 
-			            {
+					for (int xOcupied = x ; xOcupied < x+dimensionW ; xOcupied++) {
+			            for (int yOcupied = y ; yOcupied > y-dimensionH ; yOcupied--) {
 			            	if(areaType == "Cinema")
 			            	{
 			            		isOcupied[xOcupied][yOcupied] = 6;
@@ -278,9 +246,7 @@ public class GridBuilder {
 		}	      		
 	}
 	
-	
 	public void createHotelBackground() {
-		
 		// Create Hbox to contain background images of floors
 		HBox floorBackground = new HBox();
 		floorBackground.setMaxSize(48 * 8,48 * 8);
@@ -305,20 +271,17 @@ public class GridBuilder {
 	
 
 	
-	public void addElevator()
-	{
+	public void addElevator(){
 		Area lift = AreaFactory.createArea(1, "Elevator",1,1,0,0,2,2);
 	}
 	
-	public void addLobby()
-	{
+	public void addLobby(){
 		Area lobby = AreaFactory.createArea(roomNumber, "Lobby",9,1,0,0,2,10);
 		roomNumber++;
 		Area.getAreaList().add(lobby);
 	}
 	
 	public void createEdges() {
-
 		for (Area object: Area.getAreaList()) {
 			for (Area object2: Area.getAreaList()) {		 
 				// Check left for neighbours

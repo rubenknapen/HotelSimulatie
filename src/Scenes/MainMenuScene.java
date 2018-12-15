@@ -39,8 +39,7 @@ public class MainMenuScene {
 	 * constructor die zorgt dat de stage gebouwt en weergegeven wordt.
 	 * @param stage
 	 */
-	public MainMenuScene(Stage stage) 
-	{
+	public MainMenuScene(Stage stage) {
 		System.out.println(selectedLayout);
 		setStage(stage);
 		setPane();
@@ -54,8 +53,7 @@ public class MainMenuScene {
 		return mainMenuScene;
 	}
 	
-	public void setScene()
-	{
+	public void setScene(){
 		mainMenuScene = new Scene(layout, 400, 400);
 		mainMenuStage.setScene(mainMenuScene);
 	}
@@ -66,8 +64,7 @@ public class MainMenuScene {
 		stage.setResizable(false);
 	}
 	
-	public void showMainMenuStage()
-	{
+	public void showMainMenuStage(){
 		mainMenuStage.show();
 	}
 
@@ -75,14 +72,12 @@ public class MainMenuScene {
 		return mainMenuStage;
 	}
 
-	public void setPane()
-	{
+	public void setPane(){
 		layout = new VBox(10);
 		layout.setAlignment(Pos.CENTER);
 
 	}
-	public void createButtons()
-	{
+	public void createButtons(){
 		// Start button
         startButton = new Button("Start Simulatie");
         startButton.setPrefSize(150, 36);
@@ -91,13 +86,10 @@ public class MainMenuScene {
         startButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent e) {
-
-				if (selectedLayout == "0")
-				{
+				if (selectedLayout == "0"){
 					System.out.println("Selecteer eerst een layout!");
 				}
-				else
-				{
+				else{
 					startSimulation();
 				}
 			}

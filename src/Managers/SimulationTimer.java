@@ -3,11 +3,7 @@ package Managers;
 import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import Persons.Person;
-import Scenes.MainMenuScene;
 import javafx.application.Platform;
-
 
 public class SimulationTimer extends Observable{
 
@@ -18,14 +14,7 @@ public class SimulationTimer extends Observable{
 	private int interval = tickRate*100;  // iterate every sec.
 	private int currentTick = 0;
 	
-	//Constructor
-	public SimulationTimer()
-	{
-		//ShortestPath test = new ShortestPath();
-	}
-	
-	public void pause()
-	{
+	public void pause(){
 		if(!pause)
 			pause = true;
 		else if (pause)
@@ -33,18 +22,11 @@ public class SimulationTimer extends Observable{
 	}
 	
 	//Functions
-	public void setInterval(int newInterval)
-	{
+	public void setInterval(int newInterval){
 		interval = newInterval;
 	}
-	
-	public void getTimerSettings()
-	{
-		
-	}
-	
-	public void activateTimer()
-	{
+
+	public void activateTimer(){
 		  Timer timer = new Timer();
 		   
 		  timer.scheduleAtFixedRate(new TimerTask() {

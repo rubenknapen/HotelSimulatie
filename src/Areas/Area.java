@@ -24,7 +24,6 @@ public abstract class Area {
     public HashMap<Area, Integer> neighbours;
     public int distance;
     public Area latest;
-    public long capacity;
     public int id;
     public static List<Area> areaList =  Collections.synchronizedList(new ArrayList<Area>());	
     
@@ -39,7 +38,7 @@ public abstract class Area {
 	public Image roomImage;
 	String imageLocation;
 	public String areaType;
-
+	public long capacity;
 		
 	//Functions
 	public void createSprite(FileInputStream sprite){

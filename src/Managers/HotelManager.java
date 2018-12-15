@@ -393,6 +393,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 				}
 	  		}
 		}
+
 	}
 	
 	public void getPeopleBackInTheBuilding()
@@ -525,9 +526,11 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		} 
 		
 		//Check out for guest, send cleaner to room, remove the guest
+
 		else if (tempEvent == "CHECK_OUT")
 		{
 			int guestId = splitEventCheckOut(event);
+
 			checkIfInRestaurant(guestId);
 			addRoomToClean(guestId);
 			removeGuest(guestId, tempEvent);

@@ -13,14 +13,11 @@ public class SimulationScene {
 	public Scene simulationScene;
 	public Stage simulationStage;
 
-	
-	public SimulationScene()
-	{
+	public SimulationScene(){
 		setBorderPane();
 		setSimulationScene();
 	}
 	
-
 	public void setBorderPane(){
 		bPane = new BorderPane();
 		bPane.setCenter(GridBuilder.grid);
@@ -33,7 +30,6 @@ public class SimulationScene {
 	public void setSimulationScene(){
 		// TO DO auto - resize 
 		simulationScene = new Scene(bPane, 800, 600);
-
 		MainMenuScene.mainMenuStage.setScene(simulationScene);
 	}
 
