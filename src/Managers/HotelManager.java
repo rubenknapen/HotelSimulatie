@@ -370,10 +370,10 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		
 		for (int i= 0; i<list.size(); i++) 
 		{	
-			if(currentGuest.checkDistanceRestaurant(list.get(i)) < closestDistance) 
+			if(currentGuest.checkDistanceArea(list.get(i)) < closestDistance) 
 			{
 				closestArea = list.get(i);
-				closestDistance = currentGuest.checkDistanceRestaurant(list.get(i));
+				closestDistance = currentGuest.checkDistanceArea(list.get(i));
 			}
 		}
 		return closestArea;

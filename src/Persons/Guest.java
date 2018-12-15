@@ -59,7 +59,7 @@ public class Guest extends Person{
 	
 	//Functions
 	
-	public int checkDistanceRestaurant(Area destinationArea){	
+	public int checkDistanceArea(Area destinationArea){	
 		ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 		getCurrentPosition().distance = 0;	
 	    _ds.Dijkstra(getCurrentPosition(), destinationArea);

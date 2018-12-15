@@ -64,7 +64,7 @@ public abstract class Person
 		}		
 	}
 	
-	public int checkDistanceRestaurant(Area destinationArea){
+	public int checkDistanceArea(Area destinationArea){
 		return 0;
 	}
 	
