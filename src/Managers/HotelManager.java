@@ -382,7 +382,8 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	public synchronized void sendGuestToRestaurant(int guestId) 
 	{
 		String status = "NEED_FOOD";
-		synchronized (guests) {
+		synchronized (guests) 
+		{
 			for(Person guest : guests) {
 				if(guest.getId() == guestId) 
 				{
