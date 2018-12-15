@@ -4,17 +4,17 @@
 		"Position" : "3, 7",
 		"Dimension" : "2, 2"
 	}, {
-		"Capacity" : 3,
+		"Capacity" : 1,
 		"AreaType" : "Restaurant",
 		"Position" : "3, 5",
 		"Dimension" : "2, 1"
 	}, {
-		"Capacity" : 5,
-		"AreaType" : "Fitness",
+		"Capacity" : 1,
+		"AreaType" : "Restaurant",
 		"Position" : "5, 1",
 		"Dimension" : "2, 1"
 	}, {
-		"AreaType" : "Restaurant",
+		"AreaType" : "Fitness",
 		"Position" : "1, 6",
 		"Dimension" : "2, 1"
 	}, {
