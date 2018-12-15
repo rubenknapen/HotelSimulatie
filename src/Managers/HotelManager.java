@@ -484,7 +484,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 						  
 						  if (selectedRoomId != 0)
 						  {
-							  Person xx = PersonFactory.createPerson("Guest","GO_BACK_TO_ROOM", setGuestIdValue,true,2,10);
+							  Person xx = PersonFactory.createPerson("Guest","GO_BACK_TO_ROOM", setGuestIdValue,true,4,9);
 							  xx.setRoomId(selectedRoomId);
 							  guests.add(xx);
 							  xx.getRoute(getRoomNodeAfterCheckIn(selectedRoomId));

@@ -30,26 +30,13 @@ import javafx.scene.paint.Color;
 public class Guest extends Person{
 
 	//Variables
-	private String status; // Status of the person "evacuate, check in, etc."
-	private boolean visibility = true; // Hide or shows the person visually 
-	private boolean moveAllowed = true;
 	private boolean available = true;
-	private int exitCounter = 0;
-	private int x = 10; // x coordinate
-	private int y = 9; // y coordinate
-	private ImageView guestImageView;
 	public int roomId;
-	private int stairsWaitTime = 0;
-	private int id;
-	private int translateXVal;
-	private int translateYVal;
-	private int fitnessTickAmount;
 	private int queueTime = 10;
 	public ArrayList<Area> restaurantsToCheck = new ArrayList<Area>();
 	
 	//Constructor
-	public Guest(String status, int id, boolean visibility, int x, int y)
-	{
+	public Guest(String status, int id, boolean visibility, int x, int y){
 		this.id = id;
 		this.setStatus(status);
 		this.setVisibility(visibility);
@@ -58,45 +45,19 @@ public class Guest extends Person{
 		this.setY(y);
 
 		// Get the right image depending on dimensions
-		try 
-		{
+		try {
 			setSprite(new FileInputStream("src/Images/guest.png"));	
-        } catch (FileNotFoundException e) 
-		{
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 		
 		// Paint the guest on the grid
-		
-		GridBuilder.grid.add(this.guestImageView,x,y);
-		GridBuilder.grid.setHalignment(this.guestImageView, HPos.CENTER);
-		GridBuilder.grid.setValignment(this.guestImageView, VPos.BOTTOM);
-		}
-	
-		public void setSprite(FileInputStream sprite)
-		{
-		
-	        Image guestImage = new Image(sprite);
-	        guestImageView = new ImageView();
-	    	guestImageView.setFitHeight(21);
-	    	guestImageView.setFitWidth(16); 
-	    	guestImageView.setImage(guestImage);
-    	
-		}
+		GridBuilder.grid.add(this.personImageView,x,y);
+		GridBuilder.grid.setHalignment(this.personImageView, HPos.CENTER);
+		GridBuilder.grid.setValignment(this.personImageView, VPos.BOTTOM);
+	}
 	
 	//Functions
-	
-	public synchronized void getRoute(Area destinationArea){	
-		currentRoute.clear();
-		ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
-		getCurrentPosition().distance = 0;	
-	    currentRoute = _ds.Dijkstra(getCurrentPosition(), destinationArea);
-	    for(Area a : currentRoute) 
-	    {
-	    	//
-	    }
-	    clearDistances();		
-	}
 	
 	public int checkDistanceRestaurant(Area destinationArea){	
 		ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
@@ -106,39 +67,6 @@ public class Guest extends Person{
 	    clearDistances();		
 	    return foundDistance;
 	}	
-	
-	private void clearDistances() {
-		for (Area a : Area.getAreaList()) {
-			a.distance = Integer.MAX_VALUE;;
-			a.latest = null;
-		}		
-	}
-	
-	public Area getCurrentPosition() {
-		for (Area object: Area.getAreaList()) {
-//			if(object.dimensionW > 8) {
-//				return object;
-//			}
-			if(x >= object.getX()
-					&& x <= object.getX() + object.dimensionW - 1
-					&& y >= object.getRealY()
-					&& y <= object.getRealY() + object.dimensionH - 1) {
-				return object;
-			}
-			else if(object.getXEnd() == x && object.getRealY() == y) {
-				translateXVal -= GridBuilder.colSize;
-				x = object.getX();
-				return object;
-			} 
-		}
-		
-		for (Area object: Area.getAreaList()) 
-		{
-			//
-		}
-		return null;
-		//return Area.getAreaList().get(3);
-	}
 	
 	//Check the current status and based on the perform the corresponding action
 	@Override
@@ -234,8 +162,7 @@ public class Guest extends Person{
 			setVisible();
 		}
 	}
-	
-	
+		
 	private void goToOtherRestaurant() {
 		
 	}
@@ -248,326 +175,22 @@ public class Guest extends Person{
 			setStatus("IN_QUEUE");
 		}
 	}
-	
 
-	public void moveAllowed()
-	{
-		if(moveAllowed)
-		for (Area object: Area.getAreaList()) 
-		{
-			if(object.getX() == x && object.getRealY() == y) 
-			{
-				if(object.areaType == "Stairs")
-				{
-					moveAllowed = false;
-				}
-			}
-		}
-		else if(!moveAllowed)
-		{
-			if(stairsWaitTime == SettingBuilder.getStairTime())
-			{
-				moveAllowed = true;
-				stairsWaitTime = 0;
-			}
-		}
-	}
-
-
-	public void moveToArea()
-	{
-		moveAllowed();
-		
-		if(!moveAllowed)
-		{
-			stairsWaitTime++;
-		}
-		
-		else if (moveAllowed)
-		{
-			if(getLastArea() == null) 
-			{
-				//Reached end of route
-			} 
-			else if(getLastArea().dimensionW > 6) {
-				if((status.equals("LEAVE_HOTEL") || status.equals("GO_OUTSIDE")))
-				{
-					if (x > 2)
-					{
-					x--;
-					translateXVal -= GridBuilder.colSize;
-					guestImageView.setTranslateX(translateXVal);
-					
-					exitCounter++;
-					
-					}
-					else if (x <= 2 && status.equals("LEAVE_HOTEL"))
-					{
-						currentRoute.remove(getLastArea());
-					}
-				} 
-				
-				else {
-					x++;
-					translateXVal += GridBuilder.colSize;
-					guestImageView.setTranslateX(translateXVal);
-				}
-
-				if(getLastArea().getXEnd() == x) {
-					//x = getLastArea().getXEnd();
-					if(status.equals("LEAVE_HOTEL"))
-						{
-							//Do nothing
-						}
-					else
-					{
-						currentRoute.remove(getLastArea());
-					}
-				}
-			}
-			else if( ((getLastArea().getX() - x == 0) && getLastArea().getRealY() == y ) && getNextArea().getXEnd() - x == -1) {
-				if(status.equals("LEAVE_HOTEL") || status.equals("GO_OUTSIDE"))
-				{
-					//Do nothing
-				}
-				else
-				{
-					currentRoute.remove(getLastArea());
-				}
-			}
-			else if((getLastArea().getX() - x == 1) && getLastArea().getRealY() == y ) {
-				
-				
-				// Right movement
-							
-				x = getLastArea().getX();
-				translateXVal += GridBuilder.colSize;
-				guestImageView.setTranslateX(translateXVal);
-				if(getLastArea().dimensionW > 1) {
-					
-					if(currentRoute.size() == 1) {
-						currentRoute.remove(getLastArea());
-					}
-				} else {
-					currentRoute.remove(getLastArea());
-				}
-				
-			} 
-			else if((getLastArea().getXEnd() - x == 1) && getLastArea().getRealY() == y ) {
-				
-				// Right movement
-				
-				
-				x = getLastArea().getXEnd();
-				translateXVal += GridBuilder.colSize;
-				guestImageView.setTranslateX(translateXVal);
-				currentRoute.remove(getLastArea());
-				
-				
-			} else if((getLastArea().getXEnd() - x == -1) && getLastArea().getRealY() == y ) {
-				
-				// Left movement
-				
-				x = getLastArea().getXEnd();
-				translateXVal -= GridBuilder.colSize;
-				guestImageView.setTranslateX(translateXVal);
-				if(getLastArea().dimensionW > 1) {
-					
-				} else {
-					currentRoute.remove(getLastArea());
-				}
-			
-			} 
-			else if ((getLastArea().getX() - x == -1) && getLastArea().getRealY() == y ) {
-	
-				// Left movement
-				
-				x = getLastArea().getX();
-				translateXVal -= GridBuilder.colSize;
-				guestImageView.setTranslateX(translateXVal);	
-				currentRoute.remove(getLastArea());
-	
-			}
-			else if(((getLastArea().getXEnd() - x == 0) && getLastArea().getRealY() == y ) && x > getLastArea().getX()) {
-				currentRoute.remove(getLastArea());
-			}
-			else if(getLastArea().getY() != y ) {
-				
-				// Up and down movement
-				
-				if(getLastArea().getY() - y == -1) {
-					y = getLastArea().getY();
-					translateYVal -= GridBuilder.rowSize;
-					guestImageView.setTranslateY(translateYVal);
-					currentRoute.remove(getLastArea());
-				} else {
-					y = getLastArea().getY();
-					translateYVal += GridBuilder.rowSize;
-					guestImageView.setTranslateY(translateYVal);
-					currentRoute.remove(getLastArea());				
-				}
-				
-			}
-			else {
-				currentRoute.remove(getLastArea());
-			}
-			
-			if(exitCounter == 9)
-			{
-				currentRoute.clear();
-				if((status.equals("LEAVE_HOTEL")) || status.equals("GO_OUTSIDE"))
-						{
-							//moveAllowed = false;
-						}
-			}
-		}
-	}	
-	
-	public Area getLastArea() {
-		if(currentRoute.size() == 0) {
-			return null;
-		}else {
-			return currentRoute.get(currentRoute.size() - 1) ;
-		}
-	}
-	
-	public Area getNextArea() {
-
-		if(currentRoute == null){
-			return null;
-		}
-		if(currentRoute.size() == 0) {
-			return null;
-		}else {
-			int minusFactor = 2;
-			int currentSize = currentRoute.size();
-			
-			if (currentSize == 1)
-			{
-				minusFactor = 1;
-			}
-			return currentRoute.get(currentRoute.size() - minusFactor);
-		}
-	}
-	
 	public void getLobbyRoute(){
-		for (Area object: Area.getAreaList()) 
-		{
-			if(object instanceof Lobby) 
-			{
+		for (Area object: Area.getAreaList()) {
+			if(object instanceof Lobby) {
 				//
 			}
-		getRoute(Area.getAreaList().get(object.id-1));
+			getRoute(Area.getAreaList().get(object.id-1));
 		}
-	}
-	
-	public int getId()
-	{
-		return id;
-	}
-	
-	public void setId(int guestId)
-	{
-		this.id = guestId;
 	}
 			
 	public void setRoomId(int roomId) {
 		this.roomId = roomId;
 	}
 	
-	public int getSelectedRoom()
-	{
+	public int getSelectedRoom(){
 		return roomId;
 	}
-
-	public void setElevatorDirection(){
-		
-	}
 	
-	public void setElevatorFloor(){
-		
-	}
-	
-	public void die(){
-		
-	}
-	
-	public int getFitnessTickAmount() {
-		return fitnessTickAmount;
-	}
-
-	public void setFitnessTickAmount(int fitnessTickAmount) {
-		this.fitnessTickAmount = fitnessTickAmount;
-	}
-
-	
-	@Override
-	public void evacuate() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	
-	@Override
-	public void setVisible()
-	{
-		Platform.runLater(
-				  () -> {
-						guestImageView.setVisible(true);
-						visibility = true;
-				  });
-	}
-	
-	@Override
-	public void setInvisible()
-	{
-		Platform.runLater(
-				  () -> {
-					guestImageView.setVisible(false);
-					visibility = false;
-				  });
-	}
-
-	public boolean isVisibility() {
-		return visibility;
-	}
-
-	public void setVisibility(boolean visibility) {
-		this.visibility = visibility;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-	
-	@Override
-	public void setAvailability(boolean available)
-	{
-		this.available = available;
-	}
-
-	@Override
-	public boolean getAvailability()
-	{
-		return available;
-	}
-	
-	public void setY(int y) {
-		this.y = y;
-	}
 }
