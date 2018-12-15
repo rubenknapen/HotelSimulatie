@@ -25,13 +25,14 @@ public class HotelRoom extends Area {
 
 	
 	//Constructor
-	public HotelRoom(int id, int dimensionW, int dimensionH, int stars, int x, int y)
+	public HotelRoom(int id, int dimensionW, int dimensionH, int stars, int x, int y, String areaType)
 	{
 		this.x = x;
 		this.y = y;		
 		this.dimensionW = dimensionW;
 		this.dimensionH = dimensionH;
 		this.stars = stars;
+		this.areaType = areaType;
 		
         neighbours = new HashMap<>();
         distance = Integer.MAX_VALUE;

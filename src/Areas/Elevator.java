@@ -20,12 +20,13 @@ public class Elevator extends Area {
 	private ImageView elevatorCabinImageView;
 	
 	//Constructor
-	public Elevator(int id, int dimensionW, int dimensionH, int x, int y)
+	public Elevator(int id, int dimensionW, int dimensionH, int x, int y, String areaType)
 	{
 		this.dimensionW = dimensionW;
 		this.dimensionH = dimensionH;
 		this.x = x;
 		this.y = y;
+		this.areaType = areaType;
 		
         neighbours = new HashMap<>();
         distance = Integer.MAX_VALUE;

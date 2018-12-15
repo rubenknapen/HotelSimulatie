@@ -9,8 +9,8 @@ import EventLib.HotelEvent;
 import Managers.GridBuilder;
 
 
-public abstract class Person{	
-	
+public abstract class Person
+{	
 	ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 	public ArrayList<Area> currentRoute = new ArrayList<Area>();
 	public static ArrayList<Area> roomCleaningList = new ArrayList<Area>();

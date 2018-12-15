@@ -29,7 +29,7 @@ import javafx.scene.paint.Color;
 public class Lobby extends Area {
 
 	//Constructor
-	public Lobby(int id, int dimensionW, int dimensionH, int x, int y)
+	public Lobby(int id, int dimensionW, int dimensionH, int x, int y, String areaType)
 	{
 		JFrame parent = new JFrame();
 		
@@ -37,6 +37,7 @@ public class Lobby extends Area {
 		this.dimensionH = dimensionH;
 		this.x = x;
 		this.y = y;
+		this.areaType = areaType;
 		
         neighbours = new HashMap<>();
         distance = Integer.MAX_VALUE;

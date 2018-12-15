@@ -2,27 +2,18 @@ package Managers;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import Areas.Area;
 import Areas.Cinema;
-import Areas.Fitness;
 import Areas.HotelRoom;
-import Areas.Lobby;
-import Areas.Restaurant;
-import Factories.AreaFactory;
 import Factories.PersonFactory;
 import Persons.Cleaner;
-import Persons.Guest;
 import Persons.Person;
-import ShortestPath.Dijkstra;
 import javafx.application.Platform;
-import javafx.scene.Node;
 import EventLib.HotelEvent;
-import EventLib.HotelEventManager;
 
 public class HotelManager implements EventLib.HotelEventListener, Observer{
 
@@ -48,19 +39,16 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	public static int currentCleanerAmountInEmergencyCleaning = 0;
 
 	public static SimulationTimer timer;
-	//public static ArrayList<Person> guests;
 	public static List<Person> cleaners =  Collections.synchronizedList(new ArrayList<Person>());
 	public static List<Person> guests =  Collections.synchronizedList(new ArrayList<Person>());
-	//public static ArrayList<Person> cleaners;
 	ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 	
 	
 	//Constructor
-	public HotelManager(){
-
+	public HotelManager()
+	{
 		GridBuilder gridBuilder = new GridBuilder();
 		gridBuilder.buildGrid();
-		
 			
 		//Build array list for guests
 //		guests = new ArrayList();
@@ -72,9 +60,6 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		timer.addObserver(this);
 		timer.setInterval(SettingBuilder.tickSpeed);
 		timer.activateTimer();
-			
-						
-				
 	}
 	
 	public void setRealtimeStatistics()
@@ -87,7 +72,8 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		
 		currentCleanerAmountInEmergencyCleaning = 0;
 		currentCleanerAmountInCleaning = 0;
-		synchronized (guests) {
+		synchronized (guests) 
+		{
 			for(Person guest : guests) 
 			{
 				if(guest.getStatus().equals("GO_BACK_TO_ROOM") && guest.currentRoute.isEmpty())
@@ -113,7 +99,8 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		
 		currentCleanerAmount = cleaners.size();
 		
-		synchronized (cleaners) {
+		synchronized (cleaners) 
+		{
 			for(Person cleaner : cleaners) 
 			{
 				if(cleaner.getStatus().equals("EMERGENCY"))
@@ -130,7 +117,8 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	}
 	
 	//call performAction for every object in arraylist guests
-	public static void personsPerformActions(){
+	public static void personsPerformActions()
+	{
 		synchronized (guests) {
 			for(Person guest : guests) {
 				guest.performAction();
@@ -141,17 +129,22 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 				cleaner.performAction();
 			}
 		}
-	  }
+	}
 	
 	//call moveToArea for every object in arraylist guests
-	public static void moveCharacters() {
-		synchronized (guests) {
-	  		for(Person guest : guests) {
+	public static void moveCharacters() 
+	{
+		synchronized (guests) 
+		{
+	  		for(Person guest : guests) 
+	  		{
 				guest.moveToArea();
 	  		}  			
 		}
-		synchronized (cleaners) {
-			for(Person cleaner : cleaners) {
+		synchronized (cleaners) 
+		{
+			for(Person cleaner : cleaners) 
+			{
 				cleaner.moveToArea();
 			} 			
 		}		
@@ -171,15 +164,13 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 					guest.clearRoute();
 					guest.getLobbyRoute();
 	  			}
-	  			else
-	  			{
-	  				
-	  			}
 	  		}  			
 		}
 		
-		synchronized (cleaners) {
-			for(Person cleaner : cleaners) {
+		synchronized (cleaners) 
+		{
+			for(Person cleaner : cleaners) 
+			{
 				cleaner.setStatus("GO_OUTSIDE");
 				cleaner.clearRoute();
 				cleaner.getLobbyRoute();
@@ -214,20 +205,24 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	}
 	
 	//Add a cleaner
-	public void addCleaners(int amount){
+	public void addCleaners(int amount)
+	{
 		for(int i = 1; i <= amount; i++)
 		{
 			Person xx = PersonFactory.createPerson("Cleaner","INACTIVE",i,true,4,GridBuilder.getMaxY() - 8);
 			Cleaner c = (Cleaner) xx;
 			c.setId(i);
 			cleaners.add(xx);
-			}
+		}
 	}
 	
 	//Get Area object of roomToClean (input is roomnumber)
-	public Area roomToClean(int roomId){
-		for (Area a : Area.getAreaList()) {
-			if(a.id == roomId) {
+	public Area roomToClean(int roomId)
+	{
+		for (Area a : Area.getAreaList()) 
+		{
+			if(a.id == roomId) 
+			{
 				return a;
 			}
 		}
@@ -235,22 +230,30 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	}
 	
 	//return the room object with the input of prefStars, room must be available
-	public synchronized int getRoom(int prefStars){
+	public synchronized int getRoom(int prefStars)
+	{
 		int starAmount = prefStars;
 		boolean checkForRoom = true;
-		while(checkForRoom){
-			for (Area object: Area.getAreaList()) {
-				if(object instanceof HotelRoom) {
-					if (object.stars == starAmount && object.available == true){					
+		while(checkForRoom)
+		{
+			for (Area object: Area.getAreaList()) 
+			{
+				if(object instanceof HotelRoom) 
+				{
+					if (object.stars == starAmount && object.available == true)
+					{					
 						object.setAvailability(false);
 						return object.id;
 					}
 				}
 			}
-			if (starAmount < 5){
+			if (starAmount < 5)
+			{
 				starAmount += 1;
 			} 
-			else if (starAmount == 5){
+			
+			else if (starAmount == 5)
+			{
 				checkForRoom = false;
 			}
 		}
@@ -258,10 +261,14 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	}
 	
 	//Return area of the room (input roomnumber)
-	public synchronized static Area getRoomNode(int roomId) {
-		for (Area object: Area.getAreaList()) {
-			if(object instanceof HotelRoom) {
-				if (object.id == roomId){					
+	public synchronized static Area getRoomNode(int roomId) 
+	{
+		for (Area object: Area.getAreaList()) 
+		{
+			if(object instanceof HotelRoom) 
+			{
+				if (object.id == roomId)
+				{					
 					return object;
 				}
 			}
@@ -270,10 +277,14 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	}
 	
 	//Return area of the room (input roomnumber) and set the availability to false
-	public synchronized static Area getRoomNodeAfterCheckIn(int roomId) {
-		for (Area object: Area.getAreaList()) {
-			if(object instanceof HotelRoom) {
-				if (object.id == roomId){					
+	public synchronized static Area getRoomNodeAfterCheckIn(int roomId) 
+	{
+		for (Area object: Area.getAreaList()) 
+		{
+			if(object instanceof HotelRoom) 
+			{
+				if (object.id == roomId)
+				{					
 					object.setAvailability(false);
 					return object;
 				}
@@ -282,33 +293,23 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		return null;
 	}
 	
-	public synchronized void sendGuestToCinema(int guestID)
+	public synchronized void sendGuestToCinema(int guestId)
 	{
 		String status = "GOTO_CINEMA";
 		synchronized (guests) {
 			for(Person guest : guests) {
-				if(guest.getId() == guestID) {
+				if(guest.getId() == guestId) 
+				{
 					guest.currentRoute.clear();
 					guest.setStatus(status);
-					guest.getRoute(getCinemaObject());
+					guest.getRoute(findClosestArea("Cinema", guestId));
 				}
 	  		}
 		}
 	}
-	
-	//Return area of the room (input roomnumber)
-		public synchronized Area getCinemaObject() {
-			for (Area object: Area.getAreaList()) {
-				if(object instanceof Cinema) 
-				{				
-					return object;
-				}
-			}
-			return null;
-		}
-
 	//
-	public synchronized void sendGuestToFitness(int guestId, int hte) {
+	public synchronized void sendGuestToFitness(int guestId, int hte) 
+	{
 		String status = "GOTO_FITNESS";
 		synchronized (guests) {
 			for(Person guest : guests) {
@@ -316,9 +317,10 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 					guest.currentRoute.clear();
 					guest.setStatus(status);
 					guest.setFitnessTickAmount(hte);
-					guest.getRoute(findClosestFitness());
-					
-					for(Area a : guest.currentRoute) {
+					guest.getRoute(findClosestArea("Fitness", guestId));
+							
+					for(Area a : guest.currentRoute) 
+					{
 						System.out.print(a.id + " + ");
 					}
 					
@@ -326,53 +328,70 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	  		}
 		}
 	}
-		
-	private synchronized Area findClosestFitness() {
-		for (Area object: Area.getAreaList()) {
-			if(object instanceof Fitness) {
-				return object;
+	
+	private synchronized Area findClosestArea(String name, int guestId)
+	{
+		ArrayList<Area> objectList = new ArrayList<Area>();
+		{
+			for (Area object: Area.getAreaList()) 
+			{
+				if(object.areaType.equals(name)) 
+				{
+					objectList.add(object);
+				}
+			}
+			
+			if (objectList.size() == 1)
+			{
+				return objectList.get(0);
+			}
+			
+			else if (objectList.size() > 1)
+			{
+				return getClosestObject(objectList, guestId);
 			}
 		}
 		return null;
 	}
 	
-	public synchronized void sendGuestToRestaurant(int guestId) {
+	private synchronized Area getClosestObject(ArrayList<Area> list, int guestId)
+	{
+		Area closestArea = null;
+		int closestDistance = 100;
+		Person currentGuest = null;
+		
+		for(Person guest : guests) 
+		{
+			if(guest.getId() == guestId) 
+			{
+				currentGuest = guest;
+			}
+  		}
+		
+		for (int i= 0; i<list.size(); i++) 
+		{	
+			if(currentGuest.checkDistanceRestaurant(list.get(i)) < closestDistance) 
+			{
+				closestArea = list.get(i);
+				closestDistance = currentGuest.checkDistanceRestaurant(list.get(i));
+			}
+		}
+		return closestArea;
+	}
+	
+	public synchronized void sendGuestToRestaurant(int guestId) 
+	{
 		String status = "NEED_FOOD";
 		synchronized (guests) {
 			for(Person guest : guests) {
-				if(guest.getId() == guestId) {
+				if(guest.getId() == guestId) 
+				{
 					guest.currentRoute.clear();
 					guest.setStatus(status);
-					guest.getRoute(findClosestRestaurant(guest));
+					guest.getRoute(findClosestArea("Restaurant", guestId));
 				}
 	  		}
 		}
-	}	
-		
-	private synchronized Area findClosestRestaurant(Person guest) {
-		Person currentGuest = guest;
-
-		Area closestRestaurant = null;
-		int closestDistance = 100;
-		
-		for (Area object: Area.getAreaList()) {
-			if(object instanceof Restaurant) {
-				guest.restaurantsToCheck.add(object);
-			}
-		}	
-		
-		for (Area object: Area.getAreaList()) {
-			if(object instanceof Restaurant) {
-				
-				if(currentGuest.checkDistanceRestaurant(object) < closestDistance) {
-					closestRestaurant = object;
-					closestDistance = currentGuest.checkDistanceRestaurant(object);
-					}
-				
-			}
-		}
-		
-		return closestRestaurant;		
 	}
 	
 	public void getPeopleBackInTheBuilding()
@@ -397,14 +416,6 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		}
 		reimportPeople = false;
 	}
-		
-	public void addRestaurantsToCheck(Person guest) {
-		for (Area object: Area.getAreaList()) {
-			if(object instanceof Restaurant) {
-				guest.restaurantsToCheck.add(object);
-			}
-		}	
-	}
 	
 	public void removeGuest(int guestId, String tempEvent) 
 	{
@@ -419,10 +430,14 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	}	
 	
 	//add room to clean to queue
-	public void addRoomToClean(int guestId) {
-		synchronized (guests) {
-			for(Person guest : guests) {
-				if(guestId == guest.getId()) {
+	public void addRoomToClean(int guestId) 
+	{
+		synchronized (guests) 
+		{
+			for(Person guest : guests) 
+			{
+				if(guestId == guest.getId()) 
+				{
 					Cleaner.getRoomCleaningList().add(getRoomNodeAfterCheckIn(guest.getSelectedRoom()));
 				}
 			}		
@@ -430,21 +445,30 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	}
 	
 	//add room to clean to emergency clean queue
-	public void addEmergencyRoomToClean(int guestId) {
-		synchronized (guests) {
-			for(Person guest : guests) {
-				if(guestId == guest.getId()) {
+	public void addEmergencyRoomToClean(int guestId) 
+	{
+		synchronized (guests) 
+		{
+			for(Person guest : guests) 
+			{
+				if(guestId == guest.getId()) 
+				{
 					Cleaner.getEmergencyRoomCleaningList().add(getRoomNodeAfterCheckIn(guest.getSelectedRoom()));
-					}
+				}
 			}	
 		}
 	}
 	
-	public void checkIfInRestaurant(int guestId){
-		synchronized (guests) {
-			for(Person guest : guests) {
-				if(guestId == guest.getId()) {
-					if(guest.getStatus() == "IN_RESTAURANT") {
+	public void checkIfInRestaurant(int guestId)
+	{
+		synchronized (guests) 
+		{
+			for(Person guest : guests) 
+			{
+				if(guestId == guest.getId()) 
+				{
+					if(guest.getStatus() == "IN_RESTAURANT") 
+					{
 						guest.getCurrentPosition().capacity++;
 					}
 				}
@@ -454,7 +478,8 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	
 	//This is where we receive the event from the HotelEventManager and decides based on the event type what to do
 	@Override
-	public synchronized void Notify(HotelEvent event) {
+	public synchronized void Notify(HotelEvent event) 
+	{
 		String tempEvent = event.Type.toString();
 		String hashmapContent = event.Data.toString();
 		
@@ -495,35 +520,24 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 						  }
 					   }
 					);
-			
-			
 			guestCounter++;
 		} 
 		
 		//Check out for guest, send cleaner to room, remove the guest
-		else if (tempEvent == "CHECK_OUT"){
-			int guestId;
-			String[] splitArray = hashmapContent.split("=");
-			
-			if (splitArray[1].contains("}")) {
-				String[] splitArray2 = splitArray[1].split("}");
-				guestId = Integer.parseInt(splitArray2[0]);
-			}		
-			else {
-				guestId = Integer.parseInt(splitArray[1]);
-			}
+		else if (tempEvent == "CHECK_OUT")
+		{
+			int guestId = splitEventCheckOut(event);
 			checkIfInRestaurant(guestId);
 			addRoomToClean(guestId);
 			removeGuest(guestId, tempEvent);
 		}
 		
 		//Send guest to fitness
-		else if (tempEvent == "GOTO_FITNESS"){
-
+		else if (tempEvent == "GOTO_FITNESS")
+		{
 			String guestId;
 			int setGuestIdValue;
 			int HTE;
-			String prefStars;
 			
 			String[] splitArray = hashmapContent.split("\\s");
 			String[] splitArray2 = splitArray[1].split("=");
@@ -535,64 +549,26 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 			
 			checkIfInRestaurant(setGuestIdValue);
 			sendGuestToFitness(setGuestIdValue, HTE);
-
 		}
 		
 		//Send guest to restaurant
 		else if (tempEvent == "NEED_FOOD")
 		{
-			int guestId;
-			String[] splitArray = hashmapContent.split("=");
-			
-			if (splitArray[1].contains("}"))
-			{
-				String[] splitArray2 = splitArray[1].split("}");
-				guestId = Integer.parseInt(splitArray2[0]);
-			}
-			
-			else 
-			{
-				guestId = Integer.parseInt(splitArray[1]);
-			}
-
+			int guestId = splitEventNeedFood(event);
 			sendGuestToRestaurant(guestId);
 		}
-//	
-//		//Send person to the Cinema
+	
+		//Send person to the Cinema
 		else if (tempEvent == "GOTO_CINEMA")
 		{
-			int guestId;
-			String[] splitArray = hashmapContent.split("=");
-			
-			if (splitArray[1].contains("}"))
-			{
-				String[] splitArray2 = splitArray[1].split("}");
-				guestId = Integer.parseInt(splitArray2[0]);
-			}
-			
-			else 
-			{
-				guestId = Integer.parseInt(splitArray[1]);
-			}
+			int guestId = splitEventGoToCinema(event);
 			sendGuestToCinema(guestId);
 		}
-//		
+		
 		else if (tempEvent == "START_CINEMA")
 		{
-			int cinemaId;
-			String[] splitArray = hashmapContent.split("=");
-			
-			if (splitArray[1].contains("}"))
-			{
-				String[] splitArray2 = splitArray[1].split("}");
-				cinemaId = Integer.parseInt(splitArray2[0]);
-			}
-			
-			else 
-			{
-				cinemaId = Integer.parseInt(splitArray[1]);
-			}
-			
+			int cinemaId = splitEventStartCinema(event);
+						
 			for (Area object: Area.getAreaList()) 
 			{
 				if(object instanceof Cinema) 
@@ -608,25 +584,8 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		//Add room to clean to the queue.
 		else if (tempEvent == "CLEANING_EMERGENCY")
 		{
-			int guestId;
-			int availableCleanerId;
-			int emergencyRoomId;
-			
-			String[] splitArray = hashmapContent.split("=");
-			
-			if (splitArray[1].contains("}"))
-			{
-				String[] splitArray2 = splitArray[1].split("}");
-				guestId = Integer.parseInt(splitArray2[0]);
-			}
-			
-			else 
-			{
-				guestId = Integer.parseInt(splitArray[1]);
-			}
-			
+			int guestId = splitEventCleaningEmergency(event);
 			addEmergencyRoomToClean(guestId);
-			
 		}
 		
 		else if (tempEvent == "EVACUATE")
@@ -634,25 +593,114 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 			evacuatePeople();
 			reimportPeople = true;
 		}
-		
-		
+				
 		else if (tempEvent == "GODZILLA")
 		{
 			System.out.println("Godzilla event, message: " + hashmapContent);
+		}		
+	}
+	
+	int splitEventCheckOut(HotelEvent event)
+	{
+		int guestId = 0;
+		String hashmapContent = event.Data.toString();
+		String[] splitArray = hashmapContent.split("=");
+		
+		if (splitArray[1].contains("}")) {
+			String[] splitArray2 = splitArray[1].split("}");
+			guestId = Integer.parseInt(splitArray2[0]);
+		}		
+		else {
+			guestId = Integer.parseInt(splitArray[1]);
 		}
 		
+		return guestId;
 	}
-	@Override
-
-	public synchronized void update(Observable o, Object arg) 
+	
+	int splitEventNeedFood(HotelEvent event)
 	{
-		moveCharacters();
-		personsPerformActions();
-		setRealtimeStatistics();
-		checkMovie();
+		int guestId = 0;
+		String hashmapContent = event.Data.toString();
+		String[] splitArray = hashmapContent.split("=");
+		
+		if (splitArray[1].contains("}"))
+		{
+			String[] splitArray2 = splitArray[1].split("}");
+			guestId = Integer.parseInt(splitArray2[0]);
+		}
+		
+		else 
+		{
+			guestId = Integer.parseInt(splitArray[1]);
+		}
+		
+		return guestId;
+	}
+	
+	int splitEventGoToCinema(HotelEvent event)
+	{
+		int guestId;
+		String hashmapContent = event.Data.toString();
+		String[] splitArray = hashmapContent.split("=");
+		
+		if (splitArray[1].contains("}"))
+		{
+			String[] splitArray2 = splitArray[1].split("}");
+			guestId = Integer.parseInt(splitArray2[0]);
+		}
+		
+		else 
+		{
+			guestId = Integer.parseInt(splitArray[1]);
+		}
+		return guestId;
+	}
+	
+	int splitEventStartCinema(HotelEvent event)
+	{
+		int cinemaId = 0;
+		String hashmapContent = event.Data.toString();
+		String[] splitArray = hashmapContent.split("=");
+		
+		if (splitArray[1].contains("}"))
+		{
+			String[] splitArray2 = splitArray[1].split("}");
+			cinemaId = Integer.parseInt(splitArray2[0]);
+		}
+		
+		else 
+		{
+			cinemaId = Integer.parseInt(splitArray[1]);
+		}
+		return cinemaId;
+	}
+	
+	int splitEventCleaningEmergency(HotelEvent event)
+	{
+		int guestId = 0;
+		String hashmapContent = event.Data.toString();
+		
+		String[] splitArray = hashmapContent.split("=");
+		
+		if (splitArray[1].contains("}"))
+		{
+			String[] splitArray2 = splitArray[1].split("}");
+			guestId = Integer.parseInt(splitArray2[0]);
+		}
+		
+		else 
+		{
+			guestId = Integer.parseInt(splitArray[1]);
+		}
+		return guestId;
+	}
+	
+	public void checkEvacuateMode()
+	{
 		if(evacuateGuestMode)
 		{
-			synchronized (guests) {
+			synchronized (guests) 
+			{
 		  		for(Person guest : guests) 
 		  		{
 					if (guest.getStatus() == "GO_OUTSIDE")
@@ -667,7 +715,8 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		}
 		if(evacuateCleanerMode)
 		{
-			synchronized (cleaners) {
+			synchronized (cleaners) 
+			{
 				for(Person cleaner : cleaners) 
 				{
 					if (cleaner.getStatus() == "GO_OUTSIDE")
@@ -684,5 +733,15 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		{
 			getPeopleBackInTheBuilding();
 		}
+	}
+	
+	@Override
+	public synchronized void update(Observable o, Object arg) 
+	{
+		moveCharacters();
+		personsPerformActions();
+		setRealtimeStatistics();
+		checkMovie();
+		checkEvacuateMode();
 	}
 }
