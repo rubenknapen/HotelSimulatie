@@ -235,7 +235,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	}
 	
 	//return the room object with the input of prefStars, room must be available
-	public int getRoom(int prefStars){
+	public synchronized int getRoom(int prefStars){
 		int starAmount = prefStars;
 		boolean checkForRoom = true;
 		while(checkForRoom){
@@ -258,7 +258,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	}
 	
 	//Return area of the room (input roomnumber)
-	public static Area getRoomNode(int roomId) {
+	public synchronized static Area getRoomNode(int roomId) {
 		for (Area object: Area.getAreaList()) {
 			if(object instanceof HotelRoom) {
 				if (object.id == roomId){					
@@ -270,7 +270,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	}
 	
 	//Return area of the room (input roomnumber) and set the availability to false
-	public static Area getRoomNodeAfterCheckIn(int roomId) {
+	public synchronized static Area getRoomNodeAfterCheckIn(int roomId) {
 		for (Area object: Area.getAreaList()) {
 			if(object instanceof HotelRoom) {
 				if (object.id == roomId){					
@@ -282,7 +282,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		return null;
 	}
 	
-	public void sendGuestToCinema(int guestID)
+	public synchronized void sendGuestToCinema(int guestID)
 	{
 		String status = "GOTO_CINEMA";
 		synchronized (guests) {
@@ -297,7 +297,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	}
 	
 	//Return area of the room (input roomnumber)
-		public Area getCinemaObject() {
+		public synchronized Area getCinemaObject() {
 			for (Area object: Area.getAreaList()) {
 				if(object instanceof Cinema) 
 				{				
@@ -308,7 +308,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		}
 
 	//
-	public void sendGuestToFitness(int guestId, int hte) {
+	public synchronized void sendGuestToFitness(int guestId, int hte) {
 		String status = "GOTO_FITNESS";
 		synchronized (guests) {
 			for(Person guest : guests) {
@@ -317,12 +317,17 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 					guest.setStatus(status);
 					guest.setFitnessTickAmount(hte);
 					guest.getRoute(findClosestFitness());
+					
+					for(Area a : guest.currentRoute) {
+						System.out.print(a.id + " + ");
+					}
+					
 				}
 	  		}
 		}
 	}
 		
-	private Area findClosestFitness() {
+	private synchronized Area findClosestFitness() {
 		for (Area object: Area.getAreaList()) {
 			if(object instanceof Fitness) {
 				return object;
@@ -331,7 +336,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		return null;
 	}
 	
-	public void sendGuestToRestaurant(int guestId) {
+	public synchronized void sendGuestToRestaurant(int guestId) {
 		String status = "NEED_FOOD";
 		synchronized (guests) {
 			for(Person guest : guests) {
@@ -344,7 +349,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		}
 	}	
 		
-	private Area findClosestRestaurant(Person guest) {
+	private synchronized Area findClosestRestaurant(Person guest) {
 		Person currentGuest = guest;
 
 		Area closestRestaurant = null;
@@ -449,7 +454,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	
 	//This is where we receive the event from the HotelEventManager and decides based on the event type what to do
 	@Override
-	public void Notify(HotelEvent event) {
+	public synchronized void Notify(HotelEvent event) {
 		String tempEvent = event.Type.toString();
 		String hashmapContent = event.Data.toString();
 		
@@ -639,7 +644,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	}
 	@Override
 
-	public void update(Observable o, Object arg) 
+	public synchronized void update(Observable o, Object arg) 
 	{
 		moveCharacters();
 		personsPerformActions();

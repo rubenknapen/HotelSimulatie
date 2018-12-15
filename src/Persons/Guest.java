@@ -86,7 +86,7 @@ public class Guest extends Person{
 	
 	//Functions
 	
-	public void getRoute(Area destinationArea){	
+	public synchronized void getRoute(Area destinationArea){	
 		currentRoute.clear();
 		ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 		getCurrentPosition().distance = 0;	

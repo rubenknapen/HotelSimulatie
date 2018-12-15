@@ -1,16 +1,21 @@
 package EventLib;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import Persons.Person;
 
 
 public class HotelEventManager implements Runnable {
     /**
      * List of listeners to notify of a new HotelEvent
      */
-    private ArrayList<HotelEventListener> listeners;
+    private List<HotelEventListener> listeners = Collections.synchronizedList(new ArrayList<HotelEventListener>());
+    //public static List<Person> cleaners =  Collections.synchronizedList(new ArrayList<Person>());
 
     /**
      * List of events happening in the .jar
@@ -365,11 +370,13 @@ public class HotelEventManager implements Runnable {
             System.out.println(event.toString());
 
             //notify all listeners of event
-            for (HotelEventListener listener : listeners
-                    ) {
-                listener.Notify(event);
+            synchronized (listeners) {
+	            for (HotelEventListener listener : listeners
+	                    ) {
+	                listener.Notify(event);
+	            }
             }
-
+            
             //event is fired, thus useless. Remove from event lists
             events.remove(0);
 
