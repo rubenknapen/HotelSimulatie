@@ -202,7 +202,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 				
 					else
 					{
-						object.stopMovie();
+						((Cinema) object).stopMovie();
 					}
 				}
 				else if (!moviePlaying)
@@ -599,7 +599,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 				{
 					if (object.id == cinemaId)
 					{
-						object.startMovie();
+						((Cinema) object).startMovie();
 					}
 				}
 			}

@@ -2,9 +2,7 @@ package Factories;
 
 import Areas.Cinema;
 import Areas.Elevator;
-import Areas.Entrance;
 import Areas.Fitness;
-import Areas.Floor;
 import Areas.HotelRoom;
 import Areas.Lobby;
 import Areas.Restaurant;
@@ -30,20 +28,11 @@ public class AreaFactory {
 	         return new Elevator(id, dimensionW, dimensionH, x, y);
 	      }
 	      
-	      else if(areaType.equalsIgnoreCase("Entrance"))
-	      {
-	         return new Entrance();
-	      }
-	      
 	      else if(areaType.equalsIgnoreCase("Fitness"))
 	      {
 	         return new Fitness(id, dimensionW, dimensionH, x, y);
 	      }
-	      
-	      else if(areaType.equalsIgnoreCase("Floor"))
-	      {
-	         return new Floor();
-	      }      
+	            
 	      else if(areaType.equalsIgnoreCase("Room"))
 	      {
 	         return new HotelRoom(id, dimensionW, dimensionH, stars, x, y);

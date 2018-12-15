@@ -46,7 +46,6 @@ public class Cinema extends Area {
             e.printStackTrace();
         }
 		
-
 		HBox cinemaBg = new HBox();
 		cinemaBg.setBackground(new Background(new BackgroundFill(Color.web("yellow"), CornerRadii.EMPTY, Insets.EMPTY)));
 		
@@ -63,18 +62,15 @@ public class Cinema extends Area {
 //		// Paint the room on the grid
 //		GridBuilder.grid.add(roomImageView,x,y, dimensionW, dimensionH);
 //		GridBuilder.grid.setHalignment(roomImageView, HPos.LEFT);
-//		GridBuilder.grid.setValignment(roomImageView, VPos.BOTTOM);
-			
+//		GridBuilder.grid.setValignment(roomImageView, VPos.BOTTOM);	
 	}
 	
 	//Functions
-	public void startMovie()
-	{
+	public void startMovie(){
 		HotelManager.moviePlaying = true;
 	}
 	
-	public void stopMovie()
-	{
+	public void stopMovie(){
 		HotelManager.moviePlaying = false;
 		HotelManager.movieTimeRemaining = SettingBuilder.movieTime;
 	}

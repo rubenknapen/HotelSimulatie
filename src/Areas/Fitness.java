@@ -20,11 +20,8 @@ import javafx.scene.paint.Color;
 
 public class Fitness extends Area {
 
-	//Variables
-	    
 	//Constructor
-	public Fitness(int id, int dimensionW, int dimensionH, int x, int y)
-	{
+	public Fitness(int id, int dimensionW, int dimensionH, int x, int y){
 		this.dimensionW = dimensionW;
 		this.dimensionH = dimensionH;
 		this.x = x;

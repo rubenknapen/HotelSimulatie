@@ -18,17 +18,13 @@ import javafx.scene.paint.Color;
 
 public class Restaurant extends Area {
 
-	//Variables
-	
 	//Constructor
-	public Restaurant(int id, int dimensionW, int dimensionH, long capacity, int x, int y)
-	{
+	public Restaurant(int id, int dimensionW, int dimensionH, long capacity, int x, int y){
 		this.dimensionW = dimensionW;
 		this.dimensionH = dimensionH;
 		this.x = x;
 		this.y = y;
 		this.capacity = capacity;
-		
 		
         neighbours = new HashMap<>();
         distance = Integer.MAX_VALUE;
@@ -63,9 +59,4 @@ public class Restaurant extends Area {
 		
 	}
 	
-	//Functions
-	public void setCapacity(int capacity)
-	{
-		this.capacity = capacity;
-	}
 }

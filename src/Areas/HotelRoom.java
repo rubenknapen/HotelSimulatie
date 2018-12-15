@@ -20,13 +20,8 @@ import javafx.scene.paint.Color;
 
 public class HotelRoom extends Area {
 
-
-	//Variables
-
-	
 	//Constructor
-	public HotelRoom(int id, int dimensionW, int dimensionH, int stars, int x, int y)
-	{
+	public HotelRoom(int id, int dimensionW, int dimensionH, int stars, int x, int y){
 		this.x = x;
 		this.y = y;		
 		this.dimensionW = dimensionW;
@@ -67,21 +62,20 @@ public class HotelRoom extends Area {
 		
 		// Paint the room on the grid
 		GridBuilder.grid.add(roomBg,x,y, dimensionW, dimensionH);
-		
-//		
-//		// Paint the room on the grid
-//		GridBuilder.grid.add(roomImageView,x,y, dimensionW, dimensionH);
-//		GridBuilder.grid.setHalignment(roomImageView, HPos.LEFT);
-//		GridBuilder.grid.setValignment(roomImageView, VPos.BOTTOM);
+	}	
+	
+	public void getImageForStars(){
+		if (stars == 1){
+			imageLocation = "door_1.png";
+		} else if (stars == 2){
+			imageLocation = "door_2.png";
+		} else if (stars == 3){
+			imageLocation = "door_3.png";
+		} else if (stars == 4){
+			imageLocation = "door_4.png";
+		} else if (stars == 5){
+			imageLocation = "door_5.png";
+		}
 	}
 	
-//	public void makeRoomDirty(){
-//		roomBg.setStyle("-fx-background-color: yellow;");
-//		
-//	}
-	
-	public void setAvailability(boolean TrueOrFalse)
-	{
-		this.available = TrueOrFalse;
-	}
 }

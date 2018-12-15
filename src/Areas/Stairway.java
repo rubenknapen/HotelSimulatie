@@ -18,8 +18,7 @@ import javafx.scene.paint.Color;
 
 public class Stairway extends Area {
 
-	public Stairway(int id, int dimensionW, int dimensionH, int x, int y)
-	{
+	public Stairway(int id, int dimensionW, int dimensionH, int x, int y){
 		this.dimensionW = dimensionW;
 		this.dimensionH = dimensionH;
 		this.x = x;

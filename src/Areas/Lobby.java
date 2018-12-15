@@ -29,8 +29,7 @@ import javafx.scene.paint.Color;
 public class Lobby extends Area {
 
 	//Constructor
-	public Lobby(int id, int dimensionW, int dimensionH, int x, int y)
-	{
+	public Lobby(int id, int dimensionW, int dimensionH, int x, int y){
 		JFrame parent = new JFrame();
 		
 		this.dimensionW = dimensionW;
@@ -80,18 +79,6 @@ public class Lobby extends Area {
 		        MainMenuScene.eventManager.pause();
 		        HotelManager.timer.pause();
 		        
-		        
-		        /*
-				try {
-					MainMenuScene.timer.wait();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		        
-		        HotelOverviewScene overviewScene = new HotelOverviewScene();
-				overviewScene.buildScene();
-				*/
 		    }
 		});
 		
@@ -106,5 +93,5 @@ public class Lobby extends Area {
         roomImageView.setFitHeight(96);
         roomImageView.setFitWidth(480);
 	}
-	//Functions
+
 }
