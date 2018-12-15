@@ -21,19 +21,9 @@ import javafx.scene.image.ImageView;
 public class Cleaner extends Person{
 
 	//Variables
-	private String status; // Status of the person "evacuate, check in, etc."
-	private boolean visibility = true; // Hide or shows the person visually
-	private boolean moveAllowed = true;
 	private int cleaningTime = SettingBuilder.cleaningTime;
 	private int cleaningTimeRemaining;
 	private int waitInFrontOfDoor = 0;
-	private int x; // x coordinate
-	private int y; // y coordinate
-	private int id;
-	private ImageView cleanerImageView;
-	private int stairsWaitTime = 0;
-	private int translateXVal;
-	private int translateYVal;
 	private Area currentRoomToClean;
 	public static ArrayList<Area> roomCleaningList = new ArrayList<Area>();
 	public static ArrayList<Area> EmergencyRoomCleaningList = new ArrayList<Area>();
@@ -55,75 +45,13 @@ public class Cleaner extends Person{
         }
 		
 		// Paint the guest on the grid
-		GridBuilder.grid.add(this.cleanerImageView,x,y);
-		GridBuilder.grid.setHalignment(this.cleanerImageView, HPos.CENTER);
-		GridBuilder.grid.setValignment(this.cleanerImageView, VPos.BOTTOM);
+		GridBuilder.grid.add(this.personImageView,x,y);
+		GridBuilder.grid.setHalignment(this.personImageView, HPos.CENTER);
+		GridBuilder.grid.setValignment(this.personImageView, VPos.BOTTOM);
 	}
 	
-	public void setSprite(FileInputStream sprite){
-		
-        Image cleanerImage = new Image(sprite);
-        cleanerImageView = new ImageView();
-        cleanerImageView.setFitHeight(21);
-        cleanerImageView.setFitWidth(16); 
-        cleanerImageView.setImage(cleanerImage);
-    }
 	
-	//Get route to inserted Area
-	public void getRoute(Area destinationArea){	
-		ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
-		getCurrentPosition().distance = 0;	
-	    currentRoute = _ds.Dijkstra(getCurrentPosition(), destinationArea);
-	    clearDistances();
-	}
-	
-	private void clearDistances() {
-		for (Area a : Area.getAreaList()) {
-			a.distance = Integer.MAX_VALUE;;
-			a.latest = null;
-		}		
-	}
-	
-	//return area object of current position
-	public Area getCurrentPosition() {
-		for (Area object: Area.getAreaList()) {
-			if(object.getX() == x && object.getRealY() == y) {
-				return object;
-			} else if(object.getXEnd() == x && object.getRealY() == y) {
-				translateXVal -= GridBuilder.colSize;
-				x = object.getX();
-				return object;
-			}
-		}
-		return null;
-	}
-	
-	public void moveAllowed()
-	{
-		if(moveAllowed)
-		for (Area object: Area.getAreaList()) 
-		{
-			if(object.getX() == x && object.getRealY() == y) 
-			{
-				if(object.areaType == "Stairs")
-				{
-					moveAllowed = false;
-				}
-			}
-		}
-		else if(!moveAllowed)
-		{
-			if(stairsWaitTime == SettingBuilder.getStairTime())
-			{
-				moveAllowed = true;
-				stairsWaitTime = 0;
-			}
-		}
-	}
-
-	
-	public void moveToArea()
-	{
+	public void moveToArea(){
 		moveAllowed();
 		if(!moveAllowed)
 		{
@@ -141,7 +69,7 @@ public class Cleaner extends Person{
 							
 				x = getLastArea().getX();
 				translateXVal += GridBuilder.colSize;
-				cleanerImageView.setTranslateX(translateXVal);
+				personImageView.setTranslateX(translateXVal);
 				if(getLastArea().dimensionW > 1) {
 					
 				} else {
@@ -154,7 +82,7 @@ public class Cleaner extends Person{
 				
 				x = getLastArea().getXEnd();
 				translateXVal += GridBuilder.colSize;
-				cleanerImageView.setTranslateX(translateXVal);
+				personImageView.setTranslateX(translateXVal);
 				currentRoute.remove(getLastArea());
 			} else if((getLastArea().getXEnd() - x == -1) && getLastArea().getRealY() == y ) {
 				
@@ -162,7 +90,7 @@ public class Cleaner extends Person{
 				
 				x = getLastArea().getXEnd();
 				translateXVal -= GridBuilder.colSize;
-				cleanerImageView.setTranslateX(translateXVal);
+				personImageView.setTranslateX(translateXVal);
 				if(getLastArea().dimensionW > 1) {
 					
 				} else {
@@ -176,7 +104,7 @@ public class Cleaner extends Person{
 				
 				x = getLastArea().getX();
 				translateXVal -= GridBuilder.colSize;
-				cleanerImageView.setTranslateX(translateXVal);	
+				personImageView.setTranslateX(translateXVal);	
 				currentRoute.remove(getLastArea());
 	
 			}
@@ -190,12 +118,12 @@ public class Cleaner extends Person{
 				if(getLastArea().getY() - y == -1) {
 					y = getLastArea().getY();
 					translateYVal -= GridBuilder.rowSize;
-					cleanerImageView.setTranslateY(translateYVal);
+					personImageView.setTranslateY(translateYVal);
 					currentRoute.remove(getLastArea());
 				} else {
 					y = getLastArea().getY();
 					translateYVal += GridBuilder.rowSize;
-					cleanerImageView.setTranslateY(translateYVal);
+					personImageView.setTranslateY(translateYVal);
 					currentRoute.remove(getLastArea());				
 				}
 				
@@ -205,14 +133,6 @@ public class Cleaner extends Person{
 			}		
 		}
 	}		
-	
-	public Area getLastArea() {
-		if(currentRoute.size() == 0) {
-			return null;
-		}else {
-			return currentRoute.get(currentRoute.size() - 1) ;
-		}
-	}
 	
 	//Check if there is an emergency call open, otherwise check normal cleaning
 	private void checkCleaningList() {
@@ -233,10 +153,8 @@ public class Cleaner extends Person{
 		EmergencyRoomCleaningList.remove(0);
 	}
 	
-	private void assignRoomToClean(Area roomToClean) 
-	{
-		if(!HotelManager.evacuateCleanerMode)
-		{
+	private void assignRoomToClean(Area roomToClean) {
+		if(!HotelManager.evacuateCleanerMode){
 			currentRoomToClean = roomToClean;
 			status = "GOTODIRTYROOM";
 			getRoute(roomToClean);
@@ -246,8 +164,7 @@ public class Cleaner extends Person{
 	
 	//Check the status and based on that perform the corresponding action
 	@Override
-	public void performAction()
-	{
+	public void performAction(){
 		if(status.equals("EVACUATED"))
 		{
 			setInvisible();
@@ -301,106 +218,30 @@ public class Cleaner extends Person{
 		}
 	}
 	
-	public void setVisible(){
-		Platform.runLater(
-				  () -> {
-						cleanerImageView.setVisible(true);
-						visibility = true;
-				  });
-	}
-	
-	public void setInvisible(){
-		Platform.runLater(
-				  () -> {
-					cleanerImageView.setVisible(false);
-					visibility = false;
-				  });
-	}
-
 	public void getLobbyRoute(){
-
 		getRoute(Area.getAreaList().get(49));
-		if (!HotelManager.evacuateCleanerMode)
-		{
+		if (!HotelManager.evacuateCleanerMode){
 			setStatus("INACTIVE");
 		}
-
-	}
-	
-	@Override
-	public void evacuate() {
-		// TODO Auto-generated method stub
-		
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public boolean isVisibility() {
-		return visibility;
-	}
-
-	public void setVisibility(boolean visibility) {
-		this.visibility = visibility;
-	}
-	
-	public void setId(int id)
-	{
-		this.id = id;
-	}
-	
-	public int getId()
-	{
-		return id;
-	}
-
-	public int getX() 
-	{
-		return x;
-	}
-
-	public void setX(int x) 
-	{
-		this.x = x;
-	}
-
-	public int getY() 
-	{
-		return y;
-	}
-
-	public void setY(int y) 
-	{
-		this.y = y;
-	}
-	
-	public static ArrayList<Area> getRoomCleaningList() 
-	{
+	public static ArrayList<Area> getRoomCleaningList() {
 		return roomCleaningList;
 	}
 
-	public void setRoomCleaningList(ArrayList<Area> roomCleaningList) 
-	{
+	public void setRoomCleaningList(ArrayList<Area> roomCleaningList) {
 		this.roomCleaningList = roomCleaningList;
 	}
 
-	public static ArrayList<Area> getEmergencyRoomCleaningList() 
-	{
+	public static ArrayList<Area> getEmergencyRoomCleaningList() {
 		return EmergencyRoomCleaningList;
 	}
 
-	public static void setEmergencyRoomCleaningList(ArrayList<Area> roomEmergencyCleaningList) 
-	{
+	public static void setEmergencyRoomCleaningList(ArrayList<Area> roomEmergencyCleaningList) {
 		Cleaner.EmergencyRoomCleaningList = roomEmergencyCleaningList;
 	}
 	
-	private void setCleaningTime()
-	{
+	private void setCleaningTime(){
 		cleaningTime = SettingBuilder.getCleaningTime();
 	}
 	

@@ -2,9 +2,7 @@ package Factories;
 
 import Areas.Cinema;
 import Areas.Elevator;
-import Areas.Entrance;
 import Areas.Fitness;
-import Areas.Floor;
 import Areas.HotelRoom;
 import Areas.Lobby;
 import Areas.Restaurant;
@@ -32,7 +30,6 @@ public class AreaFactory {
 	      
 	      else if(areaType.equalsIgnoreCase("Fitness"))
 	      {
-	    	  System.out.println("Created fitness with areatype: "+ areaType);
 	         return new Fitness(id, dimensionW, dimensionH, x, y, areaType);
 	      }
 	      

@@ -193,7 +193,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 				
 					else
 					{
-						object.stopMovie();
+						((Cinema) object).stopMovie();
 					}
 				}
 				else if (!moviePlaying)
@@ -509,7 +509,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 						  
 						  if (selectedRoomId != 0)
 						  {
-							  Person xx = PersonFactory.createPerson("Guest","GO_BACK_TO_ROOM", setGuestIdValue,true,2,10);
+							  Person xx = PersonFactory.createPerson("Guest","GO_BACK_TO_ROOM", setGuestIdValue,true,4,9);
 							  xx.setRoomId(selectedRoomId);
 							  guests.add(xx);
 							  xx.getRoute(getRoomNodeAfterCheckIn(selectedRoomId));
@@ -575,7 +575,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 				{
 					if (object.id == cinemaId)
 					{
-						object.startMovie();
+						((Cinema) object).startMovie();
 					}
 				}
 			}

@@ -35,23 +35,13 @@ public abstract class Area {
 	public int dimensionH;	
 	public boolean available = true;
 	public int stars = 1;
-	public int cleaningTime = 1;
-	public boolean cleaningEmergency = false;
-	
-	int position = 0;
-	int dimension = 0;
-	long occupants = 0;
-	
 	public ImageView roomImageView;
 	public Image roomImage;
-	
 	String imageLocation;
 	public String areaType;
-	public HBox roomBg = new HBox();
 
 		
 	//Functions
-	
 	public void createSprite(FileInputStream sprite){
 		Image roomImage = new Image(sprite);
         roomImageView = new ImageView();
@@ -60,68 +50,33 @@ public abstract class Area {
         roomImageView.setImage(roomImage);
 	}
 	
-	public void getImageForStars(){
-		if (stars == 1){
-			imageLocation = "door_1.png";
-		} else if (stars == 2){
-			imageLocation = "door_2.png";
-		} else if (stars == 3){
-			imageLocation = "door_3.png";
-		} else if (stars == 4){
-			imageLocation = "door_4.png";
-		} else if (stars == 5){
-			imageLocation = "door_5.png";
-		}
-	}
-	
-    public static List<Area> getAreaList()
-    {
+    public static List<Area> getAreaList(){
     	return areaList;
     }
     
-	public int getDistance() 
-	{
+	public int getDistance() {
 		return dimensionW;
 	}	   
     
-	public int getX() 
-	{
+	public int getX() {
 		return x;
 	}
 
-	public int getXEnd() 
-	{
+	public int getXEnd() {
 		return x + dimensionW -1;
 	}
 	
-	public int getRealY() 
-	{
+	public int getRealY() {
 		return (y - 1) + dimensionH;
 	}
 
-	public int getY() 
-	{
+	public int getY() {
 		return y;
 	}
 
-	public void setAvailability(boolean b) 
-	{
+	public void setAvailability(boolean b) {
 		this.available = b;
 		
 	}
-	
-	public void makeRoomDirty()
-	{
-		
-	}
 
-	public void stopMovie() 
-	{
-		//
-	}
-
-	public void startMovie() 
-	{
-		//
-	}
 }
