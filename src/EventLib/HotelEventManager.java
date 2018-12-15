@@ -1,22 +1,17 @@
 package EventLib;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import Persons.Person;
 
 
 public class HotelEventManager implements Runnable {
     /**
      * List of listeners to notify of a new HotelEvent
      */
-    private List<HotelEventListener> listeners = Collections.synchronizedList(new ArrayList<HotelEventListener>());
-    //public static List<Person> cleaners =  Collections.synchronizedList(new ArrayList<Person>());
-
+    private ArrayList<HotelEventListener> listeners;
     /**
      * List of events happening in the .jar
      */
