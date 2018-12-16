@@ -26,6 +26,11 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
+/**
+ * This is the Lobby area.
+ *
+ */
+
 public class Lobby extends Area {
 
 	//Constructor

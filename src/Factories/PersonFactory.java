@@ -4,6 +4,11 @@ import Persons.Cleaner;
 import Persons.Guest;
 import Persons.Person;
 
+/**
+ * The PersonFactory allows you to create a Person (guest/cleaner).
+ *
+ */
+
 public class PersonFactory {
 
 	public static Person createPerson(String personType, String status, int id, boolean visibility, int x, int y){

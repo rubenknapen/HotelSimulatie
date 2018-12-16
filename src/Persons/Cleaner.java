@@ -28,7 +28,13 @@ public class Cleaner extends Person{
 	public static ArrayList<Area> roomCleaningList = new ArrayList<Area>();
 	public static ArrayList<Area> EmergencyRoomCleaningList = new ArrayList<Area>();
 	
-	//Constructor
+	/**
+	 * Constructor that builds a Cleaner.
+	 * @param status Is his current activate status.
+	 * @param visibility Is his current activate visiblity status.
+	 * @param x Is his current value for his position on the grid (x).
+	 * @param y Is his current value for his position on the grid (y).
+	 */
 	public Cleaner(String status, boolean visibility, int x, int y){
 		
 		this.setStatus(status);

@@ -18,6 +18,11 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
+/**
+ * This is the Fitness area.
+ *
+ */
+
 public class Fitness extends Area {
 
 	//Constructor

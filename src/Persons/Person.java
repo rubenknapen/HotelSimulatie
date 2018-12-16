@@ -13,7 +13,10 @@ import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-
+/**
+ * The abstract class Person holds the logic that is used by cleaner/guest.
+ *
+ */
 public abstract class Person
 {	
 	ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
@@ -33,11 +36,9 @@ public abstract class Person
 	protected int fitnessTickAmount;
 	protected boolean moveAllowed;
 	protected String status;
-
 	
-	//All functions
-	
-	public void setSprite(FileInputStream sprite){
+	public void setSprite(FileInputStream sprite)
+	{
         Image personImage = new Image(sprite);
         personImageView = new ImageView();
         personImageView.setFitHeight(21);
@@ -45,7 +46,8 @@ public abstract class Person
         personImageView.setImage(personImage);
     }
 	
-	public synchronized void getRoute(Area destinationArea){	
+	public synchronized void getRoute(Area destinationArea)
+	{	
 		currentRoute.clear();
 		ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 		getCurrentPosition().distance = 0;	
@@ -57,22 +59,28 @@ public abstract class Person
 	    clearDistances();		
 	}
 
-	protected void clearDistances() {
+	protected void clearDistances() 
+	{
 		for (Area a : Area.getAreaList()) {
 			a.distance = Integer.MAX_VALUE;;
 			a.latest = null;
 		}		
 	}
 	
-	public int checkDistanceArea(Area destinationArea){
+	public int checkDistanceArea(Area destinationArea)
+	{
 		return 0;
 	}
 	
-	public Area getCurrentPosition() {
-		for (Area object: Area.getAreaList()) {
-			if(object.getX() == x && object.getRealY() == y) {
+	public Area getCurrentPosition() 
+	{
+		for (Area object: Area.getAreaList()) 
+		{
+			if(object.getX() == x && object.getRealY() == y) 
+			{
 				return object;
-			} else if(object.getXEnd() == x && object.getRealY() == y) {
+			} else if(object.getXEnd() == x && object.getRealY() == y) 
+			{
 				translateXVal -= GridBuilder.colSize;
 				x = object.getX();
 				return object;
@@ -83,15 +91,20 @@ public abstract class Person
 		return null;
 	}
 	
-	public Area getLastArea() {
-		if(currentRoute.size() == 0) {
+	public Area getLastArea() 
+	{
+		if(currentRoute.size() == 0) 
+		{
 			return null;
-		}else {
+		}
+		else 
+		{
 			return currentRoute.get(currentRoute.size() - 1) ;
 		}
 	}
 	
-	public void moveToArea(){
+	public void moveToArea()
+	{
 		moveAllowed();
 		
 		if(!moveAllowed)
@@ -105,7 +118,8 @@ public abstract class Person
 			{
 				//Reached end of route
 			} 
-			else if(getLastArea().dimensionW > 6) {
+			else if(getLastArea().dimensionW > 6)
+			{
 				if((status.equals("LEAVE_HOTEL") || status.equals("GO_OUTSIDE")))
 				{
 					if (x > 2)
@@ -123,25 +137,28 @@ public abstract class Person
 					}
 				} 
 				
-				else {
+				else 
+				{
 					x++;
 					translateXVal += GridBuilder.colSize;
 					personImageView.setTranslateX(translateXVal);
 				}
 
-				if(getLastArea().getXEnd() == x) {
+				if(getLastArea().getXEnd() == x) 
+				{
 					//x = getLastArea().getXEnd();
 					if(status.equals("LEAVE_HOTEL"))
-						{
-							//Do nothing
-						}
+					{
+						//Do nothing
+					}
 					else
 					{
 						currentRoute.remove(getLastArea());
 					}
 				}
 			}
-			else if( ((getLastArea().getX() - x == 0) && getLastArea().getRealY() == y ) && getNextArea().getXEnd() - x == -1) {
+			else if( ((getLastArea().getX() - x == 0) && getLastArea().getRealY() == y ) && getNextArea().getXEnd() - x == -1) 
+			{
 				if(status.equals("LEAVE_HOTEL") || status.equals("GO_OUTSIDE"))
 				{
 					//Do nothing
@@ -151,80 +168,82 @@ public abstract class Person
 					currentRoute.remove(getLastArea());
 				}
 			}
-			else if((getLastArea().getX() - x == 1) && getLastArea().getRealY() == y ) {
-				
-				
+			else if((getLastArea().getX() - x == 1) && getLastArea().getRealY() == y ) 
+			{
 				// Right movement
 							
 				x = getLastArea().getX();
 				translateXVal += GridBuilder.colSize;
 				personImageView.setTranslateX(translateXVal);
-				if(getLastArea().dimensionW > 1) {
+				if(getLastArea().dimensionW > 1) 
+				{
 					
-					if(currentRoute.size() == 1) {
+					if(currentRoute.size() == 1) 
+					{
 						currentRoute.remove(getLastArea());
 					}
-				} else {
+				} 
+				else 
+				{
 					currentRoute.remove(getLastArea());
 				}
-				
 			} 
-			else if((getLastArea().getXEnd() - x == 1) && getLastArea().getRealY() == y ) {
-				
+			else if((getLastArea().getXEnd() - x == 1) && getLastArea().getRealY() == y ) 
+			{
 				// Right movement
-				
-				
 				x = getLastArea().getXEnd();
 				translateXVal += GridBuilder.colSize;
 				personImageView.setTranslateX(translateXVal);
 				currentRoute.remove(getLastArea());
-				
-				
-			} else if((getLastArea().getXEnd() - x == -1) && getLastArea().getRealY() == y ) {
-				
+			} 
+			else if((getLastArea().getXEnd() - x == -1) && getLastArea().getRealY() == y ) 
+			{
 				// Left movement
-				
 				x = getLastArea().getXEnd();
 				translateXVal -= GridBuilder.colSize;
 				personImageView.setTranslateX(translateXVal);
-				if(getLastArea().dimensionW > 1) {
+				if(getLastArea().dimensionW > 1) 
+				{
 					
-				} else {
+				} 
+				else 
+				{
 					currentRoute.remove(getLastArea());
 				}
 			
 			} 
-			else if ((getLastArea().getX() - x == -1) && getLastArea().getRealY() == y ) {
-	
+			else if ((getLastArea().getX() - x == -1) && getLastArea().getRealY() == y ) 
+			{
 				// Left movement
-				
 				x = getLastArea().getX();
 				translateXVal -= GridBuilder.colSize;
 				personImageView.setTranslateX(translateXVal);	
 				currentRoute.remove(getLastArea());
-	
 			}
-			else if(((getLastArea().getXEnd() - x == 0) && getLastArea().getRealY() == y ) && x > getLastArea().getX()) {
+			else if(((getLastArea().getXEnd() - x == 0) && getLastArea().getRealY() == y ) && x > getLastArea().getX()) 
+			{
 				currentRoute.remove(getLastArea());
 			}
-			else if(getLastArea().getY() != y ) {
-				
+			else if(getLastArea().getY() != y ) 
+			{
 				// Up and down movement
-				
-				if(getLastArea().getY() - y == -1) {
+				if(getLastArea().getY() - y == -1) 
+				{
 					y = getLastArea().getY();
 					translateYVal -= GridBuilder.rowSize;
 					personImageView.setTranslateY(translateYVal);
 					currentRoute.remove(getLastArea());
-				} else {
+				} 
+				else 
+				{
 					y = getLastArea().getY();
 					translateYVal += GridBuilder.rowSize;
 					personImageView.setTranslateY(translateYVal);
 					currentRoute.remove(getLastArea());				
 				}
-				
 			}
-			else {
+			else 
+			{
 				currentRoute.remove(getLastArea());
 			}
 			
@@ -232,21 +251,25 @@ public abstract class Person
 			{
 				currentRoute.clear();
 				if((status.equals("LEAVE_HOTEL")) || status.equals("GO_OUTSIDE"))
-						{
-							//moveAllowed = false;
-						}
+					{
+						//moveAllowed = false;
+					}
 			}
 		}
 	}	
 	
-	public Area getNextArea() {
-
-		if(currentRoute == null){
+	public Area getNextArea() 
+	{
+		if(currentRoute == null)
+		{
 			return null;
 		}
-		if(currentRoute.size() == 0) {
+		if(currentRoute.size() == 0) 
+		{
 			return null;
-		}else {
+		}
+		else 
+		{
 			int minusFactor = 2;
 			int currentSize = currentRoute.size();
 			
@@ -258,112 +281,139 @@ public abstract class Person
 		}
 	}
 	
-	public void setInvisible(){
-		Platform.runLater(
-				  () -> {
-					personImageView.setVisible(false);
-					visibility = false;
-				  });
+	public void setInvisible()
+	{
+		Platform.runLater(() -> 
+		{
+			personImageView.setVisible(false);
+			visibility = false;
+		});
 	}
 	
-	public void moveAllowed(){
+	public void moveAllowed()
+	{
 		if(moveAllowed)
-		for (Area object: Area.getAreaList()) {
-			if(object.getX() == x && object.getRealY() == y) {
-				if(object.areaType == "Stairs"){
+		for (Area object: Area.getAreaList()) 
+		{
+			if(object.getX() == x && object.getRealY() == y) 
+			{
+				if(object.areaType == "Stairs")
+				{
 					moveAllowed = false;
 				}
 			}
 		}
-		else if(!moveAllowed){
-			if(stairsWaitTime == SettingBuilder.getStairTime()){
+		else if(!moveAllowed)
+		{
+			if(stairsWaitTime == SettingBuilder.getStairTime())
+			{
 				moveAllowed = true;
 				stairsWaitTime = 0;
 			}
 		}
 	}	
 	
-	public int getId(){
+	public int getId()
+	{
 		return id;
 	}
 	
-	public int getX() {
+	public int getX() 
+	{
 		return x;
 	}
 
-	public void setX(int x) {
+	public void setX(int x) 
+	{
 		this.x = x;
 	}
 
-	public int getY() {
+	public int getY() 
+	{
 		return y;
 	}
 	
-	public void setY(int y) {
+	public void setY(int y) 
+	{
 		this.y = y;
 	}
 	
-	public void clearRoute(){
+	public void clearRoute()
+	{
 		currentRoute.clear();
 	}
 	
-	public void setId(int guestId){
+	public void setId(int guestId)
+	{
 		this.id = guestId;
 	}
 	
-	public void setStatus(String status) {
+	public void setStatus(String status) 
+	{
 		this.status = status;
 	}
 	
-	public String getStatus() {
+	public String getStatus() 
+	{
 		return status;
 	}
 	
-	public int getFitnessTickAmount() {
+	public int getFitnessTickAmount() 
+	{
 		return fitnessTickAmount;
 	}
 
-	public void setFitnessTickAmount(int fitnessTickAmount) {
+	public void setFitnessTickAmount(int fitnessTickAmount) 
+	{
 		this.fitnessTickAmount = fitnessTickAmount;
 	}
 	
-	public boolean isVisibility() {
+	public boolean isVisibility() 
+	{
 		return visibility;
 	}
 
-	public void setVisibility(boolean visibility) {
+	public void setVisibility(boolean visibility) 
+	{
 		this.visibility = visibility;
 	}
 	
-	public void performAction() {
+	public void performAction() 
+	{
 		
 	}
 
-	public void setRoomId(int roomId) {
+	public void setRoomId(int roomId) 
+	{
 	
 	}
 	
-	public int getSelectedRoom(){
+	public int getSelectedRoom()
+	{
 		return 0;
 	}
 	
-	public void getLobbyRoute() {
+	public void getLobbyRoute() 
+	{
 		//
 	}
 
-	public boolean getAvailability() {
+	public boolean getAvailability() 
+	{
 		return false;
 	}
 
-	public void setAvailability(boolean b) {
+	public void setAvailability(boolean b) 
+	{
 		// 
 	}
 
-	public void setVisible(){
-		Platform.runLater(
-		  () -> {
-			  	personImageView.setVisible(true);
-				visibility = true;
-		  });
+	public void setVisible()
+	{
+		Platform.runLater(() -> 
+		{
+		  	personImageView.setVisible(true);
+			visibility = true;
+		});
 	}
 }

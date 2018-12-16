@@ -19,6 +19,11 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
+/**
+ * This is the Cinema area.
+ *
+ */
+
 public class Cinema extends Area {
 
 	//Variables

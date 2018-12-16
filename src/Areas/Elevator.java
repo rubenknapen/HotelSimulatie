@@ -12,6 +12,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
+/**
+ * This is the Elevator area.
+ *
+ */
+
 public class Elevator extends Area {
 
 	//Variables

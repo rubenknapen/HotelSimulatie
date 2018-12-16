@@ -16,6 +16,11 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
+/**
+ * This is the Stairway area.
+ *
+ */
+
 public class Stairway extends Area {
 
 	public Stairway(int id, int dimensionW, int dimensionH, int x, int y, String areaType)

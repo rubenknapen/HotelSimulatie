@@ -17,6 +17,11 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
+/**
+ * This is the abstract class Area it holds the logic for all area types.=
+ *
+ */
+
 public abstract class Area {
 
 	// Variables for Dijkstra

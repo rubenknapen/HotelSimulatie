@@ -28,6 +28,10 @@ import simple.JSONObject;
 import simple.parser.JSONParser;
 import simple.parser.ParseException;
 
+/**
+ * The GridBuilder is generating the grid based on the inserted layout.
+ *
+ */
 
 public class GridBuilder {
 
@@ -176,9 +180,11 @@ public class GridBuilder {
 					System.out.println("");
 					objectNumber += 1;
 				}
-				else if(isOcupied[x][y] != 1){
+				else if(isOcupied[x][y] != 1)
+				{
 				
-					if (dimensionH > 1) {
+					if (dimensionH > 1) 
+					{
 						y += 1;
 					}
 					
@@ -189,8 +195,10 @@ public class GridBuilder {
 					Area tempRoom = AreaFactory.createArea(id, areaType,dimensionW,dimensionH,stars,capacity, x + xOffset, (getMaxY() - y + 1));
 				    Area.getAreaList().add(tempRoom);
 												
-					for (int xOcupied = x ; xOcupied < x+dimensionW ; xOcupied++) {
-			            for (int yOcupied = y ; yOcupied > y-dimensionH ; yOcupied--) {
+					for (int xOcupied = x ; xOcupied < x+dimensionW ; xOcupied++) 
+					{
+			            for (int yOcupied = y ; yOcupied > y-dimensionH ; yOcupied--) 
+			            {
 			            	if(areaType == "Cinema")
 			            	{
 			            		isOcupied[xOcupied][yOcupied] = 6;
@@ -238,15 +246,18 @@ public class GridBuilder {
 	
 	}
 	
-	public void createStairway() {
-		for(int i = 0; i < (getMaxY() + 1); i++) {
+	public void createStairway() 
+	{
+		for(int i = 0; i < (getMaxY() + 1); i++) 
+		{
 			Area stairway = AreaFactory.createArea(roomNumber, "Stairway",1,1,0,0,getMaxX(),1 + i);
 			Area.getAreaList().add(stairway);
 			roomNumber++;
 		}	      		
 	}
 	
-	public void createHotelBackground() {
+	public void createHotelBackground() 
+	{
 		// Create Hbox to contain background images of floors
 		HBox floorBackground = new HBox();
 		floorBackground.setMaxSize(48 * 8,48 * 8);
@@ -281,30 +292,38 @@ public class GridBuilder {
 		Area.getAreaList().add(lobby);
 	}
 	
-	public void createEdges() {
-		for (Area object: Area.getAreaList()) {
-			for (Area object2: Area.getAreaList()) {		 
+	public void createEdges() 
+	{
+		for (Area object: Area.getAreaList()) 
+		{
+			for (Area object2: Area.getAreaList()) 
+			{		 
 				// Check left for neighbours
-			    if ((object.getX() - 1 == object2.getX() || object.getX() - 1 == object2.getXEnd()) && object.getRealY() == object2.getRealY() ) {
+			    if ((object.getX() - 1 == object2.getX() || object.getX() - 1 == object2.getXEnd()) && object.getRealY() == object2.getRealY() ) 
+			    {
 			    	 //System.out.println("Ik " + object.id + " ben buurtjes met " + object2.id + " met gewicht: " + object2.getDistance());
 			    	 object.neighbours.put(object2, object2.getDistance());
 		        }
 			    // Check right for neighbours
-			    if (object.getXEnd() + 1 == object2.getX() && object.getRealY() == object2.getRealY() ) {
+			    if (object.getXEnd() + 1 == object2.getX() && object.getRealY() == object2.getRealY() ) 
+			    {
 			    	//System.out.println("Ik " + object.id + " ben buurtjes met " + object2.id + " met gewicht: " + object.getDistance());
 			    	object.neighbours.put(object2, object2.getDistance());
 			    }
 				if(object instanceof Stairway) {
-					if ((object.getY() == object2.getY()-1) && object.getX() == object2.getX()) {
+					if ((object.getY() == object2.getY()-1) && object.getX() == object2.getX()) 
+					{
 				    	//System.out.println("Ik " + object.id + " ben buurtjes met " + object2.id + " met gewicht: " + SettingBuilder.stairTime);
 				    	object.neighbours.put(object2, SettingBuilder.stairTime);
 				    }
-					if ((object.getY() == object2.getY()+1) && object.getX() == object2.getX()) {
+					if ((object.getY() == object2.getY()+1) && object.getX() == object2.getX()) 
+					{
 				    	//System.out.println("Ik " + object.id + " ben buurtjes met " + object2.id + " met gewicht: " + SettingBuilder.stairTime);
 				    	object.neighbours.put(object2, SettingBuilder.stairTime);
 				    }					
 				}
-				if(object instanceof Lobby) {
+				if(object instanceof Lobby) 
+				{
 					if((object.getXEnd() == object2.getX() && object.getY() == object2.getY())){
 						object.neighbours.put(object2, 7); // value 7 moet nog dynamisch gemaakt worden aan de hand van entrance point
 						object2.neighbours.put(object, 7); // value 7 moet nog dynamisch gemaakt worden aan de hand van entrance point
@@ -314,23 +333,28 @@ public class GridBuilder {
 		}					  
 	}
 	
-	public void clearGrid() {
+	public void clearGrid() 
+	{
 		grid.getChildren().clear();
 	}
 
-	public GridPane getGrid(){
+	public GridPane getGrid()
+	{
 		return grid;
 	}
 	
-	public static int getMaxY() {
+	public static int getMaxY() 
+	{
 		return maxY;
 	}
 	
-	public int getMaxX() {
+	public int getMaxX() 
+	{
 		return maxX + xOffset;
 	}
 	
-	public void buildGrid() {
+	public void buildGrid() 
+	{
 		createGrid();
 		createHotelBackground();
 		createRooms();
@@ -339,5 +363,4 @@ public class GridBuilder {
 		createStairway();
 		createEdges();		
 	}
-	
 }

@@ -5,6 +5,10 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Constructor that builds the SettingBuilder.
+ */
+
 public class SettingBuilder {
 
 	//Variables
@@ -17,7 +21,8 @@ public class SettingBuilder {
 	public static int stairTime = 2;
 
 	//Functions
-	public void getSettings(){					
+	public void getSettings()
+	{					
 		String pathBase = System.getProperty("user.dir");
 		String pathFile = "\\src\\settings\\settings.txt";
 		String fullPath = pathBase+pathFile;

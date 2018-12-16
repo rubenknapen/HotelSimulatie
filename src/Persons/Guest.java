@@ -35,8 +35,16 @@ public class Guest extends Person{
 	private int queueTime = 10;
 	public ArrayList<Area> restaurantsToCheck = new ArrayList<Area>();
 	
-	//Constructor
-	public Guest(String status, int id, boolean visibility, int x, int y){
+	/**
+	 * Constructor that builds a Guest.
+	 * @param status Is his current activate status.
+	 * @param id Is his unique identificationNumber.
+	 * @param visibility Is his current activate visiblity status.
+	 * @param x Is his current value for his position on the grid (x).
+	 * @param y Is his current value for his position on the grid (y).
+	 */
+	public Guest(String status, int id, boolean visibility, int x, int y)
+	{
 		this.id = id;
 		this.setStatus(status);
 		this.setVisibility(visibility);
@@ -163,8 +171,9 @@ public class Guest extends Person{
 		}
 	}
 		
-	private void goToOtherRestaurant() {
-		
+	private void goToOtherRestaurant() 
+	{
+		//
 	}
 
 	private void checkRestaurantQueue() {
@@ -176,7 +185,8 @@ public class Guest extends Person{
 		}
 	}
 
-	public void getLobbyRoute(){
+	public void getLobbyRoute()
+	{
 		for (Area object: Area.getAreaList()) {
 			if(object instanceof Lobby) {
 				//
