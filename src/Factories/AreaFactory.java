@@ -9,6 +9,11 @@ import Areas.Restaurant;
 import Areas.Stairway;
 import Areas.Area;
 
+/**
+ * The AreaFactory allows you to create a Area.
+ *
+ */
+
 public class AreaFactory {
 	
 	public static Area createArea(int id, String areaType, int dimensionW, int dimensionH, int stars, long capacity, int x, int y){

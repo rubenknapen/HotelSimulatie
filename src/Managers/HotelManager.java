@@ -15,6 +15,11 @@ import Persons.Person;
 import javafx.application.Platform;
 import EventLib.HotelEvent;
 
+/**
+ * The HotelManager controls the hotel based on received events.
+ *
+ */
+
 public class HotelManager implements EventLib.HotelEventListener, Observer{
 
 	//Variables
@@ -43,16 +48,13 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	public static List<Person> guests =  Collections.synchronizedList(new ArrayList<Person>());
 	ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 	
-	
-	//Constructor
+	/**
+	 * Constructor that builds the HotelManager.
+	 */
 	public HotelManager()
 	{
 		GridBuilder gridBuilder = new GridBuilder();
 		gridBuilder.buildGrid();
-			
-		//Build array list for guests
-//		guests = new ArrayList();
-//		cleaners = new ArrayList();
 
 		addCleaners(2);
 
@@ -62,7 +64,10 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		timer.activateTimer();
 	}
 	
-	public void setRealtimeStatistics()
+	/**
+     * method that counts the amount of guests / status.
+     */
+	private void setRealtimeStatistics()
 	{
 		currentGuestAmount = guests.size();
 		currentGuestAmountInRoom = 0;
@@ -72,6 +77,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		
 		currentCleanerAmountInEmergencyCleaning = 0;
 		currentCleanerAmountInCleaning = 0;
+		
 		synchronized (guests) 
 		{
 			for(Person guest : guests) 
@@ -117,7 +123,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	}
 	
 	//call performAction for every object in arraylist guests
-	public static void personsPerformActions()
+	private static void personsPerformActions()
 	{
 		synchronized (guests) {
 			for(Person guest : guests) {
@@ -132,7 +138,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	}
 	
 	//call moveToArea for every object in arraylist guests
-	public static void moveCharacters() 
+	private static void moveCharacters() 
 	{
 		synchronized (guests) 
 		{
@@ -150,7 +156,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		}		
 	}
 	
-	public void evacuatePeople()
+	private void evacuatePeople()
 	{
 		evacuateGuestMode = true;
 		evacuateCleanerMode = true;
@@ -178,7 +184,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		}
 	}
 	
-	public void checkMovie()
+	private void checkMovie()
 	{
 		for (Area object: Area.getAreaList()) 
 		{
@@ -205,7 +211,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	}
 	
 	//Add a cleaner
-	public void addCleaners(int amount)
+	private void addCleaners(int amount)
 	{
 		for(int i = 1; i <= amount; i++)
 		{
@@ -216,21 +222,12 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		}
 	}
 	
-	//Get Area object of roomToClean (input is roomnumber)
-	public Area roomToClean(int roomId)
-	{
-		for (Area a : Area.getAreaList()) 
-		{
-			if(a.id == roomId) 
-			{
-				return a;
-			}
-		}
-		return null;
-	}
-	
-	//return the room object with the input of prefStars, room must be available
-	public synchronized int getRoom(int prefStars)
+	/**
+     * method that returns an available room based on prefered stars.
+     * @param prefStars the preffered amount of stars by the guest.
+     * @return object.id The id of the room that was found.
+     */
+	private synchronized int getRoom(int prefStars)
 	{
 		int starAmount = prefStars;
 		boolean checkForRoom = true;
@@ -277,7 +274,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	}
 	
 	//Return area of the room (input roomnumber) and set the availability to false
-	public synchronized static Area getRoomNodeAfterCheckIn(int roomId) 
+	private synchronized static Area getRoomNodeAfterCheckIn(int roomId) 
 	{
 		for (Area object: Area.getAreaList()) 
 		{
@@ -293,7 +290,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		return null;
 	}
 	
-	public synchronized void sendGuestToCinema(int guestId)
+	private synchronized void sendGuestToCinema(int guestId)
 	{
 		String status = "GOTO_CINEMA";
 		synchronized (guests) {
@@ -307,8 +304,8 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	  		}
 		}
 	}
-	//
-	public synchronized void sendGuestToFitness(int guestId, int hte) 
+	
+	private synchronized void sendGuestToFitness(int guestId, int hte) 
 	{
 		String status = "GOTO_FITNESS";
 		synchronized (guests) {
@@ -324,6 +321,9 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		}
 	}
 	
+	/**
+     * method that finds the requested Area, if there are multiple available it calls getClosestObject().
+     */
 	private synchronized Area findClosestArea(String name, int guestId)
 	{
 		ArrayList<Area> objectList = new ArrayList<Area>();
@@ -349,6 +349,9 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		return null;
 	}
 	
+	/**
+     * method that returns the closest Area to the guest provided.
+     */
 	private synchronized Area getClosestObject(ArrayList<Area> list, int guestId)
 	{
 		Area closestArea = null;
@@ -374,7 +377,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		return closestArea;
 	}
 	
-	public synchronized void sendGuestToRestaurant(int guestId) 
+	private synchronized void sendGuestToRestaurant(int guestId) 
 	{
 		String status = "NEED_FOOD";
 		synchronized (guests) 
@@ -391,7 +394,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 
 	}
 	
-	public void getPeopleBackInTheBuilding()
+	private void getPeopleBackInTheBuilding()
 	{
 		if (reimportPeople)
 		{
@@ -414,7 +417,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		reimportPeople = false;
 	}
 	
-	public void removeGuest(int guestId, String tempEvent) 
+	private void removeGuest(int guestId, String tempEvent) 
 	{
 		synchronized (guests) {
 			for(Person guest : guests) {
@@ -427,7 +430,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	}	
 	
 	//add room to clean to queue
-	public void addRoomToClean(int guestId) 
+	private void addRoomToClean(int guestId) 
 	{
 		synchronized (guests) 
 		{
@@ -442,7 +445,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	}
 	
 	//add room to clean to emergency clean queue
-	public void addEmergencyRoomToClean(int guestId) 
+	private void addEmergencyRoomToClean(int guestId) 
 	{
 		synchronized (guests) 
 		{
@@ -473,7 +476,9 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		}	
 	}
 	
-	//This is where we receive the event from the HotelEventManager and decides based on the event type what to do
+	/**
+     * method that receives the events and handles them accordingly based on the eventType.
+     */
 	@Override
 	public synchronized void Notify(HotelEvent event) 
 	{
@@ -603,7 +608,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		}		
 	}
 	
-	int splitEventCheckOut(HotelEvent event)
+	private int splitEventCheckOut(HotelEvent event)
 	{
 		int guestId = 0;
 		String hashmapContent = event.Data.toString();
@@ -620,7 +625,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		return guestId;
 	}
 	
-	int splitEventNeedFood(HotelEvent event)
+	private int splitEventNeedFood(HotelEvent event)
 	{
 		int guestId = 0;
 		String hashmapContent = event.Data.toString();
@@ -640,7 +645,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		return guestId;
 	}
 	
-	int splitEventGoToCinema(HotelEvent event)
+	private int splitEventGoToCinema(HotelEvent event)
 	{
 		int guestId;
 		String hashmapContent = event.Data.toString();
@@ -659,7 +664,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		return guestId;
 	}
 	
-	int splitEventStartCinema(HotelEvent event)
+	private int splitEventStartCinema(HotelEvent event)
 	{
 		int cinemaId = 0;
 		String hashmapContent = event.Data.toString();
@@ -678,7 +683,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		return cinemaId;
 	}
 	
-	int splitEventCleaningEmergency(HotelEvent event)
+	private int splitEventCleaningEmergency(HotelEvent event)
 	{
 		int guestId = 0;
 		String hashmapContent = event.Data.toString();
@@ -698,7 +703,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		return guestId;
 	}
 	
-	public void checkEvacuateMode()
+	private void checkEvacuateMode()
 	{
 		if(evacuateGuestMode)
 		{

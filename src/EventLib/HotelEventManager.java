@@ -7,7 +7,8 @@ import java.util.concurrent.TimeUnit;
 
 
 
-public class HotelEventManager implements Runnable {
+public class HotelEventManager implements Runnable 
+{
     /**
      * List of listeners to notify of a new HotelEvent
      */

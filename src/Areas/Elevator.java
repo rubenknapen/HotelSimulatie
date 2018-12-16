@@ -5,19 +5,19 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 import Managers.GridBuilder;
-import Scenes.SimulationScene;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
+
+/**
+ * This is the Elevator area.
+ *
+ */
 
 public class Elevator extends Area {
 
 	//Variables
 	public boolean broken = true;
 	public int currentFloor = 0;
-	private ImageView elevatorCabinImageView;
 	
 	//Constructor
 	public Elevator(int id, int dimensionW, int dimensionH, int x, int y, String areaType)
@@ -45,8 +45,6 @@ public class Elevator extends Area {
 		
 		// Paint the room on the grid
 		GridBuilder.grid.add(roomImageView,x,y, dimensionW, dimensionH);
-		GridBuilder.grid.setHalignment(roomImageView, HPos.LEFT);
-		GridBuilder.grid.setValignment(roomImageView, VPos.BOTTOM);
 		roomImageView.setTranslateX(13);
 		
 	}

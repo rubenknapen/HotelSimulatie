@@ -5,6 +5,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Platform;
 
+/**
+ * Constructor that builds the SimulationTimer, this class is Observable .
+ */
+
 public class SimulationTimer extends Observable{
 
 	//Variables

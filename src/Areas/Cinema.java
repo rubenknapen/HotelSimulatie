@@ -7,11 +7,7 @@ import java.util.HashMap;
 import Managers.GridBuilder;
 import Managers.HotelManager;
 import Managers.SettingBuilder;
-import Scenes.SimulationScene;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -19,13 +15,19 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
+/**
+ * This is the Cinema area.
+ *
+ */
+
 public class Cinema extends Area {
 
 	//Variables
 	public boolean moviePlaying = false;
 	
 	//Constructor
-	public Cinema(int id, int dimensionW, int dimensionH, int x, int y, String areaType) {
+	public Cinema(int id, int dimensionW, int dimensionH, int x, int y, String areaType) 
+	{
 		this.dimensionW = dimensionW;
 		this.dimensionH = dimensionH;
 		this.x = x;
@@ -39,11 +41,12 @@ public class Cinema extends Area {
 
 		
 		// Get the right image depending on dimensions
-		try {
+		try 
+		{
 			createSprite(new FileInputStream("src/Images/door_cinema.png"));
-			
-        } catch (FileNotFoundException e) {
-            //
+        } 
+		catch (FileNotFoundException e) 
+		{
             e.printStackTrace();
         }
 		
@@ -56,14 +59,6 @@ public class Cinema extends Area {
 		
 		// Paint the room on the grid
 		GridBuilder.grid.add(cinemaBg,x,y, dimensionW, dimensionH);
-		GridBuilder.grid.setHalignment(cinemaBg, HPos.LEFT);
-		GridBuilder.grid.setValignment(cinemaBg, VPos.BOTTOM);			
-		
-		
-//		// Paint the room on the grid
-//		GridBuilder.grid.add(roomImageView,x,y, dimensionW, dimensionH);
-//		GridBuilder.grid.setHalignment(roomImageView, HPos.LEFT);
-//		GridBuilder.grid.setValignment(roomImageView, VPos.BOTTOM);	
 	}
 	
 	//Functions

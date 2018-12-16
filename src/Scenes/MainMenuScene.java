@@ -3,13 +3,8 @@ package Scenes;
 import java.io.File;
 import javax.swing.JFileChooser;
 
-import Areas.Area;
-import Factories.PersonFactory;
-import Managers.GridBuilder;
 import Managers.HotelManager;
 import Managers.SettingBuilder;
-import Managers.SimulationTimer;
-import Persons.Person;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,6 +13,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+/**
+ * This class holds the logic that is to build the main menu.
+ *
+ */
 
 public class MainMenuScene {
 	
@@ -36,10 +36,12 @@ public class MainMenuScene {
 	public static String selectedLayout = baseFolder+fileLocation;
 		
 	/**
-	 * constructor die zorgt dat de stage gebouwt en weergegeven wordt.
-	 * @param stage
+	 * constructor will set the stage and create all elements that we put into the stage.
+	 * @param stage The stage where we put the elements in.
 	 */
-	public MainMenuScene(Stage stage) {
+	
+	public MainMenuScene(Stage stage) 
+	{
 		System.out.println(selectedLayout);
 		setStage(stage);
 		setPane();
@@ -53,12 +55,12 @@ public class MainMenuScene {
 		return mainMenuScene;
 	}
 	
-	public void setScene(){
+	private void setScene(){
 		mainMenuScene = new Scene(layout, 400, 400);
 		mainMenuStage.setScene(mainMenuScene);
 	}
 
-	public void setStage(Stage stage) {
+	private void setStage(Stage stage) {
 		mainMenuStage = stage;
 		stage.setTitle("Hotel Simulatie");
 		stage.setResizable(false);
@@ -72,12 +74,12 @@ public class MainMenuScene {
 		return mainMenuStage;
 	}
 
-	public void setPane(){
+	private void setPane(){
 		layout = new VBox(10);
 		layout.setAlignment(Pos.CENTER);
 
 	}
-	public void createButtons(){
+	private void createButtons(){
 		// Start button
         startButton = new Button("Start Simulatie");
         startButton.setPrefSize(150, 36);
@@ -145,7 +147,7 @@ public class MainMenuScene {
 		});
 	}
 	
-	public void addButtons()
+	private void addButtons()
 	{
 		layout.getChildren().addAll(startButton,layoutSelectButton, layoutSettingsButton, closeButton);
 	}
