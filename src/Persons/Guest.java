@@ -32,7 +32,8 @@ public class Guest extends Person{
 	//Variables
 	private boolean available = true;
 	public int roomId;
-	private int queueTime = 10;
+	private boolean alive = true;
+	private int queueTime = 3;
 	public ArrayList<Area> restaurantsToCheck = new ArrayList<Area>();
 	
 	/**
@@ -80,107 +81,198 @@ public class Guest extends Person{
 	@Override
 	public void performAction() 
 	{
-		if(status.equals("GO_OUTSIDE"))
-			//
-			if(currentRoute.isEmpty()) 
-			{
-				setInvisible();
-				setStatus("EVACUATED");
-			}
-		
-		if(status.equals("GOTO_CINEMA"))
+		alive = getAliveStatus();
+		if(alive)
 		{
-			setVisible();
-			if(currentRoute.isEmpty()) 
+			if(status.equals("GO_OUTSIDE"))
 			{
-				
-				setStatus("INSIDE_CINEMA");
-				setInvisible();
+				performActionGoOutside();
+			}
+			
+			if(status.equals("GOTO_CINEMA"))
+			{
+				performActionGoToCinema();
+			}
+			
+			if(status.equals("INSIDE_CINEMA"))
+			{
+				performActionInsideCinema();
+			}
+			
+			if(status.equals("GOTO_FITNESS")) 
+			{
+				performActionGoToFitness();
+			}
+			if(status.equals("INSIDE_FITNESS")) 
+			{
+				performActionInsideFitness();
+			}
+			
+			if (status.equals("REENTERED") && currentRoute.isEmpty()) 
+			{
+				performActionReenteredNoRoute();
+			}
+			
+			if(status.equals("GO_BACK_TO_ROOM") && currentRoute.isEmpty()) 
+			{
+				performActionGoBackToRoomNoRoute();
+			} 
+			if(status.equals("CHECK_OUT") ) 
+			{		
+				performActionCheckOut();
+			}			
+			if(status.equals("LEAVE_HOTEL") && currentRoute.isEmpty()) 
+			{
+				performActionLeaveHotelNoRoute();
+			}	
+			if(status.equals("NEED_FOOD")) 
+			{
+				performActionNeedFood();
+			}
+			if(status.equals("CHECK_RESTAURANT_QUEUE")) 
+			{
+				performActionCheckRestaurantQueue();
+			}
+			if(status.equals("IN_RESTAURANT")) 
+			{
+				performActionInRestaurant();
+			}
+			if(status.equals("IN_QUEUE")) 
+			{
+				performActionInQueue();
+			}		
+			if(status.equals("GO_TO_CINEMA"))
+			{
+				performActionGoToCinema();
 			}
 		}
-		
-		if(status.equals("INSIDE_CINEMA"))
+	}
+	
+	private void performActionGoOutside()
+	{
+		if(currentRoute.isEmpty()) 
 		{
-			if(HotelManager.movieTimeRemaining == 0)
-			{
-				getRoute(HotelManager.getRoomNode(roomId));
-				setStatus("GO_BACK_TO_ROOM");
-				setVisible();
-			}
+			setInvisible();
+			setStatus("EVACUATED");
 		}
-		
-		if(status.equals("GOTO_FITNESS")) {
-			setVisible();
-			if(currentRoute.isEmpty()) {
-				setStatus("INSIDE_FITNESS");
-			}
+	}
+	
+	private void performActionGoToCinema()
+	{
+		setVisible();
+		if(currentRoute.isEmpty()) 
+		{
+			setStatus("INSIDE_CINEMA");
+			setInvisible();
 		}
-		if(status.equals("INSIDE_FITNESS")) {
-			if(fitnessTickAmount == 0) {
-				getRoute(HotelManager.getRoomNode(roomId));
-				setStatus("GO_BACK_TO_ROOM");
-				setVisible();
-			} else {
-				setInvisible();
-				fitnessTickAmount--;
-			}
-		}
-		
-		if (status.equals("REENTERED") && currentRoute.isEmpty()) 
+	}
+	
+	private void performActionInsideCinema()
+	{
+		if(HotelManager.movieTimeRemaining == 0)
 		{
 			getRoute(HotelManager.getRoomNode(roomId));
 			setStatus("GO_BACK_TO_ROOM");
-		}
-		
-		if(status.equals("GO_BACK_TO_ROOM") && currentRoute.isEmpty()) {
-			setInvisible();
-		} 
-		if(status.equals("CHECK_OUT") ) {		
-			setVisible();
-			getLobbyRoute();
-			setStatus("LEAVE_HOTEL");
-			HotelManager.guestCounter--;
-		}			
-		if(status.equals("LEAVE_HOTEL") && currentRoute.isEmpty()) {
-			setStatus("LEFT_HOTEL");
-			setInvisible();
-		}	
-		if(status.equals("NEED_FOOD")) {
-		setVisible();
-			if(status.equals("NEED_FOOD")  && currentRoute.isEmpty()) {
-				setStatus("CHECK_RESTAURANT_QUEUE");	
-			}
-		}
-		if(status.equals("CHECK_RESTAURANT_QUEUE")) {
-			checkRestaurantQueue();
-		}
-		if(status.equals("IN_RESTAURANT")) 
-		{
-			//
-		}
-		if(status.equals("IN_QUEUE")) {
-			checkRestaurantQueue();
-			queueTime--;
-			if(queueTime < 0) {
-				goToOtherRestaurant();
-			}
-		}		
-		if(status.equals("GO_TO_CINEMA"))
-		{
 			setVisible();
 		}
 	}
-		
-	private void goToOtherRestaurant() 
+	
+	private void performActionGoToFitness()
 	{
-		//
+		setVisible();
+		if(currentRoute.isEmpty()) 
+		{
+			setStatus("INSIDE_FITNESS");
+		}
+	}
+	
+	private void performActionInsideFitness()
+	{
+		if(fitnessTickAmount == 0) 
+		{
+			getRoute(HotelManager.getRoomNode(roomId));
+			setStatus("GO_BACK_TO_ROOM");
+			setVisible();
+		} 
+		else 
+		{
+			setInvisible();
+			fitnessTickAmount--;
+		}
+	}
+	
+	private void performActionReenteredNoRoute()
+	{
+		getRoute(HotelManager.getRoomNode(roomId));
+		setStatus("GO_BACK_TO_ROOM");
+	}
+	
+	private void performActionGoBackToRoomNoRoute()
+	{
+		setInvisible();
+	}
+	
+	private void performActionCheckOut()
+	{
+		setVisible();
+		getLobbyRoute();
+		setStatus("LEAVE_HOTEL");
+		HotelManager.guestCounter--;
+	}
+	
+	private void performActionLeaveHotelNoRoute()
+	{
+		setStatus("LEFT_HOTEL");
+		setInvisible();
+	}
+	
+	private void performActionNeedFood()
+	{
+		setVisible();
+		if(status.equals("NEED_FOOD")  && currentRoute.isEmpty()) 
+		{
+			setStatus("CHECK_RESTAURANT_QUEUE");	
+		}
+	}
+	
+	private void performActionInRestaurant()
+	{
+		if(restaurantTickAmount > 0)
+		{
+			restaurantTickAmount--;
+		}
+		else
+		{
+			getRoute(HotelManager.getRoomNode(roomId));
+			setStatus("GO_BACK_TO_ROOM");
+			setVisible();
+		}
+	}
+	
+	private void performActionInQueue()
+	{
+		performActionCheckRestaurantQueue();
+		queueTime--;
+		if(queueTime < 0) 
+		{
+			die();
+		}
+	}
+		
+	private void die() 
+	{
+		setInvisible();
+		setDead();
 	}
 
-	private void checkRestaurantQueue() {
+	private void performActionCheckRestaurantQueue() {
 		if(getCurrentPosition().capacity > 0) {
 			setStatus("IN_RESTAURANT");
+			setInvisible();
 			getCurrentPosition().capacity--;
-		} else {
+		} 
+		else 
+		{
 			setStatus("IN_QUEUE");
 		}
 	}

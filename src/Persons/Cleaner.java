@@ -57,7 +57,8 @@ public class Cleaner extends Person{
 	}
 	
 	
-	public void moveToArea(){
+	public void moveToArea()
+	{
 		moveAllowed();
 		if(!moveAllowed)
 		{
@@ -202,7 +203,8 @@ public class Cleaner extends Person{
 	}
 
 	//Functions
-	public void cleanRoom(){
+	public void cleanRoom()
+	{
 		if(visibility){
 			if (waitInFrontOfDoor == 0){
 				waitInFrontOfDoor++;

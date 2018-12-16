@@ -27,6 +27,7 @@ public abstract class Person
 	protected boolean visibility = true; // Hide or shows the person visually
 	private int exitCounter = 0;
 	protected int id;
+	private boolean alive = true;
 	public int roomId;
 	protected int stairsWaitTime = 0;
 	protected int x = 10; // x coordinate
@@ -34,6 +35,7 @@ public abstract class Person
 	protected int translateXVal;
 	protected int translateYVal;
 	protected int fitnessTickAmount;
+	protected int restaurantTickAmount = 10;
 	protected boolean moveAllowed;
 	protected String status;
 	
@@ -290,6 +292,16 @@ public abstract class Person
 		});
 	}
 	
+	public void setDead()
+	{
+		alive = false;
+	}
+	
+	public boolean getAliveStatus()
+	{
+		return alive;
+	}
+	
 	public void moveAllowed()
 	{
 		if(moveAllowed)
@@ -410,10 +422,13 @@ public abstract class Person
 
 	public void setVisible()
 	{
-		Platform.runLater(() -> 
+		if(alive)
 		{
-		  	personImageView.setVisible(true);
-			visibility = true;
-		});
+			Platform.runLater(() -> 
+			{
+			  	personImageView.setVisible(true);
+				visibility = true;
+			});
+		}
 	}
 }

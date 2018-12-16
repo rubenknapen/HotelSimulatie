@@ -31,7 +31,7 @@ public class Restaurant extends Area {
 		this.dimensionH = dimensionH;
 		this.x = x;
 		this.y = y;
-		this.capacity = capacity;
+		this.capacity = 2; //capacity
 		this.areaType = areaType;
 		
         neighbours = new HashMap<>();
