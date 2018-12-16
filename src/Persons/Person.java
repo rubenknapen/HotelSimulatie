@@ -2,11 +2,8 @@ package Persons;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 import Areas.Area;
-import EventLib.HotelEvent;
 import Managers.GridBuilder;
 import Managers.SettingBuilder;
 import javafx.application.Platform;
@@ -54,10 +51,6 @@ public abstract class Person
 		ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 		getCurrentPosition().distance = 0;	
 	    currentRoute = _ds.Dijkstra(getCurrentPosition(), destinationArea);
-	    for(Area a : currentRoute) 
-	    {
-	    	//
-	    }
 	    clearDistances();		
 	}
 

@@ -2,15 +2,10 @@ package Areas;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import Managers.GridBuilder;
-import Persons.Person;
-import Scenes.SimulationScene;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -58,15 +53,5 @@ public class Fitness extends Area {
 		
 		// Paint the room on the grid
 		GridBuilder.grid.add(fitnessBg,x,y, dimensionW, dimensionH);
-		GridBuilder.grid.setHalignment(fitnessBg, HPos.LEFT);
-		GridBuilder.grid.setValignment(fitnessBg, VPos.BOTTOM);	
-		
-//		// Paint the room on the grid
-//		GridBuilder.grid.add(roomImageView,x,y, dimensionW, dimensionH);
-//		GridBuilder.grid.setHalignment(roomImageView, HPos.LEFT);
-//		GridBuilder.grid.setValignment(roomImageView, VPos.BOTTOM);
 	}
-	
-	//Functions
-	
 }

@@ -10,14 +10,8 @@ import javax.swing.JOptionPane;
 import Managers.GridBuilder;
 import Managers.HotelManager;
 import Scenes.MainMenuScene;
-import Scenes.SettingsScene;
-import Scenes.SimulationScene;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.VPos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -95,8 +89,6 @@ public class Lobby extends Area {
 		
 		// Paint the room on the grid
 		GridBuilder.grid.add(lobbyBackground,x,y, dimensionW, dimensionH);
-		GridBuilder.grid.setHalignment(lobbyBackground, HPos.LEFT);
-		GridBuilder.grid.setValignment(lobbyBackground, VPos.BOTTOM);
         roomImageView.setFitHeight(96);
         roomImageView.setFitWidth(480);
 	}

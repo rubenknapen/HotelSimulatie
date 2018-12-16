@@ -6,7 +6,13 @@ import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class SimulationScene {
+/**
+ * This class holds the logic that is used building the scene of the simulation.
+ *
+ */
+
+public class SimulationScene 
+{
 
 	public static GridPane grid;
 	public BorderPane bPane;

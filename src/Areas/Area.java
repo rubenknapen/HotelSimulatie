@@ -6,24 +6,16 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import Managers.SettingBuilder;
-import Persons.Person;
-import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 
 /**
  * This is the abstract class Area it holds the logic for all area types.=
  *
  */
 
-public abstract class Area {
-
+public abstract class Area 
+{
 	// Variables for Dijkstra
 
     public HashMap<Area, Integer> neighbours;
@@ -46,7 +38,8 @@ public abstract class Area {
 	public long capacity;
 		
 	//Functions
-	public void createSprite(FileInputStream sprite){
+	public void createSprite(FileInputStream sprite)
+	{
 		Image roomImage = new Image(sprite);
         roomImageView = new ImageView();
         roomImageView.setFitWidth(16);
@@ -54,33 +47,39 @@ public abstract class Area {
         roomImageView.setImage(roomImage);
 	}
 	
-    public static List<Area> getAreaList(){
+    public static List<Area> getAreaList()
+    {
     	return areaList;
     }
     
-	public int getDistance() {
+	public int getDistance() 
+	{
 		return dimensionW;
 	}	   
     
-	public int getX() {
+	public int getX() 
+	{
 		return x;
 	}
 
-	public int getXEnd() {
+	public int getXEnd() 
+	{
 		return x + dimensionW -1;
 	}
 	
-	public int getRealY() {
+	public int getRealY() 
+	{
 		return (y - 1) + dimensionH;
 	}
 
-	public int getY() {
+	public int getY() 
+	{
 		return y;
 	}
 
-	public void setAvailability(boolean b) {
+	public void setAvailability(boolean b) 
+	{
 		this.available = b;
-		
 	}
 
 }

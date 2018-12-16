@@ -5,18 +5,9 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 import Managers.GridBuilder;
-import Scenes.SimulationScene;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 
 /**
  * This is the HotelRoom area.

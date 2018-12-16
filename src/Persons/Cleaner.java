@@ -3,20 +3,16 @@ package Persons;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 import Areas.Area;
-import EventLib.HotelEvent;
 import Managers.GridBuilder;
 import Managers.HotelManager;
 import Managers.SettingBuilder;
-import Scenes.SimulationScene;
-import javafx.application.Platform;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+
+/**
+ * This class holds the logic that is only used by Cleaner.
+ *
+ */
 
 public class Cleaner extends Person{
 
@@ -52,8 +48,6 @@ public class Cleaner extends Person{
 		
 		// Paint the guest on the grid
 		GridBuilder.grid.add(this.personImageView,x,y);
-		GridBuilder.grid.setHalignment(this.personImageView, HPos.CENTER);
-		GridBuilder.grid.setValignment(this.personImageView, VPos.BOTTOM);
 	}
 	
 	
@@ -237,7 +231,8 @@ public class Cleaner extends Person{
 		return roomCleaningList;
 	}
 
-	public void setRoomCleaningList(ArrayList<Area> roomCleaningList) {
+	public void setRoomCleaningList(ArrayList<Area> roomCleaningList) 
+	{
 		this.roomCleaningList = roomCleaningList;
 	}
 

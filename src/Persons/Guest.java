@@ -3,34 +3,20 @@ package Persons;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 import Areas.Area;
-import Areas.Cinema;
-import Areas.Fitness;
 import Areas.Lobby;
-import Areas.Stairway;
-import EventLib.HotelEvent;
 import Managers.GridBuilder;
 import Managers.HotelManager;
-import Managers.SettingBuilder;
-import Scenes.SimulationScene;
-import javafx.application.Platform;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.geometry.VPos;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
+
+/**
+ * This class holds the logic that is only used by Guest.
+ *
+ */
 
 public class Guest extends Person{
 
 	//Variables
-	private boolean available = true;
 	public int roomId;
 	private boolean alive = true;
 	private int queueTime = 3;
@@ -62,8 +48,6 @@ public class Guest extends Person{
 		
 		// Paint the guest on the grid
 		GridBuilder.grid.add(this.personImageView,x,y);
-		GridBuilder.grid.setHalignment(this.personImageView, HPos.CENTER);
-		GridBuilder.grid.setValignment(this.personImageView, VPos.BOTTOM);
 	}
 	
 	//Functions

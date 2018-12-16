@@ -3,13 +3,8 @@ package Scenes;
 import java.io.File;
 import javax.swing.JFileChooser;
 
-import Areas.Area;
-import Factories.PersonFactory;
-import Managers.GridBuilder;
 import Managers.HotelManager;
 import Managers.SettingBuilder;
-import Managers.SimulationTimer;
-import Persons.Person;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,6 +13,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+/**
+ * This class holds the logic that is to build the main menu.
+ *
+ */
 
 public class MainMenuScene {
 	

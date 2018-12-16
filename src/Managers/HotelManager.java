@@ -222,19 +222,6 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		}
 	}
 	
-	//Get Area object of roomToClean (input is roomnumber)
-	private Area roomToClean(int roomId)
-	{
-		for (Area a : Area.getAreaList()) 
-		{
-			if(a.id == roomId) 
-			{
-				return a;
-			}
-		}
-		return null;
-	}
-	
 	/**
      * method that returns an available room based on prefered stars.
      * @param prefStars the preffered amount of stars by the guest.

@@ -283,7 +283,7 @@ public class GridBuilder {
 
 	
 	public void addElevator(){
-		Area lift = AreaFactory.createArea(1, "Elevator",1,1,0,0,2,2);
+		AreaFactory.createArea(1, "Elevator",1,1,0,0,2,2);
 	}
 	
 	public void addLobby(){

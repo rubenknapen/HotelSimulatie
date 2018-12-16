@@ -1,14 +1,9 @@
 package Areas;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 import Managers.GridBuilder;
-import Scenes.SimulationScene;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -21,8 +16,8 @@ import javafx.scene.paint.Color;
  *
  */
 
-public class Stairway extends Area {
-
+public class Stairway extends Area 
+{
 	public Stairway(int id, int dimensionW, int dimensionH, int x, int y, String areaType)
 	{
 		this.dimensionW = dimensionW;
@@ -44,16 +39,6 @@ public class Stairway extends Area {
 		stairwayBg.getChildren().addAll(label);
 		
 		// Paint the room on the grid
-		GridBuilder.grid.add(stairwayBg,x,y, dimensionW, dimensionH);
-		GridBuilder.grid.setHalignment(stairwayBg, HPos.LEFT);
-		GridBuilder.grid.setValignment(stairwayBg, VPos.BOTTOM);			
-		
-		
-//		// Paint the room on the grid
-//		GridBuilder.grid.add(roomImageView,x,y, dimensionW, dimensionH);
-//		GridBuilder.grid.setHalignment(roomImageView, HPos.LEFT);
-//		GridBuilder.grid.setValignment(roomImageView, VPos.BOTTOM);
-			
+		GridBuilder.grid.add(stairwayBg,x,y, dimensionW, dimensionH);			
 	}
-	
 }
