@@ -50,6 +50,7 @@ public abstract class Person
 		ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
 		getCurrentPosition().distance = 0;	
 	    currentRoute = _ds.Dijkstra(getCurrentPosition(), destinationArea);
+	    currentRoute.remove(currentRoute.size() - 1);
 	    for(Area a : currentRoute) 
 	    {
 	    	//
@@ -72,14 +73,17 @@ public abstract class Person
 		for (Area object: Area.getAreaList()) {
 			if(object.getX() == x && object.getRealY() == y) {
 				return object;
-			} else if(object.getXEnd() == x && object.getRealY() == y) {
-				translateXVal -= GridBuilder.colSize;
-				x = object.getX();
-				return object;
+			}
+			else if(object.getRealY() == y) {
+				for(int i = object.dimensionW; i > 0; i--) {
+					if(i + object.getX() - 1 == x) {
+						return object;
+					}
+				}
 			}
 		}
-		System.out.println("Je bent er voorbij!!!!!!!!!!!!!!!!!!!!!!!!!");
-		System.out.println("person x: " + x + "  y: " + y);
+//		System.out.println("Je bent er voorbij!!!!!!!!!!!!!!!!!!!!!!!!!");
+//		System.out.println("person x: " + x + "  y: " + y);
 		return null;
 	}
 	
@@ -94,183 +98,71 @@ public abstract class Person
 	public void moveToArea(){
 		moveAllowed();
 		
-		if(!moveAllowed)
-		{
+		if(!moveAllowed){
 			stairsWaitTime++;
-		}
-		
-		else if (moveAllowed)
-		{
-			if(getLastArea() == null) 
-			{
+		} else if (moveAllowed){
+
+			if(getLastArea() == null) {
 				//Reached end of route
 			} 
-			else if(getLastArea().dimensionW > 6) {
-				if((status.equals("LEAVE_HOTEL") || status.equals("GO_OUTSIDE")))
-				{
-					if (x > 2)
-					{
-					x--;
-					translateXVal -= GridBuilder.colSize;
-					personImageView.setTranslateX(translateXVal);
-					
-					exitCounter++;
-					
-					}
-					else if (x <= 2 && status.equals("LEAVE_HOTEL"))
-					{
-						currentRoute.remove(getLastArea());
-					}
-				} 
-				
-				else {
-					x++;
-					translateXVal += GridBuilder.colSize;
-					personImageView.setTranslateX(translateXVal);
-				}
-
-				if(getLastArea().getXEnd() == x) {
-					//x = getLastArea().getXEnd();
-					if(status.equals("LEAVE_HOTEL"))
-						{
-							//Do nothing
-						}
-					else
-					{
-						currentRoute.remove(getLastArea());
-					}
-				}
+			else if (getLastArea().getXEnd() == x || getLastArea().getX() == x) {
+				currentRoute.remove(getLastArea());
 			}
-			else if( ((getLastArea().getX() - x == 0) && getLastArea().getRealY() == y ) && getNextArea().getXEnd() - x == -1) {
-				if(status.equals("LEAVE_HOTEL") || status.equals("GO_OUTSIDE"))
-				{
-					//Do nothing
-				}
-				else
-				{
-					currentRoute.remove(getLastArea());
-				}
-			}
-			else if((getLastArea().getX() - x == 1) && getLastArea().getRealY() == y ) {
-				
-				
-				// Right movement
-							
-				x = getLastArea().getX();
-				translateXVal += GridBuilder.colSize;
-				personImageView.setTranslateX(translateXVal);
-				if(getLastArea().dimensionW > 1) {
-					
-					if(currentRoute.size() == 1) {
-						currentRoute.remove(getLastArea());
-					}
-				} else {
-					currentRoute.remove(getLastArea());
-				}
-				
+			if(getLastArea() == null) {
+				//Reached end of route
 			} 
-			else if((getLastArea().getXEnd() - x == 1) && getLastArea().getRealY() == y ) {
-				
-				// Right movement
-				
-				
-				x = getLastArea().getXEnd();
-				translateXVal += GridBuilder.colSize;
-				personImageView.setTranslateX(translateXVal);
-				currentRoute.remove(getLastArea());
-				
-				
-			} else if((getLastArea().getXEnd() - x == -1) && getLastArea().getRealY() == y ) {
-				
-				// Left movement
-				
-				x = getLastArea().getXEnd();
-				translateXVal -= GridBuilder.colSize;
-				personImageView.setTranslateX(translateXVal);
-				if(getLastArea().dimensionW > 1) {
-					
-				} else {
-					currentRoute.remove(getLastArea());
-				}
-			
+			else if(getLastArea().getX() > x && getLastArea().getRealY() == y) {
+				moveRight();
 			} 
-			else if ((getLastArea().getX() - x == -1) && getLastArea().getRealY() == y ) {
-	
-				// Left movement
-				
-				x = getLastArea().getX();
-				translateXVal -= GridBuilder.colSize;
-				personImageView.setTranslateX(translateXVal);	
-				currentRoute.remove(getLastArea());
-	
-			}
-			else if(((getLastArea().getXEnd() - x == 0) && getLastArea().getRealY() == y ) && x > getLastArea().getX()) {
-				currentRoute.remove(getLastArea());
-			}
-			else if(getLastArea().getY() != y ) {
-				
-				// Up and down movement
-				
-				if(getLastArea().getY() - y == -1) {
-					y = getLastArea().getY();
-					translateYVal -= GridBuilder.rowSize;
-					personImageView.setTranslateY(translateYVal);
-					currentRoute.remove(getLastArea());
-				} else {
-					y = getLastArea().getY();
-					translateYVal += GridBuilder.rowSize;
-					personImageView.setTranslateY(translateYVal);
-					currentRoute.remove(getLastArea());				
-				}
-				
-			}
-			else {
-				currentRoute.remove(getLastArea());
-			}
-			
-			if(exitCounter == 9)
-			{
-				currentRoute.clear();
-				if((status.equals("LEAVE_HOTEL")) || status.equals("GO_OUTSIDE"))
-						{
-							//moveAllowed = false;
-						}
+			else if(getLastArea().getX() < x && getLastArea().getRealY() == y) {
+				moveLeft();
+			} 
+			else if(getLastArea().getRealY() < y) {
+				moveUp();
+			} 
+			else if(getLastArea().getRealY() > y) {
+				moveDown();
 			}
 		}
 	}	
 	
-	public Area getNextArea() {
-
-		if(currentRoute == null){
-			return null;
-		}
-		if(currentRoute.size() == 0) {
-			return null;
-		}else {
-			int minusFactor = 2;
-			int currentSize = currentRoute.size();
-			
-			if (currentSize == 1)
-			{
-				minusFactor = 1;
-			}
-			return currentRoute.get(currentRoute.size() - minusFactor);
-		}
+	private void moveRight() {
+		x++;
+		translateXVal += GridBuilder.colSize;
+		personImageView.setTranslateX(translateXVal);	
 	}
+	
+	private void moveLeft() {
+		x--;
+		translateXVal -= GridBuilder.colSize;
+		personImageView.setTranslateX(translateXVal);
+	}
+	
+	private void moveDown() {
+		y++;
+		translateYVal += GridBuilder.rowSize;
+		personImageView.setTranslateY(translateYVal);		
+	}
+	
+	private void moveUp() {
+		y--;
+		translateYVal -= GridBuilder.rowSize;
+		personImageView.setTranslateY(translateYVal);	
+	}	
 	
 	public void setInvisible(){
 		Platform.runLater(
-				  () -> {
-					personImageView.setVisible(false);
-					visibility = false;
-				  });
+		  () -> {
+			personImageView.setVisible(false);
+			visibility = false;
+		  });
 	}
 	
 	public void moveAllowed(){
 		if(moveAllowed)
 		for (Area object: Area.getAreaList()) {
 			if(object.getX() == x && object.getRealY() == y) {
-				if(object.areaType == "Stairs"){
+				if(object.areaType == "Stairway"){
 					moveAllowed = false;
 				}
 			}

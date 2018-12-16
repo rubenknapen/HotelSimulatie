@@ -318,12 +318,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 					guest.setStatus(status);
 					guest.setFitnessTickAmount(hte);
 					guest.getRoute(findClosestArea("Fitness", guestId));
-							
-					for(Area a : guest.currentRoute) 
-					{
-						System.out.print(a.id + " + ");
-					}
-					
+												
 				}
 	  		}
 		}
@@ -511,10 +506,14 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 						  
 						  if (selectedRoomId != 0)
 						  {
-							  Person xx = PersonFactory.createPerson("Guest","GO_BACK_TO_ROOM", setGuestIdValue,true,4,9);
+							  Person xx = PersonFactory.createPerson("Guest","GO_BACK_TO_ROOM", setGuestIdValue,true,6,10);
 							  xx.setRoomId(selectedRoomId);
 							  guests.add(xx);
 							  xx.getRoute(getRoomNodeAfterCheckIn(selectedRoomId));
+							  
+								for(Area a : xx.currentRoute) {
+									System.out.println(a.id + " + " + " Distance = " + a.distance);
+								}
 						  }
 						  else
 						  {

@@ -25,7 +25,7 @@ public abstract class Area {
     public int distance;
     public Area latest;
     public int id;
-    public static List<Area> areaList =  Collections.synchronizedList(new ArrayList<Area>());	
+    public static List<Area> areaList =  Collections.synchronizedList(new ArrayList<Area>());
     
 	// Variables
 	public int x = 0;
@@ -39,6 +39,7 @@ public abstract class Area {
 	String imageLocation;
 	public String areaType;
 	public long capacity;
+	protected List xSpan = new ArrayList();
 		
 	//Functions
 	public void createSprite(FileInputStream sprite){
@@ -75,7 +76,6 @@ public abstract class Area {
 
 	public void setAvailability(boolean b) {
 		this.available = b;
-		
 	}
-
+	
 }
