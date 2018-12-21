@@ -12,6 +12,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 
 /**
  * The abstract class Person holds the logic that is used by cleaner/guest.
@@ -25,7 +26,6 @@ public abstract class Person
 	public ArrayList<Area> restaurantsToCheck = new ArrayList<Area>();
 	protected ImageView personImageView;
 	protected boolean visibility = true; // Hide or shows the person visually
-	private int exitCounter = 0;
 	protected int id;
 	private boolean alive = true;
 	public int roomId;
@@ -46,8 +46,8 @@ public abstract class Person
         personImageView.setFitHeight(21);
         personImageView.setFitWidth(16); 
         personImageView.setImage(personImage);
-        GridBuilder.grid.setHalignment(this.personImageView, HPos.CENTER);
-		GridBuilder.grid.setValignment(this.personImageView, VPos.BOTTOM);
+        GridPane.setHalignment(this.personImageView, HPos.CENTER);
+		GridPane.setValignment(this.personImageView, VPos.BOTTOM);
     }
 	
 	public synchronized void getRoute(Area destinationArea)

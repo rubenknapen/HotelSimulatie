@@ -20,8 +20,6 @@ import javafx.scene.layout.GridPane;
 
 public class SettingsScene 
 {
-
-	private Scene settingsScene;
 	
 	public SettingsScene() {
 		
@@ -32,7 +30,7 @@ public class SettingsScene
 		JFrame parent = new JFrame();
 		
 		GridPane settingsGrid = new GridPane();
-		settingsScene = new Scene(settingsGrid, 400, 400);
+		Scene settingsScene = new Scene(settingsGrid, 400, 400);
 		MainMenuScene.mainMenuStage.setScene(settingsScene);
 		
 		

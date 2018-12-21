@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class SettingBuilder {
 
 	//Variables
-	ArrayList<String> settingList;
+	private ArrayList<String> settingList;
 	public static int defaultTickSpeed = 1000;
 	public static int tickSpeed = 100; //In miliseconds
 	public static int cleaningTime = 3;
@@ -21,6 +21,7 @@ public class SettingBuilder {
 	public static int stairTime = 2;
 
 	//Functions
+	@SuppressWarnings("unused")
 	private void getSettings()
 	{					
 		String pathBase = System.getProperty("user.dir");
@@ -45,15 +46,7 @@ public class SettingBuilder {
 		    settingList.add(input.nextLine());
 		}
 	}
-	
-	private void showSettings(){
-		for(int i = 0; i < settingList.size(); i++)
-		{
-			System.out.println(settingList.get(i));
-		}
-	}
-	
-	
+		
 	public static int getTickSpeed() {
 		return tickSpeed;
 	}

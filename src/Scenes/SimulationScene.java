@@ -3,8 +3,6 @@ package Scenes;
 import javafx.scene.layout.BorderPane;
 import Managers.GridBuilder;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
 /**
  * This class holds the logic that is used building the scene of the simulation.
@@ -14,10 +12,8 @@ import javafx.stage.Stage;
 public class SimulationScene 
 {
 
-	public static GridPane grid;
-	public BorderPane bPane;
-	public Scene simulationScene;
-	public Stage simulationStage;
+	private BorderPane bPane;
+	private Scene simulationScene;
 
 	public SimulationScene(){
 		setBorderPane();
@@ -39,7 +35,4 @@ public class SimulationScene
 		MainMenuScene.mainMenuStage.setScene(simulationScene);
 	}
 
-	public Scene getSimulationScene(){
-		return simulationScene;
-	}
 }

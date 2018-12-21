@@ -7,14 +7,9 @@ import java.util.HashMap;
 import Managers.GridBuilder;
 import Managers.HotelManager;
 import Managers.SettingBuilder;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
+
 
 /**
  * This is the Cinema area.
@@ -23,9 +18,6 @@ import javafx.scene.paint.Color;
 
 public class Cinema extends Area {
 
-	//Variables
-	public boolean moviePlaying = false;
-	
 	//Constructor
 	public Cinema(int id, int dimensionW, int dimensionH, int x, int y, String areaType) 
 	{

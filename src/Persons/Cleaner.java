@@ -146,7 +146,7 @@ public class Cleaner extends Person{
 
 	public void setRoomCleaningList(ArrayList<Area> roomCleaningList) 
 	{
-		this.roomCleaningList = roomCleaningList;
+		Cleaner.roomCleaningList = roomCleaningList;
 	}
 
 	public static ArrayList<Area> getEmergencyRoomCleaningList() {

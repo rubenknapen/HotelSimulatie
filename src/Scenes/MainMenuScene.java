@@ -23,16 +23,10 @@ public class MainMenuScene {
 	
 	static Stage mainMenuStage;
 	static Scene mainMenuScene;
-	private VBox layout;
-	private Button closeButton;
-	private Button startButton;
-	private Button layoutSelectButton;
-	private Button layoutSettingsButton;
-	ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
-	
+	private VBox layout;	
 	public static EventLib.HotelEventManager eventManager;
-	public static String baseFolder = System.getProperty("user.dir");
-	public static String fileLocation = "\\src\\layout\\hotel4.layout";
+	private static String baseFolder = System.getProperty("user.dir");
+	private static String fileLocation = "\\src\\layout\\hotel4.layout";
 	public static String selectedLayout = baseFolder+fileLocation;
 		
 	/**
@@ -46,15 +40,10 @@ public class MainMenuScene {
 		setStage(stage);
 		setPane();
 		createButtons();
-		addButtons();
 		setScene();
 		showMainMenuStage();
 	}
 
-	public Scene getScene(){
-		return mainMenuScene;
-	}
-	
 	private void setScene(){
 		mainMenuScene = new Scene(layout, 400, 400);
 		mainMenuStage.setScene(mainMenuScene);
@@ -66,12 +55,8 @@ public class MainMenuScene {
 		stage.setResizable(false);
 	}
 	
-	public void showMainMenuStage(){
+	private void showMainMenuStage(){
 		mainMenuStage.show();
-	}
-
-	public Stage getStage() {
-		return mainMenuStage;
 	}
 
 	private void setPane(){
@@ -81,7 +66,7 @@ public class MainMenuScene {
 	}
 	private void createButtons(){
 		// Start button
-        startButton = new Button("Start Simulatie");
+		Button startButton = new Button("Start Simulatie");
         startButton.setPrefSize(150, 36);
         startButton.setLayoutX(75);
         startButton.setLayoutY(1);
@@ -98,7 +83,7 @@ public class MainMenuScene {
 		});
 		
 		// Close button
-		closeButton = new Button("Afsluiten");
+		Button closeButton = new Button("Afsluiten");
 		closeButton.setPrefSize(150, 36);
 		closeButton.setLayoutX(75);
 		closeButton.setLayoutY(150);
@@ -111,7 +96,7 @@ public class MainMenuScene {
 		});
 		
 		//Layout Select Button
-		layoutSelectButton = new Button("Kies Layout");
+		Button layoutSelectButton = new Button("Kies Layout");
 		layoutSelectButton.setPrefSize(150, 36);
 		layoutSelectButton.setLayoutX(75);
 		layoutSelectButton.setLayoutY(50);
@@ -134,7 +119,7 @@ public class MainMenuScene {
 		});
 		
 		
-		layoutSettingsButton = new Button("Instellingen");
+		Button layoutSettingsButton = new Button("Instellingen");
 		layoutSettingsButton.setPrefSize(150, 36);
 		layoutSettingsButton.setLayoutX(75);
 		layoutSettingsButton.setLayoutY(100);
@@ -145,12 +130,10 @@ public class MainMenuScene {
 				settingScene.buildScene();
 			}
 		});
-	}
-	
-	private void addButtons()
-	{
+		
 		layout.getChildren().addAll(startButton,layoutSelectButton, layoutSettingsButton, closeButton);
 	}
+	
 	
 	public void startSimulation()
 	{

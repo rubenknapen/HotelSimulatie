@@ -11,14 +11,8 @@ import Managers.GridBuilder;
 import Managers.HotelManager;
 import Scenes.MainMenuScene;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 
 /**
  * This is the Lobby area.
@@ -81,8 +75,6 @@ public class Lobby extends Area {
 		        
 		    }
 		});
-		
-		Label label = new Label(Integer.toString(id));
 		
 		lobbyBackground.getChildren().addAll(roomImageView);
 		

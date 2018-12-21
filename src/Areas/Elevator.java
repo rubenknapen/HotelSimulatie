@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 import Managers.GridBuilder;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * This is the Elevator area.
@@ -15,10 +13,6 @@ import javafx.scene.image.ImageView;
 
 public class Elevator extends Area {
 
-	//Variables
-	public boolean broken = true;
-	public int currentFloor = 0;
-	
 	//Constructor
 	public Elevator(int id, int dimensionW, int dimensionH, int x, int y, String areaType)
 	{
@@ -46,22 +40,9 @@ public class Elevator extends Area {
 		// Paint the room on the grid
 		GridBuilder.grid.add(roomImageView,x,y, dimensionW, dimensionH);
 		roomImageView.setTranslateX(13);
-		
-	}
-	
-	public void createSprite(FileInputStream sprite)
-	{
-		Image roomImage = new Image(sprite);
-        roomImageView = new ImageView();
         roomImageView.setFitWidth(24);
         roomImageView.setFitHeight(48);
-        roomImageView.setImage(roomImage);
-	}
-	
-	
-	//Functions
-	public void goToFloor()
-	{
 		
 	}
+
 }

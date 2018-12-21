@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import Areas.Area;
-import Areas.Lobby;
 import Managers.GridBuilder;
 import Managers.HotelManager;
 

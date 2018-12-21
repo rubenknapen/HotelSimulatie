@@ -37,14 +37,14 @@ public class GridBuilder {
 
 	//Variables
 	public static GridPane grid;
-	static int xOffset = 3;
+	private static int xOffset = 3;
 	private static int maxY = 0;
 	private static int maxX = 0;
 	private	int roomNumber = 1; // Give room numbers
 	public static int colSize = 48;
 	public static int rowSize= 48;
-    int[][] isOcupied = new int[25][25];
-    int objectNumber = 1;
+    private int[][] isOcupied = new int[25][25];
+    private int objectNumber = 1;
     ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
     
 	
@@ -355,14 +355,7 @@ public class GridBuilder {
 		    }
 		}					  
 	}
-	
-	private void clearGrid() {
-		grid.getChildren().clear();
-	}
 
-	private GridPane getGrid(){
-		return grid;
-	}
 	
 	public static int getMaxY() {
 		return maxY;

@@ -20,11 +20,12 @@ import EventLib.HotelEvent;
  *
  */
 
+@SuppressWarnings("deprecation")
 public class HotelManager implements EventLib.HotelEventListener, Observer{
 
 	//Variables
 	public static int guestCounter = 0;
-	int selectedRoomId;
+	private int selectedRoomId;
 	
 	public boolean evacuateGuestMode = false;
 	public static boolean evacuateCleanerMode = false;
@@ -621,17 +622,13 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		String hashmapContent = event.Data.toString();
 		String[] splitArray = hashmapContent.split("=");
 		
-		if (splitArray[1].contains("}"))
-		{
+		if (splitArray[1].contains("}")){
 			String[] splitArray2 = splitArray[1].split("}");
 			guestId = Integer.parseInt(splitArray2[0]);
-		}
-		
-		else 
-		{
+		} else {
 			guestId = Integer.parseInt(splitArray[1]);
 		}
-		
+	
 		return guestId;
 	}
 	

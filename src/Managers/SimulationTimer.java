@@ -9,6 +9,7 @@ import javafx.application.Platform;
  * Constructor that builds the SimulationTimer, this class is Observable .
  */
 
+@SuppressWarnings("deprecation")
 public class SimulationTimer extends Observable{
 
 	//Variables
