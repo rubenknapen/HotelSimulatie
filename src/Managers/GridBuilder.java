@@ -50,7 +50,7 @@ public class GridBuilder {
 	
 	public void createGrid(){	
 		grid = new GridPane();
-		grid.setGridLinesVisible(true);
+		grid.setGridLinesVisible(false);
 		grid.setMaxSize(500, 500);		
 		int cols = 14;
 		int rows = 11;
@@ -287,7 +287,7 @@ public class GridBuilder {
 	}
 	
 	public void addLobby(){
-		Area lobby = AreaFactory.createArea(roomNumber, "Lobby",9,1,0,0,2,10);
+		Area lobby = AreaFactory.createArea(roomNumber, "Lobby",9,1,0,0,2,getMaxY()+1);
 		roomNumber++;
 		Area.getAreaList().add(lobby);
 	}

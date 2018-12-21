@@ -4,9 +4,12 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 
 import Areas.Area;
+import Areas.Lobby;
 import Managers.GridBuilder;
 import Managers.SettingBuilder;
 import javafx.application.Platform;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -43,6 +46,8 @@ public abstract class Person
         personImageView.setFitHeight(21);
         personImageView.setFitWidth(16); 
         personImageView.setImage(personImage);
+        GridBuilder.grid.setHalignment(this.personImageView, HPos.CENTER);
+		GridBuilder.grid.setValignment(this.personImageView, VPos.BOTTOM);
     }
 	
 	public synchronized void getRoute(Area destinationArea)
@@ -113,7 +118,11 @@ public abstract class Person
 				//Reached end of route
 			} 
 			else if (getLastArea().getXEnd() == x || getLastArea().getX() == x) {
-				currentRoute.remove(getLastArea());
+				if(currentRoute.size() == 1 && getLastArea().getX() != x) {
+					moveLeft();
+				} else {
+					currentRoute.remove(getLastArea());
+				}
 			}
 			if(getLastArea() == null) {
 				//Reached end of route
@@ -275,10 +284,16 @@ public abstract class Person
 		return 0;
 	}
 	
-	public void getLobbyRoute() 
+	public static Area getLobby()
 	{
-		//
+		for (Area object: Area.getAreaList()) {
+			if(object instanceof Lobby) {
+				return object;
+			}
+		}
+		return null;
 	}
+		
 
 	public boolean getAvailability() 
 	{

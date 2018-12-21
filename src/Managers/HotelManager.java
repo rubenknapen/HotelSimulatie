@@ -168,7 +168,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	  				guest.setVisible();
 					guest.setStatus("GO_OUTSIDE");
 					guest.clearRoute();
-					guest.getLobbyRoute();
+					guest.getRoute(Person.getLobby());
 	  			}
 	  		}  			
 		}
@@ -179,7 +179,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 			{
 				cleaner.setStatus("GO_OUTSIDE");
 				cleaner.clearRoute();
-				cleaner.getLobbyRoute();
+				cleaner.getRoute(Person.getLobby());
 			} 			
 		}
 	}
@@ -215,7 +215,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	{
 		for(int i = 1; i <= amount; i++)
 		{
-			Person xx = PersonFactory.createPerson("Cleaner","INACTIVE",i,true,4,GridBuilder.getMaxY() - 8);
+			Person xx = PersonFactory.createPerson("Cleaner","INACTIVE",i,true,2,GridBuilder.getMaxY()+1);
 			Cleaner c = (Cleaner) xx;
 			c.setId(i);
 			cleaners.add(xx);
@@ -324,7 +324,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	/**
      * method that finds the requested Area, if there are multiple available it calls getClosestObject().
      */
-	private synchronized Area findClosestArea(String name, int guestId)
+	public synchronized static Area findClosestArea(String name, int guestId)
 	{
 		ArrayList<Area> objectList = new ArrayList<Area>();
 		{
@@ -352,7 +352,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	/**
      * method that returns the closest Area to the guest provided.
      */
-	private synchronized Area getClosestObject(ArrayList<Area> list, int guestId)
+	private synchronized static Area getClosestObject(ArrayList<Area> list, int guestId)
 	{
 		Area closestArea = null;
 		int closestDistance = 100;
@@ -511,14 +511,10 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 						  
 						  if (selectedRoomId != 0)
 						  {
-							  Person xx = PersonFactory.createPerson("Guest","GO_BACK_TO_ROOM", setGuestIdValue,true,6,10);
+							  Person xx = PersonFactory.createPerson("Guest","GO_BACK_TO_ROOM", setGuestIdValue,true,2,GridBuilder.getMaxY()+1);
 							  xx.setRoomId(selectedRoomId);
 							  guests.add(xx);
 							  xx.getRoute(getRoomNodeAfterCheckIn(selectedRoomId));
-							  
-								for(Area a : xx.currentRoute) {
-									System.out.println(a.id + " + " + " Distance = " + a.distance);
-								}
 						  }
 						  else
 						  {

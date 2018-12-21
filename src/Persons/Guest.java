@@ -199,7 +199,7 @@ public class Guest extends Person{
 	private void performActionCheckOut()
 	{
 		setVisible();
-		getLobbyRoute();
+		getRoute(Person.getLobby());
 		setStatus("LEAVE_HOTEL");
 		HotelManager.guestCounter--;
 	}
@@ -260,17 +260,7 @@ public class Guest extends Person{
 			setStatus("IN_QUEUE");
 		}
 	}
-
-	public void getLobbyRoute()
-	{
-		for (Area object: Area.getAreaList()) {
-			if(object instanceof Lobby) {
-				//
-			}
-			getRoute(Area.getAreaList().get(object.id-1));
-		}
-	}
-			
+	
 	public void setRoomId(int roomId) {
 		this.roomId = roomId;
 	}

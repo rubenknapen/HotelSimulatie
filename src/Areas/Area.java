@@ -6,6 +6,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import Managers.GridBuilder;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -45,7 +48,9 @@ public abstract class Area
         roomImageView = new ImageView();
         roomImageView.setFitWidth(16);
         roomImageView.setFitHeight(37);
-        roomImageView.setImage(roomImage);
+        roomImageView.setImage(roomImage);	
+		GridBuilder.grid.setHalignment(roomImageView, HPos.LEFT);
+		GridBuilder.grid.setValignment(roomImageView, VPos.BOTTOM);
 	}
 	
     public static List<Area> getAreaList()

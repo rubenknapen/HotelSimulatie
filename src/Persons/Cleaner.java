@@ -120,15 +120,20 @@ public class Cleaner extends Person{
 				waitInFrontOfDoor++;
 			}
 			else if (waitInFrontOfDoor == 1){
-				setInvisible();
-				cleaningTimeRemaining = cleaningTime;
+				if(getCurrentPosition() == HotelManager.findClosestArea("Lobby", id)) {
+					
+				} else {
+					setInvisible();
+					System.out.println("TEST");
+					cleaningTimeRemaining = cleaningTime;
+				}
 			}
 		}
 		else if (!visibility){
 			if(cleaningTimeRemaining == 0){
 				currentRoomToClean.setAvailability(true);
 				setVisible();
-				getLobbyRoute();
+				getRoute(Person.getLobby());
 			}
 			else {
 				cleaningTimeRemaining -= 1;
@@ -136,13 +141,6 @@ public class Cleaner extends Person{
 		}
 	}
 	
-	public void getLobbyRoute(){
-		getRoute(Area.getAreaList().get(49));
-		if (!HotelManager.evacuateCleanerMode){
-			setStatus("INACTIVE");
-		}
-	}
-
 	public static ArrayList<Area> getRoomCleaningList() {
 		return roomCleaningList;
 	}
