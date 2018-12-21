@@ -581,10 +581,10 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		}
 		
 		//Add room to clean to the queue.
-//		else if (tempEvent == "CLEANING_EMERGENCY"){
-//			int guestId = splitEventCleaningEmergency(event);
-//			addEmergencyRoomToClean(guestId);
-//		}
+		else if (tempEvent == "CLEANING_EMERGENCY"){
+			int guestId = splitEventCleaningEmergency(event);
+			addEmergencyRoomToClean(guestId);
+		}
 		
 		else if (tempEvent == "EVACUATE")
 		{
