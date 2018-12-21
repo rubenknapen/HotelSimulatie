@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import Managers.GridBuilder;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -20,7 +21,6 @@ import javafx.scene.paint.Color;
 
 public class Restaurant extends Area {
 
-	
 	//Constructor
 	public Restaurant(int id, int dimensionW, int dimensionH, long capacity, int x, int y, String areaType)
 	{
@@ -46,11 +46,8 @@ public class Restaurant extends Area {
         }
 		
 		HBox restaurantBg = new HBox();
-		restaurantBg.setBackground(new Background(new BackgroundFill(Color.web("red"), CornerRadii.EMPTY, Insets.EMPTY)));	
-		
-		Label label = new Label(Integer.toString(id));
-		
-		restaurantBg.getChildren().addAll(roomImageView, label);
+		restaurantBg.setAlignment(Pos.BOTTOM_LEFT);
+		restaurantBg.getChildren().addAll(roomImageView);
 		
 		// Paint the room on the grid
 		GridBuilder.grid.add(restaurantBg,x,y, dimensionW, dimensionH);

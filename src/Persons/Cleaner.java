@@ -76,7 +76,7 @@ public class Cleaner extends Person{
 			status = "GOTODIRTYROOM";
 			getRoute(roomToClean);
 			roomCleaningList.remove(0);
-			}
+		}
 	}
 	
 	//Check the status and based on that perform the corresponding action
@@ -113,8 +113,7 @@ public class Cleaner extends Person{
 	}
 
 	//Functions
-	public void cleanRoom()
-	{
+	private void cleanRoom(){
 		if(visibility){
 			if (waitInFrontOfDoor == 0){
 				waitInFrontOfDoor++;
@@ -124,7 +123,6 @@ public class Cleaner extends Person{
 					
 				} else {
 					setInvisible();
-					System.out.println("TEST");
 					cleaningTimeRemaining = cleaningTime;
 				}
 			}
@@ -134,6 +132,7 @@ public class Cleaner extends Person{
 				currentRoomToClean.setAvailability(true);
 				setVisible();
 				getRoute(Person.getLobby());
+				setStatus("INACTIVE");
 			}
 			else {
 				cleaningTimeRemaining -= 1;

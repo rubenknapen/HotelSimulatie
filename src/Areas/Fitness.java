@@ -5,7 +5,10 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 import Managers.GridBuilder;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -44,12 +47,10 @@ public class Fitness extends Area {
             e.printStackTrace();
         }
 		
-		HBox fitnessBg = new HBox();
-		fitnessBg.setBackground(new Background(new BackgroundFill(Color.web("blue"), CornerRadii.EMPTY, Insets.EMPTY)));	
 		
-		Label label = new Label(Integer.toString(id));
-		
-		fitnessBg.getChildren().addAll(roomImageView, label);
+		HBox fitnessBg = new HBox();		
+		fitnessBg.setAlignment(Pos.BOTTOM_LEFT);	
+		fitnessBg.getChildren().addAll(roomImageView);
 		
 		// Paint the room on the grid
 		GridBuilder.grid.add(fitnessBg,x,y, dimensionW, dimensionH);

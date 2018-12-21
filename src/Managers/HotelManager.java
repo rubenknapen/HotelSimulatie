@@ -156,15 +156,12 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		}		
 	}
 	
-	private void evacuatePeople()
-	{
+	private void evacuatePeople(){
 		evacuateGuestMode = true;
 		evacuateCleanerMode = true;
 		synchronized (guests) {
-	  		for(Person guest : guests) 
-	  		{
-	  			if(guest.getAvailability())
-	  			{
+	  		for(Person guest : guests) {
+	  			if(!guest.getAvailability()){
 	  				guest.setVisible();
 					guest.setStatus("GO_OUTSIDE");
 					guest.clearRoute();
@@ -173,10 +170,8 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 	  		}  			
 		}
 		
-		synchronized (cleaners) 
-		{
-			for(Person cleaner : cleaners) 
-			{
+		synchronized (cleaners) {
+			for(Person cleaner : cleaners) {
 				cleaner.setStatus("GO_OUTSIDE");
 				cleaner.clearRoute();
 				cleaner.getRoute(Person.getLobby());
@@ -586,11 +581,10 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		}
 		
 		//Add room to clean to the queue.
-		else if (tempEvent == "CLEANING_EMERGENCY")
-		{
-			int guestId = splitEventCleaningEmergency(event);
-			addEmergencyRoomToClean(guestId);
-		}
+//		else if (tempEvent == "CLEANING_EMERGENCY"){
+//			int guestId = splitEventCleaningEmergency(event);
+//			addEmergencyRoomToClean(guestId);
+//		}
 		
 		else if (tempEvent == "EVACUATE")
 		{
@@ -707,7 +701,7 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 			{
 		  		for(Person guest : guests) 
 		  		{
-					if (guest.getStatus() == "GO_OUTSIDE")
+					if (guest.getStatus() == "GO_OUTSIDE" && guest.getAliveStatus() == true)
 					{
 						evacuateGuestMode = true;
 						break;
@@ -746,6 +740,6 @@ public class HotelManager implements EventLib.HotelEventListener, Observer{
 		personsPerformActions();
 		setRealtimeStatistics();
 		checkMovie();
-		checkEvacuateMode();
+		checkEvacuateMode();	
 	}
 }

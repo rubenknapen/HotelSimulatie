@@ -8,6 +8,7 @@ import Managers.GridBuilder;
 import Managers.HotelManager;
 import Managers.SettingBuilder;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -51,11 +52,8 @@ public class Cinema extends Area {
         }
 		
 		HBox cinemaBg = new HBox();
-		cinemaBg.setBackground(new Background(new BackgroundFill(Color.web("yellow"), CornerRadii.EMPTY, Insets.EMPTY)));
-		
-		Label label = new Label(Integer.toString(id));
-		
-		cinemaBg.getChildren().addAll(roomImageView, label);
+		cinemaBg.setAlignment(Pos.BOTTOM_LEFT);			
+		cinemaBg.getChildren().addAll(roomImageView);
 		
 		// Paint the room on the grid
 		GridBuilder.grid.add(cinemaBg,x,y, dimensionW, dimensionH);

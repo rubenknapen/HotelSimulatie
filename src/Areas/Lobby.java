@@ -54,7 +54,6 @@ public class Lobby extends Area {
 		
 		HBox lobbyBackground = new HBox();
 		lobbyBackground.setMinHeight(48);
-		lobbyBackground.setBackground(new Background(new BackgroundFill(Color.web("#fff"), CornerRadii.EMPTY, Insets.EMPTY)));	
 		
 		lobbyBackground.setOnMouseClicked(new EventHandler<MouseEvent>() {
 		    @Override
@@ -85,12 +84,12 @@ public class Lobby extends Area {
 		
 		Label label = new Label(Integer.toString(id));
 		
-		lobbyBackground.getChildren().addAll(label);
+		lobbyBackground.getChildren().addAll(roomImageView);
 		
 		// Paint the room on the grid
 		GridBuilder.grid.add(lobbyBackground,x,y, dimensionW, dimensionH);
         roomImageView.setFitHeight(96);
-        roomImageView.setFitWidth(480);
+        roomImageView.setFitWidth((GridBuilder.getMaxX() - 1) * 48);
 	}
 
 }

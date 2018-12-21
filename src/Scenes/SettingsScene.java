@@ -118,7 +118,7 @@ public class SettingsScene
 			    }
 				
 				//HTE speed
-				if (setting1IntValue < 250)
+				if (setting1IntValue < 0)
 				{
 					JOptionPane.showMessageDialog(parent, "Value can't be lower then 250");
 					settingComplete = false;

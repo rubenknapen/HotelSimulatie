@@ -14,14 +14,14 @@ public class SettingBuilder {
 	//Variables
 	ArrayList<String> settingList;
 	public static int defaultTickSpeed = 1000;
-	public static int tickSpeed = 40; //In miliseconds
+	public static int tickSpeed = 250; //In miliseconds
 	public static int cleaningTime = 3;
 	public static int dieInLineTime = 5;
 	public static int movieTime = 20;
 	public static int stairTime = 2;
 
 	//Functions
-	public void getSettings()
+	private void getSettings()
 	{					
 		String pathBase = System.getProperty("user.dir");
 		String pathFile = "\\src\\settings\\settings.txt";
@@ -46,7 +46,7 @@ public class SettingBuilder {
 		}
 	}
 	
-	public void showSettings(){
+	private void showSettings(){
 		for(int i = 0; i < settingList.size(); i++)
 		{
 			System.out.println(settingList.get(i));

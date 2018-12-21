@@ -31,13 +31,7 @@ public class Stairway extends Area
         latest = null;
         this.id = id;
 
-		HBox stairwayBg = new HBox();
-		stairwayBg.setBackground(new Background(new BackgroundFill(Color.web("purple"), CornerRadii.EMPTY, Insets.EMPTY)));
-		
-		Label label = new Label(Integer.toString(id));
-		
-		stairwayBg.getChildren().addAll(label);
-		
+		HBox stairwayBg = new HBox();		
 		// Paint the room on the grid
 		GridBuilder.grid.add(stairwayBg,x,y, dimensionW, dimensionH);			
 	}

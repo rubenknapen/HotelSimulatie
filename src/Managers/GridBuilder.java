@@ -39,7 +39,7 @@ public class GridBuilder {
 	public static GridPane grid;
 	static int xOffset = 3;
 	private static int maxY = 0;
-	private int maxX = 0;
+	private static int maxX = 0;
 	private	int roomNumber = 1; // Give room numbers
 	public static int colSize = 48;
 	public static int rowSize= 48;
@@ -48,12 +48,12 @@ public class GridBuilder {
     ShortestPath.Dijkstra _ds = new ShortestPath.Dijkstra();
     
 	
-	public void createGrid(){	
+	private void createGrid(){	
 		grid = new GridPane();
 		grid.setGridLinesVisible(false);
 		grid.setMaxSize(500, 500);		
 		int cols = 14;
-		int rows = 11;
+		int rows = 12;
 		
 		for (int i = 0; i < cols; i++) {
 		      ColumnConstraints colConst = new ColumnConstraints();
@@ -82,8 +82,7 @@ public class GridBuilder {
 		
 		// Create Hbox to contain background images of elevator
 		HBox elevatorBackground = new HBox();
-		elevatorBackground.setMaxSize(colSize * 2,rowSize * 8);
-		elevatorBackground.setMinSize(colSize * 2,rowSize * 8);
+		elevatorBackground.setMaxSize(colSize * 2,rowSize * getMaxY());
 		BackgroundImage elevatorBG= new BackgroundImage(new Image("file:src/Images/elevator_bg.png",96,48,false,false),
 		        BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,
 		          BackgroundSize.DEFAULT);
@@ -91,13 +90,11 @@ public class GridBuilder {
 		elevatorBackground.getChildren().add(elevatorImageImageView);
 			
 		// Add the elevator background to the grid
-		grid.add(elevatorBackground, xOffset - 1,1,1,8);
+		grid.add(elevatorBackground, xOffset - 1,1,1,getMaxY());
 		grid.setBackground(new Background(new BackgroundFill(Color.web("#102860"), CornerRadii.EMPTY, Insets.EMPTY)));			
 	}
-		
-	public void createRooms(){
-
-			
+	
+	private void getDimensions() {
 		try {
 			FileReader reader = new FileReader(MainMenuScene.selectedLayout);
 			JSONParser jsonParser = new JSONParser();
@@ -131,9 +128,39 @@ public class GridBuilder {
 				if(x + dimensionW > maxX) {
 					maxX = x + dimensionW;
 				}
-
+				
 			}
-					
+			
+		}
+		catch (FileNotFoundException ex) 
+		{
+			ex.printStackTrace();
+		} 	
+		
+		catch (IOException ex) 
+		{
+			ex.printStackTrace();
+		}	 
+		
+		catch (ParseException ex)
+		{
+			ex.printStackTrace();
+		} 
+		
+		catch (NullPointerException ex) 
+		{
+			ex.printStackTrace();
+		}
+	}
+		
+	private void createRooms(){
+
+			
+		try {
+			FileReader reader = new FileReader(MainMenuScene.selectedLayout);
+			JSONParser jsonParser = new JSONParser();
+			JSONArray jsonArr = (JSONArray) jsonParser.parse(reader);
+									
 			// For-each loop to create rooms via the AreaFactory
 			
 			for (Object o: jsonArr){
@@ -246,7 +273,7 @@ public class GridBuilder {
 	
 	}
 	
-	public void createStairway() 
+	private void createStairway() 
 	{
 		for(int i = 0; i < (getMaxY() + 1); i++) 
 		{
@@ -256,43 +283,39 @@ public class GridBuilder {
 		}	      		
 	}
 	
-	public void createHotelBackground() 
-	{
+	private void createHotelBackground() {
 		// Create Hbox to contain background images of floors
 		HBox floorBackground = new HBox();
-		floorBackground.setMaxSize(48 * 8,48 * 8);
-		floorBackground.setMinSize(48 * 8,48 * 8);
+		floorBackground.setMaxSize((getMaxX() -3)* 48,48 * getMaxY());
 		
 		// Create top-floor background image
 		Image topFloorImage = new Image("file:src/Images/top_floor.png");
 		ImageView topFloorImageView = new ImageView(topFloorImage);
-		topFloorImageView.setFitWidth(384);
+		topFloorImageView.setFitWidth((getMaxX() -3)* 48);
 		topFloorImageView.setFitHeight(48);
 		
-		BackgroundImage myBI= new BackgroundImage(new Image("file:src/Images/floor_bg.png",384,48,false,false),
+		BackgroundImage myBI= new BackgroundImage(new Image("file:src/Images/floor_bg.png",(getMaxX() -3)* 48,48,false,false),
 		        BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,
 		          BackgroundSize.DEFAULT);
 		floorBackground.setBackground(new Background(myBI));
 		floorBackground.getChildren().add(topFloorImageView);
 		
 		// Add the floor background to the grid
-		grid.add(floorBackground, xOffset+1, 1, 8, 8);
+		grid.add(floorBackground, xOffset+1, 1, getMaxX()-3, getMaxY());
 	}
 	
-	
 
-	
-	public void addElevator(){
+	private void addElevator(){
 		AreaFactory.createArea(1, "Elevator",1,1,0,0,2,2);
 	}
 	
-	public void addLobby(){
+	private void addLobby(){
 		Area lobby = AreaFactory.createArea(roomNumber, "Lobby",9,1,0,0,2,getMaxY()+1);
 		roomNumber++;
 		Area.getAreaList().add(lobby);
 	}
 	
-	public void createEdges() 
+	private void createEdges() 
 	{
 		for (Area object: Area.getAreaList()) 
 		{
@@ -333,28 +356,24 @@ public class GridBuilder {
 		}					  
 	}
 	
-	public void clearGrid() 
-	{
+	private void clearGrid() {
 		grid.getChildren().clear();
 	}
 
-	public GridPane getGrid()
-	{
+	private GridPane getGrid(){
 		return grid;
 	}
 	
-	public static int getMaxY() 
-	{
+	public static int getMaxY() {
 		return maxY;
 	}
 	
-	public int getMaxX() 
-	{
+	public static int getMaxX() {
 		return maxX + xOffset;
 	}
 	
-	public void buildGrid() 
-	{
+	public void buildGrid() {
+		getDimensions();
 		createGrid();
 		createHotelBackground();
 		createRooms();
